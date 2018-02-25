@@ -24,7 +24,7 @@ export class CategoryListComponent implements OnDestroy {
 
    selectCategory(category: Category) {
       if (category === this.selectedCategory) {
-        this.selectCategory = undefined;
+        this.selectedCategory = null;
       } else {
         this.selectedCategory = category;
       }

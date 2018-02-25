@@ -9,6 +9,13 @@
   <ul *ngIf="selectedCategory === category" class="list-group list-group-flush">
     <li *ngFor="let subcategory of category.subcategories" class="list-group-item">
       {{ subcategory.name }}
+      <div class="btn-group float-right" role="group" aria-label="Basic example">
+        <button class="btn btn-sm btn-outline-warning">Edit <span class="fa fa-edit"></span></button>
+        <button class="btn btn-sm btn-outline-danger">Delete <span class="fa fa-times"></span></button>
+    </div>
+    </li>
+    <li>
+      <button type="button" class="btn btn-primary btn-lg btn-block">Add subcateogry</button>
     </li>
   </ul>
 </div>
