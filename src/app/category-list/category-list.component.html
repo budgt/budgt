@@ -1,0 +1,14 @@
+<div *ngFor="let category of categories" class="card">
+  <div (click)="selectCategory(category)" class="card-header">
+    {{ category.name }}
+    <span *ngIf="selectedCategory != category; else arrowUp" class="fa fa-angle-down float-right"></span>
+    <ng-template #arrowUp>
+      <span class="fa fa-angle-up float-right"></span>
+    </ng-template>
+  </div>
+  <ul *ngIf="selectedCategory === category" class="list-group list-group-flush">
+    <li *ngFor="let subcategory of category.subcategories" class="list-group-item">
+      {{ subcategory.name }}
+    </li>
+  </ul>
+</div>

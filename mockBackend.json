@@ -5,7 +5,7 @@
             "name": "Arbeit",
             "type": "Income",
             "amount": 5432,
-            "subcateogry": [
+            "subcategories": [
                 {
                     "id": 1,
                     "name": "Gehalt",
@@ -23,7 +23,7 @@
             "name": "Lebenshaltung",
             "Type": "Expense",
             "Amount": 321,
-            "subcateogry": [
+            "subcategories": [
                 {
                     "id": 3,
                     "name": "Miete",
@@ -41,7 +41,7 @@
             "name": "Hobbys",
             "Type": "Expense",
             "Amount": 765,
-            "subcateogry": [
+            "subcategories": [
                 {
                     "id": 5,
                     "name": "Pizza",
@@ -54,7 +54,7 @@
             "name": "Sonstiges",
             "Type": "Expense",
             "Amount": 987,
-            "subcateogry": [
+            "subcategories": [
                 {
                     "id": 6,
                     "name": "Barabhebung",

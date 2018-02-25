@@ -5,6 +5,6 @@ export interface Category {
     'name': String;
     'type': categoryType;
     'amount': number;
-    'subcateogry': Subcategory;
+    'subcategories': Subcategory[];
 }
 enum categoryType { INCOME, EXPENSE }
