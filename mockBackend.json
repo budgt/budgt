@@ -25,12 +25,12 @@
             "Amount": 321,
             "subcategories": [
                 {
-                    "id": 3,
+                    "id": 1,
                     "name": "Miete",
                     "amount": 300
                 },
                 {
-                    "id": 4,
+                    "id": 2,
                     "name": "Strom",
                     "amount": 21
                 }
@@ -43,25 +43,25 @@
             "Amount": 765,
             "subcategories": [
                 {
-                    "id": 5,
+                    "id": 1,
                     "name": "Pizza",
                     "amount": 765
                 }
             ]
         },
         {
-            "id": 2,
+            "id": 4,
             "name": "Sonstiges",
             "Type": "Expense",
             "Amount": 987,
             "subcategories": [
                 {
-                    "id": 6,
+                    "id": 1,
                     "name": "Barabhebung",
                     "amount": 87
                 },
                 {
-                    "id": 7,
+                    "id": 2,
                     "name": "Sonstige Ausgaben",
                     "amount": 900
                 }
@@ -76,7 +76,7 @@
             "date": "02.01.2018"
         },
         {
-            "id": 1,
+            "id": 2,
             "subcategory": "5",
             "name": "Pizza.de",
             "date": "08.01.2018"
