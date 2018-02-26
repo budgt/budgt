@@ -5,6 +5,7 @@
     <ng-template #arrowUp>
       <span class="fa fa-angle-up float-right"></span>
     </ng-template>
+      <span (click)="deleteCategory(category)" class="fa fa-times deleteCateogry float-right"></span>
   </div>
   <ul *ngIf="selectedCategory === category" class="list-group list-group-flush">
     <li *ngFor="let subcategory of category.subcategories" class="list-group-item">

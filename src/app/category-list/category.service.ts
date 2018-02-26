@@ -51,6 +51,14 @@ export class CategoryService {
   }
 
   /**
+   * Deletes a Category
+   * @param category - category to delete
+   */
+  deleteCatgory(category: Category) {
+    this.http.delete(this.categoryUrl + '/' + category.id );
+  }
+
+  /**
    * Handle Http operation that failed.
    * Let the app continue.
    * @param operation - name of the operation that failed

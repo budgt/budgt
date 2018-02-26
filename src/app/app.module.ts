@@ -20,7 +20,7 @@ import { CategoryService } from './category-list/category.service';
     HttpClientModule
   ],
   providers: [
-    CategoryService
+    CategoryService,
   ],
   bootstrap: [AppComponent],
 })
