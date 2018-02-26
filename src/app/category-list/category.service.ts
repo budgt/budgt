@@ -34,6 +34,22 @@ export class CategoryService {
       );
   }
 
+    /**
+   * Updates a category
+   * @param category - the new version of the category
+   */
+  updateCategory(category: Category) {
+    return this.http.put(this.categoryUrl + '/' + category.id, category);
+  }
+
+  /**
+   * Creates a new Category
+   * @param category - the new category
+   */
+  createCategory(category: Category) {
+    return this.http.post(this.categoryUrl, category);
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

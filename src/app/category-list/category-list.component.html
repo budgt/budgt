@@ -11,7 +11,7 @@
       {{ subcategory.name }}
       <div class="btn-group float-right" role="group" aria-label="Basic example">
         <button class="btn btn-sm btn-outline-warning">Edit <span class="fa fa-edit"></span></button>
-        <button class="btn btn-sm btn-outline-danger">Delete <span class="fa fa-times"></span></button>
+        <button (click)="deleteSubcategory(subcategory)" class="btn btn-sm btn-outline-danger">Delete <span class="fa fa-times"></span></button>
     </div>
     </li>
     <li>
