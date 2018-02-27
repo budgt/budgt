@@ -1,7 +1,7 @@
 import { Subcategory } from './../../models/subcategory';
 import { Category } from './../../models/category';
 import { CategoryService } from './category.service';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -10,39 +10,41 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./category-list.component.scss']
 })
 
-export class CategoryListComponent implements OnDestroy {
+export class CategoryListComponent implements OnDestroy, OnInit {
   categories: Category[];
   selectedCategory: Category;
   categorySubscription: Subscription;
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private categoryService: CategoryService) { }
+
+  ngOnInit() {
     this.categorySubscription = this.categoryService.getAllCategories()
       .subscribe(categories => {
-          this.categories = categories;
+        this.categories = categories;
       });
-   }
+  }
 
-   selectCategory(category: Category) {
-      if (category === this.selectedCategory) {
-        this.selectedCategory = null;
-      } else {
-        this.selectedCategory = category;
-      }
+  selectCategory(category: Category) {
+    if (category === this.selectedCategory) {
+      this.selectedCategory = null;
+    } else {
+      this.selectedCategory = category;
     }
+  }
 
-    deleteSubcategory(subcategory: Subcategory) {
-      let index: number = this.selectedCategory.subcategories.indexOf(subcategory);
-      this.selectedCategory.subcategories.splice(index, 1);
+  deleteSubcategory(subcategory: Subcategory) {
+    let index: number = this.selectedCategory.subcategories.indexOf(subcategory);
+    this.selectedCategory.subcategories.splice(index, 1);
 
-      this.categoryService.updateCategory(this.selectedCategory);
-    }
+    this.categoryService.updateCategory(this.selectedCategory);
+  }
 
-    deleteCategory(category: Category) {
-      let index: number = this.categories.indexOf(category);
-      this.categories.splice(index, 1);
+  deleteCategory(category: Category) {
+    let index: number = this.categories.indexOf(category);
+    this.categories.splice(index, 1);
 
-      this.categoryService.deleteCatgory(category);
-    }
+    this.categoryService.deleteCatgory(category);
+  }
 
 
   ngOnDestroy() {
