@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./category-list.component.scss']
 })
 
-export class CategoryListComponent implements OnDestroy, OnInit {
+export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[];
   selectedCategory: Category;
   categorySubscription: Subscription;
@@ -18,7 +18,7 @@ export class CategoryListComponent implements OnDestroy, OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.categorySubscription = this.categoryService.getAllCategories()
+    this.categorySubscription = this.categoryService.getCategories()
       .subscribe(categories => {
         this.categories = categories;
       });
