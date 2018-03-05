@@ -25,7 +25,7 @@ describe('Service Tests', () => {
 
         describe('Service methods', () => {
             it('should call correct URL', () => {
-                service.getCategoryById('123').subscribe(() => {});
+                service.getCategoryById(123).subscribe(() => {});
 
                 const req  = httpMock.expectOne({ method: 'GET' });
 
@@ -35,17 +35,17 @@ describe('Service Tests', () => {
             });
             it('should return Category', () => {
 
-                service.getCategoryById('123').subscribe((received) => {
-                    expect(received.id).toEqual('123');
+                service.getCategoryById(123).subscribe((received) => {
+                    expect(received.id).toEqual(123);
                 });
 
                 const req = httpMock.expectOne({ method: 'GET' });
-                req.flush({id: '123'});
+                req.flush({id: 123});
             });
 
             it('should propagate not found response', () => {
 
-                service.getCategoryById('123').subscribe(null, (_error: any) => {
+                service.getCategoryById(123).subscribe(null, (_error: any) => {
                     expect(_error.status).toEqual(404);
                 });
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Category } from './../../models/category';
+import { Category } from '../models/category';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -27,7 +27,7 @@ export class CategoryService {
    * Returns a specific category
    * @param id - id of the category to fetch
    */
-  getCategoryById(id: String): Observable<Category> {
+  getCategoryById(id: number): Observable<Category> {
     return this.http.get<Category>(this.categoryUrl + '/' + id)
       .pipe(
         catchError(this.handleError<Category>('getCategory id=' + id))
