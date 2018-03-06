@@ -25,27 +25,27 @@ describe('Service Tests', () => {
 
         describe('Service methods', () => {
             it('should call correct URL', () => {
-                service.getCategoryById(123).subscribe(() => {});
+                service.getCategoryById(1).subscribe(() => {});
 
                 const req  = httpMock.expectOne({ method: 'GET' });
 
                 //const resourceUrl = SERVER_API_URL + 'api/bank-accounts';
                 const resourceUrl = 'http://localhost:3000/category';
-                expect(req.request.url).toEqual(resourceUrl + '/' + 123);
+                expect(req.request.url).toEqual(resourceUrl + '/' + 1);
             });
             it('should return Category', () => {
 
-                service.getCategoryById(123).subscribe((received) => {
-                    expect(received.id).toEqual(123);
+                service.getCategoryById(1).subscribe((received) => {
+                    expect(received.id).toEqual(1);
                 });
 
                 const req = httpMock.expectOne({ method: 'GET' });
-                req.flush({id: 123});
+                req.flush({id: 1});
             });
 
             it('should propagate not found response', () => {
 
-                service.getCategoryById(123).subscribe(null, (_error: any) => {
+                service.getCategoryById(1).subscribe(null, (_error: any) => {
                     expect(_error.status).toEqual(404);
                 });
 

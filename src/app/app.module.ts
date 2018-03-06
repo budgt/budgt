@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryService } from './category-list/category.service';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 
 @NgModule({
@@ -17,10 +17,10 @@ import { CategoryService } from './category-list/category.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    CategoryService,
+    CategoryService
   ],
   bootstrap: [AppComponent],
 })

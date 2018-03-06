@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 
 describe('Component Tests', () => {
 
-    describe('BankAccount Management Component', () => {
+    describe('Category Management Component', () => {
         let comp: CategoryListComponent;
         let fixture: ComponentFixture<CategoryListComponent>;
         let service: CategoryService;
@@ -34,16 +34,11 @@ describe('Component Tests', () => {
         });
 
         describe('OnInit', () => {
-            it('Should #getCategorieson init', () => {
-                // GIVEN
-                spyOn(service, 'getCategories').and.returnValue(Observable.of(new HttpResponse({
-                    body: [new Category(123)],
-                })));
+            it('should call #getCategories', () => {
+                spyOn(service, 'getCategories').and.returnValue(Observable.of([new Category(123)]));
 
-                // WHEN
                 comp.ngOnInit();
 
-                // THEN
                 expect(service.getCategories).toHaveBeenCalled();
                 expect(comp.categories[0]).toEqual(jasmine.objectContaining({id: 123}));
             });
