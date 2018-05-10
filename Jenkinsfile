@@ -18,22 +18,20 @@ pipeline {
             }
         }
 
-        stage {
-            stage('Build') {
-                steps {
-                    sh 'yarn install'
 
-                    sh 'ng build'
-                }
-            
+        stage('Build') {
+            steps {
+                sh 'yarn install'
+
+                sh 'ng build'
             }
+        
         }
+        
 
-        stage {
-            stage('unit test') {
-                steps {
-                    sh 'ng test --browsers PhantomJS'
-                }
+        stage('unit test') {
+            steps {
+                sh 'ng test --browsers PhantomJS'
             }
         }
     }
