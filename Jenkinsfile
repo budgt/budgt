@@ -27,7 +27,7 @@ pipeline {
         }
     }
 
-    stages {
+    stage {
         stage('Build') {
             steps {
                 sh 'yarn install'
@@ -39,7 +39,7 @@ pipeline {
         
         }
     }
-    stages {
+    stage {
         stage('unit test') {
             steps {
                 sh 'ng test --browsers PhantomJS'
