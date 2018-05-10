@@ -25,24 +25,24 @@ pipeline {
                 sh 'ng -v'
             }
         }
-    }
 
-    stage {
-        stage('Build') {
-            steps {
-                sh 'yarn install'
-            }
+        stage {
+            stage('Build') {
+                steps {
+                    sh 'yarn install'
+                }
 
-            steps {
-                sh 'ng build'
+                steps {
+                    sh 'ng build'
+                }
+            
             }
-        
         }
-    }
-    stage {
-        stage('unit test') {
-            steps {
-                sh 'ng test --browsers PhantomJS'
+        stage {
+            stage('unit test') {
+                steps {
+                    sh 'ng test --browsers PhantomJS'
+                }
             }
         }
     }
