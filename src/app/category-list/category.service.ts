@@ -55,7 +55,7 @@ export class CategoryService {
    * @param category - category to delete
    */
   deleteCatgory(category: Category) {
-    this.http.delete(this.categoryUrl + '/' + category.id );
+    return this.http.delete(this.categoryUrl + '/' + category.id );
   }
 
   /**
