@@ -13,9 +13,7 @@ pipeline {
 
                 sh 'npm -v'
 
-                sh 'npm install -g yarn'
-
-                sh 'yarn global add @angular/cli'
+                sh 'npm install -g @angular/cli'
                 
                 sh 'ng -v'
             }
@@ -29,7 +27,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'yarn install'
+                sh 'npm install'
 
                 sh 'ng build'
             }
