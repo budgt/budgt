@@ -26,14 +26,6 @@ pipeline {
             }
         }
 
-        stage('SonarQube analysis') {
-            def scannerHome = tool 'sonar';
-            
-            withSonarQubeEnv('pahofmann') {
-                sh "${scannerHome}/bin/sonar-scanner"
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'yarn install'
