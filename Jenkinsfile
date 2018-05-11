@@ -15,10 +15,8 @@ pipeline {
 
                 sh 'npm install -g yarn'
 
-                sh 'yarn -v'
-
                 sh 'yarn global add @angular/cli'
-
+                
                 sh 'ng -v'
             }
         }
