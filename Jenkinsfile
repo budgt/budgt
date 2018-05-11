@@ -15,6 +15,8 @@ pipeline {
 
                 sh 'npm install -g yarn'
 
+                sh 'yarn -v'
+
                 sh 'yarn global add @angular/cli'
                 
                 sh 'ng -v'
@@ -38,7 +40,7 @@ pipeline {
 
         stage('unit test') {
             steps {
-                sh 'ng test --browsers PhantomJS'
+                sh 'ng test --browsers PhantomJS --single-run'
             }
         }
     }
