@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'node:7-alpine' }
+        docker { image 'node:8.11.1-alpine' }
     }
 
     stages {
@@ -8,16 +8,31 @@ pipeline {
             steps {
                 sh 'node --version'
 
-                sh 'npm install yarn'
+                sh 'npm -v'
+
+                sh 'npm install -g yarn'
 
                 sh 'yarn -v'
 
-                sh 'yarn add @angular/cli'
+                sh 'yarn global add @angular/cli'
 
                 sh 'ng -v'
             }
         }
 
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('SonarQube analysis') {
+            def scannerHome = tool 'sonar';
+            
+            withSonarQubeEnv('pahofmann') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
 
         stage('Build') {
             steps {
@@ -27,7 +42,6 @@ pipeline {
             }
         
         }
-        
 
         stage('unit test') {
             steps {
