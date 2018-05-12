@@ -79,7 +79,6 @@ pipeline {
             steps {
                 unstash 'node_modules'
                 sh 'ng test --browsers PhantomJS --watch=false'
-                junit 'reports/**/*.xml'
             }
         }
 
