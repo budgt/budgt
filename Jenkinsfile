@@ -20,12 +20,18 @@ pipeline {
             }
         }
 
-        stage('SonarQube analysis') {
-            steps {
-                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
+        parallel(
+            stage('SonarQube analysis') {
+                steps {
+                    sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
+                }
             }
-        }
-        
+            stage('Lint') {
+                steps {
+                    sh 'yarn lint'
+                }
+            }
+        )
 
         stage('Build') {
             steps {
