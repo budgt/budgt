@@ -31,13 +31,13 @@ pipeline {
         
         }
 
-        stage('unit test') {
+        stage('Unit test') {
             steps {
                 sh 'ng test --browsers PhantomJS --single-run'
             }
         }
 
-        stage('clean up') {
+        stage('Clean up') {
             steps {
                 deleteDir()
             }
