@@ -18,15 +18,15 @@ pipeline {
         }
 
         stage('Preparation') {
-            agent {
-                dockerfile { 
-                    dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
-                }
-            }
-
             parallel {
                 stage('Check versions') {    
+                    agent {
+                        dockerfile { 
+                            dir 'deploy/docker/build'
+                            additionalBuildArgs '-t budget-build'
+                        }
+                    }
+
                     steps {
                         sh 'node --version'
 
@@ -40,6 +40,12 @@ pipeline {
                 }
 
                 stage('Lint') {
+                    agent {
+                        dockerfile { 
+                            dir 'deploy/docker/build'
+                            additionalBuildArgs '-t budget-build'
+                        }
+                    }
                     steps {
                         unstash 'node_modules'
                         sh 'yarn lint'
@@ -92,6 +98,15 @@ pipeline {
             }
         
         }
+
+        stage('Build and run Docker Image') {
+            agent any
+
+            steps {
+                sh 'docker image build deploy/docker/frontend -t budgt-frontend'
+                sh 'docker run -p 1337:80 budgt-frontend'
+            }
+        }        
 
         stage('Clean up') {
             agent {
