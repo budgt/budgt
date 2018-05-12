@@ -6,6 +6,10 @@ pipeline {
         }
     }
 
+     tools {
+        sonar 'sonar-scanner'
+    }
+
     stages {
         stage('Preparation') {
             steps {
