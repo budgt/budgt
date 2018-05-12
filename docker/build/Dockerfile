@@ -22,5 +22,5 @@ RUN yarn global add @angular/cli
 ##################### INSTALLATION END #####################
 
 # Add jenkins user
-RUN adduser jenkins -s /bin/ash -D
+RUN adduser jenkins -s /bin/ash -D -u 974
 RUN echo 'jenkins  ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
