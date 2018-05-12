@@ -92,7 +92,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh 'ng build --env=production'
+                sh 'ng build --configuration=production '
                 stash includes: 'dist/', name: 'dist'
             }
         
