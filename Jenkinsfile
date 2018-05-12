@@ -1,33 +1,29 @@
 pipeline {
     agent {
-        docker { 
-            image 'node:8.11.1-alpine'
-            args '-u root'
+        dockerfile { 
+            dir 'docker/build'
+            additionalBuildArgs '-t budget-build'
         }
     }
 
     stages {
         stage('Preparation') {
             steps {
+                checkout scm
+
                 sh 'node --version'
 
                 sh 'npm -v'
 
-                sh 'npm install -g @angular/cli'
-                
-                sh 'ng -v'
-            }
-        }
+                sh 'yarn -v'
 
-        stage('Checkout') {
-            steps {
-                checkout scm
+                sh 'ng -v'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'yarn install'
 
                 sh 'ng build'
             }
