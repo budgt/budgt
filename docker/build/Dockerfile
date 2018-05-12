@@ -3,19 +3,13 @@
 # Based on node:alpine
 ########################################
 
-# Set the base image to Ubuntu
-FROM node:alpine
+# Set the base image to node
+FROM node
 
 # File Author / Maintainer
 MAINTAINER Patrick Hofmann
 
 ################## BEGIN INSTALLATION ######################
-# Install sudo and angular cli
-
-# Install sudo
-RUN apk update
-RUN apk add sudo
-
 # Install angular cli
 RUN yarn global add @angular/cli
 
