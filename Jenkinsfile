@@ -23,7 +23,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('pahofmann') {
-                    sh "sonar"
+                    sh "sonar-scanner"
                 }
             }
         }
