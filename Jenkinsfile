@@ -33,7 +33,7 @@ pipeline {
 
         stage('Unit test') {
             steps {
-                sh 'ng test --browsers PhantomJS --single-run'
+                sh 'ng test --browsers PhantomJS --watch=false'
             }
         }
 
