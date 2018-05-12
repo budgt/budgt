@@ -23,9 +23,9 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 sh "sonar-scanner"
-                }
             }
         }
+        
 
         stage('Build') {
             steps {
