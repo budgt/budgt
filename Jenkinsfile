@@ -7,6 +7,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Install dependencies') {
+            steps {
+                sh 'yarn install'
+            }
+        }
+
         stage('Preparation') {
             parallel {
                 stage('Check versions') {    
@@ -16,6 +23,8 @@ pipeline {
                         sh 'npm -v'
 
                         sh 'yarn -v'
+
+                        sh 'ng -v'
 
                     }
                 }
@@ -36,10 +45,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'yarn install'
-
-                sh 'ng -v'
-
                 sh 'ng build'
             }
         
