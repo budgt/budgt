@@ -7,7 +7,7 @@ pipeline {
     }
 
      tools {
-        sonar 'sonar-scanner'
+        sonar-scanner 'sonar-scanner'
     }
 
     stages {
