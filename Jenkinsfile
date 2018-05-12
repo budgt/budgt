@@ -39,5 +39,11 @@ pipeline {
                 sh 'ng test --browsers PhantomJS --single-run'
             }
         }
+
+        stage('clean up') {
+            steps {
+                deleteDir()
+            }
+        }
     }
 }
