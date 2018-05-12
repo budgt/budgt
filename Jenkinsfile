@@ -22,7 +22,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                sh "sonar-scanner -Dsonar.host.url=https://sonar.pahofmann.com:443"
+                sh "sonar-scanner -Dsonar.host.url=https://192.168.2.10:9000"
             }
         }
         
