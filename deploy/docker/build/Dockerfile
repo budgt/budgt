@@ -7,7 +7,7 @@
 FROM node
 
 # File Author / Maintainer
-MAINTAINER Patrick Hofmann
+LABEL maintainer="hofmann@budgt.de"
 
 ################## BEGIN INSTALLATION ######################
 # Install angular cli and sonarqube-scanner
