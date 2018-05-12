@@ -10,11 +10,16 @@ FROM node
 MAINTAINER Patrick Hofmann
 
 ################## BEGIN INSTALLATION ######################
-# Install angular cli
+# Install angular cli and sonarqube-scanner
 RUN yarn global add @angular/cli
+RUN yarn global add sonarqube-scanner
 
 ##################### INSTALLATION END #####################
 
 # Add jenkins user
 RUN adduser jenkins --shell /bin/bash --disabled-password -u 974
 RUN echo 'jenkins  ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+#Configure sonarqube server
+RUN echo 'sonar.host.url=http://192.168.2.10:9000' >> /etc/sonar-scanner/sonar-scanner.properties
+

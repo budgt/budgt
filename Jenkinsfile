@@ -6,10 +6,6 @@ pipeline {
         }
     }
 
-     tools {
-        sonar-scanner 'sonar-scanner'
-    }
-
     stages {
         stage('Preparation') {
             steps {
@@ -26,8 +22,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('pahofmann') {
-                    sh "sonar-scanner"
+                sh "sonar-scanner"
                 }
             }
         }
