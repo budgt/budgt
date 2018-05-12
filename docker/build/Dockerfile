@@ -17,7 +17,7 @@ RUN yarn global add sonarqube-scanner
 ##################### INSTALLATION END #####################
 
 # Add jenkins user
-RUN adduser jenkins --shell /bin/bash --disabled-password -u 974
+RUN adduser jenkins --shell /bin/bash --disabled-password -u 974 --gecos ""
 RUN echo 'jenkins  ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 #Configure sonarqube server
