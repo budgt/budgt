@@ -8,28 +8,29 @@ pipeline {
 
     stages {
         stage('Preparation') {
-            steps {
-                checkout scm
+            parallel {
+                stage('Check versions') {    
+                    steps {
+                        sh 'node --version'
 
-                sh 'node --version'
+                        sh 'npm -v'
 
-                sh 'npm -v'
+                        sh 'yarn -v'
 
-                sh 'yarn -v'
+                    }
+                }
 
-            }
+                stage('Lint') {
+                    steps {
+                        sh 'yarn lint'
+                    }
+                }   
+            }   
         }
 
-        parallel {
-            stage('SonarQube analysis') {
-                steps {
-                    sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
-                }
-            }
-            stage('Lint') {
-                steps {
-                    sh 'yarn lint'
-                }
+        stage('SonarQube analysis') {
+            steps {
+                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
             }
         }
 
