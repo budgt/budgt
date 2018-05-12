@@ -22,7 +22,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                sh "sonar-scanner"
+                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
             }
         }
         
