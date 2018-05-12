@@ -1,20 +1,30 @@
 pipeline {
-    agent {
-        dockerfile { 
-            dir 'docker/build'
-            additionalBuildArgs '-t budget-build'
-        }
-    }
+    agent none
 
     stages {
 
-        stage('Install dependencies') {
+        stage('Fetch dependencies') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
             steps {
                 sh 'yarn install'
+                stash includes: 'node_modules/', name: 'node_modules'
             }
         }
 
         stage('Preparation') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
             parallel {
                 stage('Check versions') {    
                     steps {
@@ -31,6 +41,7 @@ pipeline {
 
                 stage('Lint') {
                     steps {
+                        unstash 'node_modules'
                         sh 'yarn lint'
                     }
                 }   
@@ -38,25 +49,58 @@ pipeline {
         }
 
         stage('SonarQube analysis') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
             steps {
+                unstash 'node_modules'
                 sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
             }
         }
 
-        stage('Build') {
+        stage('Unit test') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
             steps {
-                sh 'ng build'
+                unstash 'node_modules'
+                sh 'ng test --browsers PhantomJS --watch=false'
+                junit 'reports/**/*.xml'
+            }
+        }
+
+        stage('Compile') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
+            steps {
+                unstash 'node_modules'
+                sh 'ng build --env=production'
+                stash includes: 'dist/', name: 'dist'
             }
         
         }
 
-        stage('Unit test') {
-            steps {
-                sh 'ng test --browsers PhantomJS --watch=false'
-            }
-        }
-
         stage('Clean up') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budget-build'
+                }
+            }
+
             steps {
                 deleteDir()
             }
