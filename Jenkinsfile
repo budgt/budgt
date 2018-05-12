@@ -17,13 +17,14 @@ pipeline {
 
                 sh 'yarn -v'
 
-                sh 'ng -v'
             }
         }
 
         stage('Build') {
             steps {
                 sh 'yarn install'
+
+                sh 'ng -v'
 
                 sh 'ng build'
             }
