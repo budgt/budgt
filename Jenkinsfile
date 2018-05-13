@@ -103,7 +103,7 @@ pipeline {
             agent any
 
             steps {
-                sh 'docker build deploy/docker/frontend -t budgt-frontend'
+                sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
                 sh 'docker run -p 1337:80 budgt-frontend'
             }
         }        
