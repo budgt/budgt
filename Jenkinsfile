@@ -121,11 +121,17 @@ pipeline {
                     agent any
 
                     steps {
-                        sh 'docker stop budget-frontend'
-                        sh 'docker rm budget-frontend'
+                        script {
+                            if (sh 'docker inspect -f {{.State.Running}} budget-frontend') {
+                                sh 'docker stop budget-frontend'
+                                sh 'docker rm budget-frontend'
+                            }
 
-                        sh 'docker stop budget-mockbackend'
-                        sh 'docker rm budget-mockbackend'
+                            if (sh 'docker inspect -f {{.State.Running}} budget-mockbackend') {
+                                sh 'docker stop budget-mockbackend'
+                                sh 'docker rm budget-mockbackend'
+                            }
+                        }
                     }
                 }
             }
