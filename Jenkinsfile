@@ -101,7 +101,7 @@ pipeline {
 
         stage('Prepare dev deployment') {
             parallel {
-                stage("Build frontend new image") {
+                stage("Build new frontend image") {
                     agent any
 
                     steps {
@@ -122,14 +122,24 @@ pipeline {
 
                     steps {
                         script {
-                            if (sh 'docker inspect -f {{.State.Running}} budget-frontend') {
-                                sh 'docker stop budget-frontend'
-                                sh 'docker rm budget-frontend'
+                            try {
+                                def frontend = sh 'docker inspect -f {{.State.Running}} budget-frontend';
+                                if (frontend) {
+                                    sh 'docker stop budget-frontend'
+                                    sh 'docker rm budget-frontend'
+                                }
+                            } catch (ex) {
+                                echo 'No frontend container running...'
                             }
-
-                            if (sh 'docker inspect -f {{.State.Running}} budget-mockbackend') {
-                                sh 'docker stop budget-mockbackend'
-                                sh 'docker rm budget-mockbackend'
+                            
+                            try {
+                                def mockBackend = sh 'docker inspect -f {{.State.Running}} budget-mockbackend'
+                                if (mockbackend) {
+                                    sh 'docker stop budget-mockbackend'
+                                    sh 'docker rm budget-mockbackend'
+                                }
+                            } catch (ex) {
+                                echo 'No mockBackend container running...'
                             }
                         }
                     }
