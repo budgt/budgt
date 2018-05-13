@@ -123,7 +123,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                def frontend = sh 'docker inspect -f {{.State.Running}} budget-frontend';
+                                def frontend = sh 'docker inspect -f {{.State.Running}} budgt-frontend';
                                 if (frontend) {
                                     sh 'docker stop budget-frontend'
                                     sh 'docker rm budget-frontend'
@@ -133,7 +133,7 @@ pipeline {
                             }
                             
                             try {
-                                def mockBackend = sh 'docker inspect -f {{.State.Running}} budget-mockbackend'
+                                def mockBackend = sh 'docker inspect -f {{.State.Running}} budgt-mockbackend'
                                 if (mockbackend) {
                                     sh 'docker stop budget-mockbackend'
                                     sh 'docker rm budget-mockbackend'
