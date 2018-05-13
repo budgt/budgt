@@ -1,6 +1,6 @@
 ########################################
-# Dockerfile to build and test budget 
-# Based on node:alpine
+# Dockerfile to run budget frontend 
+# Based on nginx:alpine
 ########################################
 
 # Set the base image to node

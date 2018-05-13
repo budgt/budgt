@@ -99,16 +99,60 @@ pipeline {
         
         }
 
-        stage('Build and run Docker Image') {
-            agent any
+        stage('Prepare dev deployment') {
+            parallel {
+                stage("Build frontend new image") {
+                    agent any
 
-            steps {
-                sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
-                sh 'docker run -p 1337:80 budgt-frontend'
+                    steps {
+                        sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+                    }
+                }
+
+                stage("Build new mock-backend image") {
+                    agent any
+
+                    steps {
+                        sh 'docker build -f deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
+                    }
+                }
+
+                stage("Clean dev environment") {
+                    agent any
+
+                    steps {
+                        sh 'docker stop budget-frontend'
+                        sh 'docker rm budget-frontend'
+
+                        sh 'docker stop budget-mockbackend'
+                        sh 'docker rm budget-mockbackend'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to dev') {
+            parallel {
+                
+                stage('Deploy mockBackend') {
+                    agent any
+                    
+                    steps {
+                        sh 'docker run -p 1337:80 -d budgt-frontend -name budgt-frontend'
+                    }
+                }
+
+                stage('Deploy mockBackend') {
+                    agent any
+                    
+                    steps {
+                        sh 'docker run -p 1338:3000 -d budgt-mockbackend -name budgt-mockbackend'                    }
+                    }
+                }
             }
         }        
 
-        stage('Clean up') {
+        stage('Clean up workspace') {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'

@@ -1,6 +1,6 @@
 ########################################
 # Dockerfile to build and test budget 
-# Based on node:alpine
+# Based on node
 ########################################
 
 # Set the base image to node
