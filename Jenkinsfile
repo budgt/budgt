@@ -154,7 +154,7 @@ pipeline {
                     agent any
                     
                     steps {
-                        sh 'docker run -p 1338:3000 -d budgt-mockbackend -name budgt-mockbackend'
+                        sh 'docker run -p 1338:3000 --name budgt-mockbackend -d budgt-mockbackend'
                     }
                 }
 
@@ -162,7 +162,7 @@ pipeline {
                     agent any
                     
                     steps {
-                        sh 'docker run -p 1337:80 -d budgt-frontend -name budgt-frontend'
+                        sh 'docker run -p 1337:80 --name budgt-frontend -d budgt-frontend'
                     }
                 }
             }
