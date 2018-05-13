@@ -1,13 +1,13 @@
 ########################################
 # Dockerfile to build and test budget 
-# Based on node:alpine
+# Based on node
 ########################################
 
 # Set the base image to node
 FROM node
 
 # File Author / Maintainer
-MAINTAINER Patrick Hofmann
+LABEL maintainer="hofmann@budgt.de"
 
 ################## BEGIN INSTALLATION ######################
 # Install angular cli and sonarqube-scanner
