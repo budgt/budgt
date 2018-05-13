@@ -2,6 +2,18 @@ pipeline {
     agent none
 
     stages {
+        stage('Clean up workspace') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budgt-build'
+                }
+            }
+
+            steps {
+                deleteDir()
+            }
+        }
 
         stage('Fetch dependencies') {
             agent {
@@ -152,18 +164,5 @@ pipeline {
                 }
             }
         }        
-
-        stage('Clean up workspace') {
-            agent {
-                dockerfile { 
-                    dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
-                }
-            }
-
-            steps {
-                deleteDir()
-            }
-        }
     }
 }
