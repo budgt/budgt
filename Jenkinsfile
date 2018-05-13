@@ -94,7 +94,7 @@ pipeline {
                 unstash 'node_modules'
                 sh 'ng build --configuration=production '
                 stash includes: 'dist/', name: 'dist'
-                stash includes: 'deploy/conf', name: 'conf'
+                stash includes: 'deploy/conf/', name: 'conf'
             }
         
         }
@@ -103,9 +103,7 @@ pipeline {
             agent any
 
             steps {
-                unstash 'dist'
-                unstash 'conf'
-                sh 'docker image build deploy/docker/frontend -t budgt-frontend'
+                sh 'docker build deploy/docker/frontend -t budgt-frontend'
                 sh 'docker run -p 1337:80 budgt-frontend'
             }
         }        

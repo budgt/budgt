@@ -12,7 +12,7 @@ EXPOSE 80
 LABEL maintainer="hofmann@budgt.de"
 
 # Copy config
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY deploy/conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy app
 WORKDIR /usr/share/nginx/html
