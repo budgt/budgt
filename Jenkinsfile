@@ -7,7 +7,7 @@ pipeline {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
+                    additionalBuildArgs '-t budgt-build'
                 }
             }
 
@@ -19,11 +19,12 @@ pipeline {
 
         stage('Preparation') {
             parallel {
+                
                 stage('Check versions') {    
                     agent {
                         dockerfile { 
                             dir 'deploy/docker/build'
-                            additionalBuildArgs '-t budget-build'
+                            additionalBuildArgs '-t budgt-build'
                         }
                     }
 
@@ -43,7 +44,7 @@ pipeline {
                     agent {
                         dockerfile { 
                             dir 'deploy/docker/build'
-                            additionalBuildArgs '-t budget-build'
+                            additionalBuildArgs '-t budgt-build'
                         }
                     }
                     steps {
@@ -58,7 +59,7 @@ pipeline {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
+                    additionalBuildArgs '-t budgt-build'
                 }
             }
 
@@ -72,7 +73,7 @@ pipeline {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
+                    additionalBuildArgs '-t budgt-build'
                 }
             }
 
@@ -86,7 +87,7 @@ pipeline {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
+                    additionalBuildArgs '-t budgt-build'
                 }
             }
 
@@ -121,27 +122,11 @@ pipeline {
                     agent any
 
                     steps {
-                        script {
-                            try {
-                                def frontend = sh 'docker inspect -f {{.State.Running}} budgt-frontend';
-                                if (frontend) {
-                                    sh 'docker stop budget-frontend'
-                                    sh 'docker rm budget-frontend'
-                                }
-                            } catch (ex) {
-                                echo 'No frontend container running...'
-                            }
-                            
-                            try {
-                                def mockBackend = sh 'docker inspect -f {{.State.Running}} budgt-mockbackend'
-                                if (mockbackend) {
-                                    sh 'docker stop budget-mockbackend'
-                                    sh 'docker rm budget-mockbackend'
-                                }
-                            } catch (ex) {
-                                echo 'No mockBackend container running...'
-                            }
-                        }
+                        sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
+                        sh 'docker container ls -a -fname=budgt-frontend -q | xargs -r docker container rm'
+                        
+                        sh 'docker ps -f name=budgt-mockbackend -q | xargs --no-run-if-empty docker container stop'
+                        sh 'docker container ls -a -fname=budgt-mockbackend -q | xargs -r docker container rm'    
                     }
                 }
             }
@@ -172,7 +157,7 @@ pipeline {
             agent {
                 dockerfile { 
                     dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budget-build'
+                    additionalBuildArgs '-t budgt-build'
                 }
             }
 
