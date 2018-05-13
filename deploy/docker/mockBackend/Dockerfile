@@ -15,6 +15,6 @@ LABEL maintainer="hofmann@budgt.de"
 COPY deploy/conf/mockBackend.json /opt/mockBackend.json
 
 # Install json-server
-RUN yarn global add -server
+RUN yarn global add json-server
 
-CMD ["/bin/sh -c", "json-server", "/opt/mockBackend.json"]
+CMD ["json-server", "/opt/mockBackend.json"]
