@@ -124,10 +124,9 @@ pipeline {
                 }
 
                 stage("Build new mock-backend image") {
-                    Aagent any
+                    agent any
 
                     steps {
-                        sh 'ls -lah'
                         sh 'docker build -f deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
                     }
                 }
