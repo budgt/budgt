@@ -92,14 +92,16 @@ pipeline {
             steps {
                 unstash 'node_modules'
                 sh 'ng test --browsers PhantomJS --watch=false'
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: false,
-                    reportDir: 'build/reports/coverage/report-html/',
-                    reportFiles: 'index.html',
-                    reportName: 'Unit test coverage'
-                ])
+                script {
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: false,
+                        reportDir: 'build/reports/coverage/report-html/',
+                        reportFiles: 'index.html',
+                        reportName: 'Unit test coverage'
+                    ])
+                }
                  junit 'build/reports/unit-test/*.xml'
             }
         }
