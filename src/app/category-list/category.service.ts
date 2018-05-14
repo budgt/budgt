@@ -9,7 +9,7 @@ import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class CategoryService {
-  private categoryUrl = 'http://api.budgt.de/category';
+  private categoryUrl = 'https://api.budgt.de/category';
 
   constructor(private http: HttpClient) { }
 
