@@ -105,7 +105,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh 'ng build --configuration=production '
+                sh 'ng build --configuration=production'
                 stash includes: 'dist/', name: 'dist'
                 stash includes: 'deploy/conf/', name: 'conf'
             }
@@ -118,14 +118,16 @@ pipeline {
                     agent any
 
                     steps {
+                        unstash('dist')
                         sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
                     }
                 }
 
                 stage("Build new mock-backend image") {
-                    agent any
+                    Aagent any
 
                     steps {
+                        sh 'ls -lah'
                         sh 'docker build -f deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
                     }
                 }
