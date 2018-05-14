@@ -5,7 +5,7 @@ import { Subcategory } from './subcategory';
 export class Category implements BaseEntity {
     constructor(
         public id?: number,
-        public name?: String,
+        public name?: string,
         public type?: categoryType,
         public amount?: number,
         public subcategories?: Subcategory[]
