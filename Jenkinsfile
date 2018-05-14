@@ -2,6 +2,18 @@ pipeline {
     agent none
 
     stages {
+        stage('Clean up workspace') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budgt-build'
+                }
+            }
+
+            steps {
+                deleteDir()
+            }
+        }
 
         stage('Fetch dependencies') {
             agent {
@@ -93,7 +105,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh 'ng build --configuration=production '
+                sh 'ng build --configuration=production'
                 stash includes: 'dist/', name: 'dist'
                 stash includes: 'deploy/conf/', name: 'conf'
             }
@@ -106,6 +118,7 @@ pipeline {
                     agent any
 
                     steps {
+                        unstash('dist')
                         sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
                     }
                 }
@@ -152,18 +165,5 @@ pipeline {
                 }
             }
         }        
-
-        stage('Clean up workspace') {
-            agent {
-                dockerfile { 
-                    dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
-                }
-            }
-
-            steps {
-                deleteDir()
-            }
-        }
     }
 }
