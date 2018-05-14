@@ -9,9 +9,11 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-phantomjs-launcher')
+      require('karma-phantomjs-launcher'),
+      require('karma-junit-reporter'),
+      require('karma-coverage')
+      
     ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -23,7 +25,20 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'coverage', 'junit'],
+    junitReporter: {
+      outputDir: 'build/reports/unit-test',
+      outputFile: 'karma-results.xml',
+      useBrowserName: false
+    },
+    coverageReporter: {
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'html', subdir: 'report-html' },
+        { type: 'text', subdir: '.', file: 'text.txt' }
+      ],
+      dir : 'build/reports/coverage'
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
