@@ -1,3 +1,4 @@
+import { CategoryPopupService } from './category-list/category-popup.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -24,7 +25,8 @@ import { CategoryDialogComponent } from './category-list/category-dialog.compone
     FormsModule
   ],
   providers: [
-    CategoryService
+    CategoryService,
+    CategoryPopupService
   ],
   bootstrap: [AppComponent],
 })
