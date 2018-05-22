@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryService } from './category-list/category.service';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { CategoryDialogComponent } from './category-list/category-dialog.component';
+import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog.component';
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import { CategoryDialogComponent } from './category-list/category-dialog.compone
     AppComponent,
     NavigationBarComponent,
     CategoryListComponent,
-    CategoryDialogComponent
+    CategoryDialogComponent,
+    CategoryPopupComponent
   ],
   imports: [
     BrowserModule,
