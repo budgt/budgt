@@ -13,6 +13,7 @@ import { CategoryService } from './category-list/category.service';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,15 @@ import { RouterModule, Routes } from '@angular/router';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule.forRoot()
   ],
   providers: [
     CategoryService,
     CategoryPopupService
+  ],
+  entryComponents: [
+    CategoryDialogComponent
   ],
   bootstrap: [AppComponent],
 })

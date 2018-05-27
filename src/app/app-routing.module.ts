@@ -7,7 +7,7 @@ import { CategoryPopupComponent } from './category-list/category-dialog.componen
 const appRoutes: Routes = [
     { path: 'category-list', component: CategoryListComponent },
     {
-        path: 'category/:id/new',
+        path: 'category-new',
         component: CategoryPopupComponent,
         data: {
             pageTitle: 'Create Category'
