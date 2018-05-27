@@ -3,6 +3,7 @@ import { Category } from './../models/category';
 import { CategoryService } from './category.service';
 import { Injectable, Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CategoryPopupService {
@@ -10,6 +11,7 @@ export class CategoryPopupService {
 
   constructor(
     private modalService: NgbModal,
+    private router: Router,
     private categoryService: CategoryService
   ) {
     this.ngbModalRef = null;
