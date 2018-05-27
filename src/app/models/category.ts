@@ -1,6 +1,7 @@
 import { BaseEntity } from './base-entity';
 import { Subcategory } from './subcategory';
 
+enum categoryType { INCOME, EXPENSE }
 
 export class Category implements BaseEntity {
     public keys: any[];
@@ -15,4 +16,3 @@ export class Category implements BaseEntity {
     ) {
         this.keys = Object.keys(this.types).filter(f => !isNaN(Number(f)));    }
 }
-enum categoryType { INCOME, EXPENSE }
