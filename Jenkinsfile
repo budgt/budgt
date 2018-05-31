@@ -102,7 +102,7 @@ pipeline {
                         reportName: 'Unit test coverage'
                     ])
                 }
-                 junit 'build/reports/unit-test/*.xml'
+                 junit 'src/test/build/reports/unit-test/*.xml'
             }
         }
 
