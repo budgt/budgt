@@ -1,4 +1,5 @@
 import { AppPage } from './app.po';
+import {} from 'jasmine';
 
 describe('budget App', () => {
   let page: AppPage;
@@ -9,6 +10,6 @@ describe('budget App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect<any>(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });
