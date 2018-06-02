@@ -97,7 +97,7 @@ pipeline {
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
                         keepAll: false,
-                        reportDir: 'build/reports/coverage/report-html/',
+                        reportDir: 'src/test/build/reports/coverage/report-html/',
                         reportFiles: 'index.html',
                         reportName: 'Unit test coverage'
                     ])
@@ -144,11 +144,14 @@ pipeline {
 
                 stage("Clean dev environment") {
                     agent any
-
+                    
+                    when { 
+                        branch 'master' 
+                    }
                     steps {
                         sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
                         sh 'docker container ls -a -fname=budgt-frontend -q | xargs -r docker container rm'
-                        
+                            
                         sh 'docker ps -f name=budgt-mockbackend -q | xargs --no-run-if-empty docker container stop'
                         sh 'docker container ls -a -fname=budgt-mockbackend -q | xargs -r docker container rm'    
                     }
@@ -157,6 +160,9 @@ pipeline {
         }
 
         stage('Deploy to dev') {
+             when { 
+                branch 'master' 
+            }
             parallel {
                 
                 stage('Deploy mockBackend') {
@@ -169,7 +175,7 @@ pipeline {
 
                 stage('Deploy frontend') {
                     agent any
-                    
+
                     steps {
                         sh 'docker run -p 1337:80 --name budgt-frontend -d budgt-frontend'
                     }

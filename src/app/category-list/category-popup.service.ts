@@ -27,7 +27,6 @@ export class CategoryPopupService {
         if (id) {
             this.categoryService.getCategoryById(id)
                 .subscribe(category => {
-                    const popupCategory = category;
                     this.ngbModalRef = this.categoryModalRef(component, category);
                     resolve(this.ngbModalRef);
                   });
