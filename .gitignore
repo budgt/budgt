@@ -43,4 +43,4 @@ testem.log
 Thumbs.db
 
 # test reports
-src/test/build/
+build/

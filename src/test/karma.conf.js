@@ -1,3 +1,4 @@
+
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
@@ -13,21 +14,16 @@ module.exports = function (config) {
       require('karma-phantomjs-launcher'),
       require('karma-junit-reporter'),
       require('karma-coverage')
-      
     ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
-    },
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'coverage', 'junit'],
+    reporters: ['junit', 'coverage', 'progress', 'kjhtml'],
     junitReporter: {
-      outputDir: 'build/reports/unit-test',
+      outputDir: '../../build/reports/unit-test',
       outputFile: 'karma-results.xml',
       useBrowserName: false
     },
@@ -37,7 +33,7 @@ module.exports = function (config) {
         { type: 'html', subdir: 'report-html' },
         { type: 'text', subdir: '.', file: 'text.txt' }
       ],
-      dir : 'build/reports/coverage'
+      dir : '../../build/reports/coverage'
     },
     port: 9876,
     colors: true,

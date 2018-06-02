@@ -97,12 +97,12 @@ pipeline {
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
                         keepAll: false,
-                        reportDir: 'src/test/build/reports/coverage/report-html/',
+                        reportDir: 'build/reports/coverage/report-html/',
                         reportFiles: 'index.html',
                         reportName: 'Unit test coverage'
                     ])
                 }
-                 junit 'src/test/build/reports/unit-test/*.xml'
+                 junit 'build/reports/unit-test/*.xml'
             }
         }
 
