@@ -13,10 +13,15 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-phantomjs-launcher'),
       require('karma-junit-reporter'),
-      require('karma-coverage')
+      require('karma-coverage'),
+      require('karma-coverage-istanbul-reporter')
     ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
+    coverageIstanbulReporter: {
+      reports: [ 'lcovonly' ],
+      fixWebpackSourcePaths: true
     },
     angularCli: {
       environment: 'dev'
