@@ -91,7 +91,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh 'ng test --browsers PhantomJS --watch=false'
+                sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
                 script {
                     publishHTML([
                         allowMissing: false,
