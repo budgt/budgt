@@ -67,20 +67,6 @@ pipeline {
             }   
         }
 
-        stage('SonarQube analysis') {
-            agent {
-                dockerfile { 
-                    dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
-                }
-            }
-
-            steps {
-                unstash 'node_modules'
-                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
-            }
-        }
-
         stage('Unit test') {
             agent {
                 dockerfile { 
@@ -103,6 +89,20 @@ pipeline {
                     ])
                 }
                  junit 'build/reports/unit-test/*.xml'
+            }
+        }
+
+        stage('SonarQube analysis') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budgt-build'
+                }
+            }
+
+            steps {
+                unstash 'node_modules'
+                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
             }
         }
 
