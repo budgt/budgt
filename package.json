@@ -49,6 +49,7 @@
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "protractor": "^5.3.2",
+    "sonar-scanner": "^3.1.0",
     "sonarqube-scanner": "^2.0.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
