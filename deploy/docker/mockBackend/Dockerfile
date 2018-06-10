@@ -17,4 +17,4 @@ COPY deploy/conf/mockBackend.json /opt/mockBackend.json
 # Install json-server
 RUN yarn global add json-server
 
-CMD ["json-server", "/opt/mockBackend.json"]
+CMD ["json-server", "-H", "0.0.0.0", "/opt/mockBackend.json"]
