@@ -102,7 +102,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
+                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000 -Dsonar.branch.name=$BRANCH_NAME""
             }
         }
 
