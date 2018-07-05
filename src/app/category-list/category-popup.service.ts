@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Category } from './../models/category';
 import { CategoryService } from './category.service';
 import { Injectable, Component } from '@angular/core';

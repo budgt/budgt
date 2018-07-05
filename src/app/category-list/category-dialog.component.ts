@@ -2,7 +2,7 @@ import { CategoryService } from './category.service';
 import { Category } from './../models/category';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryPopupService } from './category-popup.service';
