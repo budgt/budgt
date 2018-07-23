@@ -1,22 +1,38 @@
-<div *ngFor="let category of categories" class="card">
-  <div (click)="selectCategory(category)" class="card-header">
-    {{ category.name }}
-    <span *ngIf="selectedCategory != category; else arrowUp" class="fa fa-angle-down float-right"></span>
-    <ng-template #arrowUp>
-      <span class="fa fa-angle-up float-right"></span>
-    </ng-template>
-      <span (click)="deleteCategory(category)" class="fa fa-times deleteCateogry float-right"></span>
-  </div>
-  <ul *ngIf="selectedCategory === category" class="list-group list-group-flush">
-    <li *ngFor="let subcategory of category.subcategories" class="list-group-item">
-      {{ subcategory.name }}
-      <div class="btn-group float-right" role="group" aria-label="Basic example">
-        <button class="btn btn-sm btn-outline-warning">Edit <span class="fa fa-edit"></span></button>
-        <button (click)="deleteSubcategory(subcategory)" class="btn btn-sm btn-outline-danger">Delete <span class="fa fa-times"></span></button>
+<div class="categoryListContainer">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <div *ngFor="let category of categories" class="card">
+          <div (click)="selectCategory(category)" class="card-header">
+            {{ category.name }}
+            <span *ngIf="selectedCategory != category; else arrowUp" class="fa fa-angle-down float-right"></span>
+            <ng-template #arrowUp>
+              <span class="fa fa-angle-up float-right"></span>
+            </ng-template>
+            <span (click)="deleteCategory(category)" class="fa fa-times deleteCateogry float-right"></span>
+          </div>
+          <ul *ngIf="selectedCategory === category" class="list-group list-group-flush">
+            <li *ngFor="let subcategory of category.subcategories" class="list-group-item">
+              {{ subcategory.name }}
+              <div class="btn-group float-right" role="group" aria-label="Basic example">
+                <button class="btn btn-sm btn-outline-warning">Edit
+                  <span class="fa fa-edit"></span>
+                </button>
+                <button (click)="deleteSubcategory(subcategory)" class="btn btn-sm btn-outline-danger">Delete
+                  <span class="fa fa-times"></span>
+                </button>
+              </div>
+            </li>
+            <li class="list-group list-group-flush">
+              <button type="button" class="btn btn-primary btn-lg btn-block">Add subcateogry</button>
+            </li>
+          </ul>
+        </div>
+        <button type="submit" [routerLink]="['/', { outlets: { popup: ['category-new'] } }]" replaceUrl="true"
+          queryParamsHandling="merge" class="btn btn-primary btn-lg btn-block">
+          <span class="fa fa-plus"></span>
+        </button>
+      </div>
     </div>
-    </li>
-    <li class="list-group list-group-flush">
-      <button type="button" class="btn btn-primary btn-lg btn-block">Add subcateogry</button>
-    </li>
-  </ul>
+  </div>
 </div>

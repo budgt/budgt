@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class CategoryService {
@@ -38,17 +37,18 @@ export class CategoryService {
    * Updates a category
    * @param category - the new version of the category
    */
-  updateCategory(category: Category) {
-    return this.http.put(this.categoryUrl + '/' + category.id, category);
+  updateCategory(category: Category): Observable<Category> {
+    return this.http.put<Category>(this.categoryUrl + '/' + category.id, category);
   }
 
   /**
    * Creates a new Category
    * @param category - the new category
    */
-  createCategory(category: Category) {
-    return this.http.post(this.categoryUrl, category);
+  createCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(this.categoryUrl, category);
   }
+
 
   /**
    * Deletes a Category

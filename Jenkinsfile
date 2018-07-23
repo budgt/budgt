@@ -67,20 +67,6 @@ pipeline {
             }   
         }
 
-        stage('SonarQube analysis') {
-            agent {
-                dockerfile { 
-                    dir 'deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
-                }
-            }
-
-            steps {
-                unstash 'node_modules'
-                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
-            }
-        }
-
         stage('Unit test') {
             agent {
                 dockerfile { 
@@ -91,7 +77,7 @@ pipeline {
 
             steps {
                 unstash 'node_modules'
-                sh 'ng test --browsers PhantomJS --watch=false'
+                sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
                 script {
                     publishHTML([
                         allowMissing: false,
@@ -103,6 +89,20 @@ pipeline {
                     ])
                 }
                  junit 'build/reports/unit-test/*.xml'
+            }
+        }
+
+        stage('SonarQube analysis') {
+            agent {
+                dockerfile { 
+                    dir 'deploy/docker/build'
+                    additionalBuildArgs '-t budgt-build'
+                }
+            }
+
+            steps {
+                unstash 'node_modules'
+                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
             }
         }
 
@@ -144,11 +144,14 @@ pipeline {
 
                 stage("Clean dev environment") {
                     agent any
-
+                    
+                    when { 
+                        branch 'master' 
+                    }
                     steps {
                         sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
                         sh 'docker container ls -a -fname=budgt-frontend -q | xargs -r docker container rm'
-                        
+                            
                         sh 'docker ps -f name=budgt-mockbackend -q | xargs --no-run-if-empty docker container stop'
                         sh 'docker container ls -a -fname=budgt-mockbackend -q | xargs -r docker container rm'    
                     }
@@ -157,6 +160,9 @@ pipeline {
         }
 
         stage('Deploy to dev') {
+             when { 
+                branch 'master' 
+            }
             parallel {
                 
                 stage('Deploy mockBackend') {
@@ -169,7 +175,7 @@ pipeline {
 
                 stage('Deploy frontend') {
                     agent any
-                    
+
                     steps {
                         sh 'docker run -p 1337:80 --name budgt-frontend -d budgt-frontend'
                     }

@@ -1,11 +1,7 @@
 <navigation-bar></navigation-bar>
 
-<div class="categoryListContainer">
-    <div class="container">
-        <div class="row">
-            <div class="col-4">
-                <category-list></category-list>
-            </div>
-        </div>
-    </div>
-</div>
+<nav>
+  <a routerLink="/category-list" routerLinkActive="active">Category List</a>
+</nav>
+<router-outlet></router-outlet>
+<router-outlet name="popup"></router-outlet>

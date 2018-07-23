@@ -1,13 +1,12 @@
-import { Category } from './../models/category';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CategoryService } from './category.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryListComponent } from './category-list.component';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { Subcategory } from '../models/subcategory';
+import { CategoryListComponent } from '../../../app/category-list/category-list.component';
+import { CategoryService } from '../../../app/category-list/category.service';
+import { Category } from '../../../app/models/category';
 
 describe('Component Tests', () => {
 

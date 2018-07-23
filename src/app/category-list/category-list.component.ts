@@ -2,7 +2,7 @@ import { Subcategory } from '../models/subcategory';
 import { Category } from '../models/category';
 import { CategoryService } from './category.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'category-list',
