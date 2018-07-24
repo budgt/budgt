@@ -101,8 +101,9 @@ pipeline {
             }
 
             steps {
-                unstash 'node_modules'
-                sh "sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.branch.name=$BRANCH_NAME"
+                withSonarQubeEnv('sonarcloud') {
+                    sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+                }
             }
         }
 
