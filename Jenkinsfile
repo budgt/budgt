@@ -1,6 +1,10 @@
 pipeline {
     agent none
 
+    options {
+        gitLabConnection('pahofmann')
+    }
+
     stages {
         stage('Clean up workspace') {
             agent {
