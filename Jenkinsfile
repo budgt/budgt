@@ -1,5 +1,19 @@
 pipeline {
     agent none
+    post {
+      failure {
+        updateGitlabCommitStatus name: 'build', state: 'failed'
+      }
+      success {
+        updateGitlabCommitStatus name: 'build', state: 'success'
+      }
+    }
+    options {
+        gitLabConnection('pahofmann')
+    }
+    triggers {
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
+    }
 
     stages {
         stage('Clean up workspace') {
@@ -101,8 +115,9 @@ pipeline {
             }
 
             steps {
-                unstash 'node_modules'
-                sh "sonar-scanner -Dsonar.host.url=http://192.168.2.10:9000"
+                withSonarQubeEnv('sonarcloud') {
+                    sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+                }
             }
         }
 
