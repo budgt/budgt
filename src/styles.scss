@@ -3,3 +3,7 @@
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome';
 @import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config($font-family: '"Fjalla One", sans-serif;');
+@include mat-core($custom-typography);
