@@ -16,6 +16,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {MaterialModule} from './material.module';
     AppRoutingModule,
     NgbModule.forRoot(),
     BrowserAnimationsModule,
+    FlexLayoutModule,
     MaterialModule
   ],
   providers: [
