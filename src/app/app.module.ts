@@ -14,6 +14,8 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from './material.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [
     CategoryService,
