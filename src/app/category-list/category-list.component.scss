@@ -1,8 +1,19 @@
-.deleteCateogry {
-    margin-right: 10px;
+.left-margin {
+  margin-left: 8px;
 }
 
-.categoryListContainer {
-    margin-top: 70px;
+#subcategory-buttons {
+  margin-left: auto;
 }
 
+.button {
+  cursor: pointer;
+}
+
+#category-list {
+  min-width: 550px;
+}
+
+#add-category-button {
+  margin: auto;
+}

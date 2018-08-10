@@ -7,3 +7,7 @@
 
 $custom-typography: mat-typography-config($font-family: '"Fjalla One", sans-serif;');
 @include mat-core($custom-typography);
+
+body {
+  background-color: #303030;
+}
