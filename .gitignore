@@ -11,6 +11,8 @@
 
 # IDEs and editors
 /.idea
+budget.ipr
+budget.iws
 .project
 .classpath
 .c9/
