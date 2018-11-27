@@ -1,7 +1,11 @@
 <navigation-bar></navigation-bar>
 
-<nav>
-  <a routerLink="/category-list" routerLinkActive="active">Category List</a>
-</nav>
-<router-outlet></router-outlet>
+<div class="category-list-wrapper"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="left"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0">
+  <router-outlet fxFlex="1 1 10%"></router-outlet>
+</div>
 <router-outlet name="popup"></router-outlet>
