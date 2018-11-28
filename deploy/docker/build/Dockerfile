@@ -4,7 +4,7 @@
 ########################################
 
 # Set the base image to node
-FROM node
+FROM node:11.1
 
 # File Author / Maintainer
 LABEL maintainer="hofmann@budgt.de"
