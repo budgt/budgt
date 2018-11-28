@@ -2,8 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable , of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
@@ -40,7 +39,7 @@ describe('Component Tests', () => {
 
         describe('OnInit', () => {
             it('should call #getCategories', () => {
-                spyOn(service, 'getCategories').and.returnValue(Observable.of([category1]));
+                spyOn(service, 'getCategories').and.returnValue(of([category1]));
 
                 comp.ngOnInit();
 
@@ -59,7 +58,7 @@ describe('Component Tests', () => {
 
         describe('deleteCategory', () => {
             beforeEach(() => {
-                spyOn(service, 'getCategories').and.returnValue(Observable.of([category1, category2]));
+                spyOn(service, 'getCategories').and.returnValue(of([category1, category2]));
 
                 comp.ngOnInit();
             });
@@ -82,7 +81,7 @@ describe('Component Tests', () => {
         describe('delteSubcategory', () => {
             beforeEach(() => {
                 category1.subcategories = [subCategory1, subCategory2];
-                spyOn(service, 'getCategories').and.returnValue(Observable.of([category1]));
+                spyOn(service, 'getCategories').and.returnValue(of([category1]));
 
                 comp.ngOnInit();
                 comp.selectCategory(category1);

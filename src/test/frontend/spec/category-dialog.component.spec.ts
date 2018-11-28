@@ -8,7 +8,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MockActiveModal } from './helpers/mock-active-modal.service';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MockRouter } from './helpers/mock-route.service';
@@ -45,7 +45,7 @@ describe('CategoryDialogComponent', () => {
       inject([],
         fakeAsync(() => {
           const entity = new Category(123);
-          spyOn(service, 'updateCategory').and.returnValue(Observable.of(entity));
+          spyOn(service, 'updateCategory').and.returnValue(of(entity));
           component.category = entity;
 
           component.save();
@@ -62,7 +62,7 @@ describe('CategoryDialogComponent', () => {
       inject([],
         fakeAsync(() => {
           const entity = new Category();
-          spyOn(service, 'createCategory').and.returnValue(Observable.of(entity));
+          spyOn(service, 'createCategory').and.returnValue(of(entity));
           component.category = entity;
 
           component.save();
