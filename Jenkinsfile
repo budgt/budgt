@@ -61,7 +61,7 @@ pipeline {
 
                         sh 'yarn -v'
 
-                        sh 'ng -v'
+                        sh 'ng --version'
 
                     }
                 }
