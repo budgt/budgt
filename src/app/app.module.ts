@@ -32,7 +32,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    NgbModule.forRoot(),
+    NgbModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule
