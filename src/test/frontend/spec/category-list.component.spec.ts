@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable ,of } from 'rxjs';
+import { Observable , of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
