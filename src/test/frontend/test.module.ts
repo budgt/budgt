@@ -1,19 +1,15 @@
 import { NgModule } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MockActiveModal } from './spec/helpers/mock-active-modal.service';
+import { MockActiveDialog } from './spec/helpers/mock-active-dialog.service';
 import { Router } from '@angular/router';
 import { MockRouter } from './spec/helpers/mock-route.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogRef } from '@angular/material';
 
 @NgModule({
     providers: [
         {
-            provide: NgbActiveModal,
-            useClass: MockActiveModal
-        },
-        {
-            provide: NgbModal,
-            useValue: null
+            provide: MatDialogRef,
+            useClass: MockActiveDialog
         },
         {
             provide: Router,

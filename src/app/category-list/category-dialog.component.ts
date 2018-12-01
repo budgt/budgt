@@ -1,11 +1,11 @@
 import { CategoryService } from './category.service';
 import { Category } from './../models/category';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryPopupService } from './category-popup.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-category-dialog',
@@ -17,17 +17,16 @@ export class CategoryDialogComponent implements OnInit {
     isSaving: boolean;
 
     constructor(
-        public activeModal: NgbActiveModal,
+        public activeDialog: MatDialogRef<Component>,
         private categoryService: CategoryService
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
     }
 
     clear() {
-        this.activeModal.dismiss('cancel');
+        this.activeDialog.close('cancel');
     }
 
     save() {
@@ -48,7 +47,7 @@ export class CategoryDialogComponent implements OnInit {
 
     private onSaveSuccess(result: Category) {
         this.isSaving = false;
-        this.activeModal.dismiss(result);
+        this.activeDialog.close(result);
     }
 
     private onSaveError() {
