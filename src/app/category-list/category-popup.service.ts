@@ -1,55 +1,56 @@
-import { Observable } from 'rxjs';
 import { Category } from './../models/category';
 import { CategoryService } from './category.service';
 import { Injectable, Component } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Injectable()
 export class CategoryPopupService {
-  private ngbModalRef: NgbModalRef;
+    private matDialogRef: MatDialogRef<Component>;
 
-  constructor(
-    private modalService: NgbModal,
-    private router: Router,
-    private categoryService: CategoryService
-  ) {
-    this.ngbModalRef = null;
-  }
+    constructor(
+        private dialogService: MatDialog,
+        private router: Router,
+        private categoryService: CategoryService
+    ) {
+        this.matDialogRef = null;
+    }
 
-  open(component: Component, id?: number): Promise<NgbModalRef> {
-    return new Promise<NgbModalRef>((resolve, reject) => {
-        const isOpen = this.ngbModalRef !== null;
-        if (isOpen) {
-            resolve(this.ngbModalRef);
-        }
+    open(component: Component, id?: number): Promise<MatDialogRef<Component>> {
+        return new Promise<MatDialogRef<Component>>((resolve, reject) => {
+            const isOpen = this.matDialogRef !== null;
+            if (isOpen) {
+                resolve(this.matDialogRef);
+            }
 
-        if (id) {
-            this.categoryService.getCategoryById(id)
-                .subscribe(category => {
-                    this.ngbModalRef = this.categoryModalRef(component, category);
-                    resolve(this.ngbModalRef);
-                  });
-        } else {
-            // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-            setTimeout(() => {
-                this.ngbModalRef = this.categoryModalRef(component, new Category());
-                resolve(this.ngbModalRef);
-            }, 0);
-        }
-    });
-}
+            if (id) {
+                this.categoryService.getCategoryById(id)
+                    .subscribe(category => {
+                        this.matDialogRef = this.categoryDialogRef(component, category);
+                        resolve(this.matDialogRef);
+                    });
+            } else {
+                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
+                setTimeout(() => {
+                    this.matDialogRef = this.categoryDialogRef(component, new Category());
+                    resolve(this.matDialogRef);
+                }, 0);
+            }
+        });
+    }
 
-categoryModalRef(component: Component, category: Category): NgbModalRef {
-    const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
-    modalRef.componentInstance.category = category;
-    modalRef.result.then((result) => {
-        this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
-        this.ngbModalRef = null;
-    }, (reason) => {
-        this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
-        this.ngbModalRef = null;
-    });
-    return modalRef;
-}
+    categoryDialogRef(component, category: Category): MatDialogRef<Component> {
+        const dialogRef = this.dialogService.open(component, {
+            height: '550px',
+            width: '800px',
+            data: category
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
+            this.matDialogRef = null;
+        });
+
+        return dialogRef;
+    }
 }

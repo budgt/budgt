@@ -13,7 +13,6 @@ import { CategoryService } from './category-list/category.service';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog.component';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -32,7 +31,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    NgbModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule
