@@ -161,7 +161,7 @@ pipeline {
                     agent any
                     
                     when { 
-                        branch 'master' 
+                        branch 'development' 
                     }
                     steps {
                         sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
@@ -176,7 +176,7 @@ pipeline {
 
         stage('Deploy to dev') {
              when { 
-                branch 'master' 
+                branch 'development' 
             }
             parallel {
                 
