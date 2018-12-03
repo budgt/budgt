@@ -1,23 +1,18 @@
 import { BudgtTestModule } from './../test.module';
 import { Category } from './../../../app/models/category';
-import { fakeAsync, ComponentFixture, TestBed, inject, tick, async, getTestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angular/core/testing';
 
-import { FormsModule } from '@angular/forms';
 import { CategoryDialogComponent } from '../../../app/category-list/category-dialog.component';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MockActiveModal } from './helpers/mock-active-modal.service';
 import { CategoryService } from '../../../app/category-list/category.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable, of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { MockRouter } from './helpers/mock-route.service';
+import { of } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MockActiveDialog } from './helpers/mock-active-dialog.service';
 
 describe('CategoryDialogComponent', () => {
   let component: CategoryDialogComponent;
   let fixture: ComponentFixture<CategoryDialogComponent>;
   let service: CategoryService;
-  let mockActiveModal: any;
+  let mockActiveDialog: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +21,15 @@ describe('CategoryDialogComponent', () => {
       ],
       declarations: [CategoryDialogComponent],
       providers: [
-        CategoryService
+        CategoryService,
+        {
+          provide: MatDialogRef,
+          useClass: MockActiveDialog
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {}
+        }
       ]
     })
       .overrideTemplate(CategoryDialogComponent, '')
@@ -37,7 +40,7 @@ describe('CategoryDialogComponent', () => {
     fixture = TestBed.createComponent(CategoryDialogComponent);
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get(CategoryService);
-    mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
+    mockActiveDialog = fixture.debugElement.injector.get(MatDialogRef);
   });
 
   describe('save', () => {
@@ -53,7 +56,7 @@ describe('CategoryDialogComponent', () => {
 
           expect(service.updateCategory).toHaveBeenCalledWith(entity);
           expect(component.isSaving).toEqual(false);
-          expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
+          expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
         })
       )
     );
@@ -70,7 +73,7 @@ describe('CategoryDialogComponent', () => {
 
           expect(service.createCategory).toHaveBeenCalledWith(entity);
           expect(component.isSaving).toEqual(false);
-          expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
+          expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
 
         })
       )
