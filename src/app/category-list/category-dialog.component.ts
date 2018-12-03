@@ -1,16 +1,16 @@
 import { CategoryService } from './category.service';
 import { Category } from './../models/category';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryPopupService } from './category-popup.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-category-dialog',
-  templateUrl: './category-dialog.component.html',
-  styleUrls: ['./category-dialog.component.scss']
+    selector: 'app-category-dialog',
+    templateUrl: './category-dialog.component.html',
+    styleUrls: ['./category-dialog.component.scss']
 })
 export class CategoryDialogComponent implements OnInit {
     category: Category;
@@ -18,11 +18,13 @@ export class CategoryDialogComponent implements OnInit {
 
     constructor(
         public activeDialog: MatDialogRef<Component>,
-        private categoryService: CategoryService
-    ) {}
+        private categoryService: CategoryService,
+        @Inject(MAT_DIALOG_DATA) public data: Category
+    ) { }
 
     ngOnInit() {
         this.isSaving = false;
+        this.category = this.data;
     }
 
     clear() {
@@ -66,11 +68,11 @@ export class CategoryPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private categoryPopupService: CategoryPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.categoryPopupService
                     .open(CategoryDialogComponent as Component, params['id']);
             } else {

@@ -41,9 +41,8 @@ export class CategoryPopupService {
 
     categoryDialogRef(component, category: Category): MatDialogRef<Component> {
         const dialogRef = this.dialogService.open(component, {
-            height: '550px',
-            width: '800px',
-            data: category
+            data: category,
+            width: '250px'
         });
 
         dialogRef.afterClosed().subscribe(result => {
