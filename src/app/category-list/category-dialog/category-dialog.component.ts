@@ -1,10 +1,10 @@
-import { CategoryService } from './category.service';
-import { Category } from './../models/category';
+import { CategoryService } from '../category.service';
+import { Category } from '../../models/category';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryPopupService } from './category-popup.service';
+import { CategoryPopupService } from '../category-popup.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -67,17 +67,19 @@ export class CategoryPopupComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private categoryPopupService: CategoryPopupService
+        private categoryPopupService: CategoryPopupService,
+        private categoryService: CategoryService
     ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if (params['id']) {
-                this.categoryPopupService
-                    .open(CategoryDialogComponent as Component, params['id']);
+            if (params['create'] === 'true') {
+                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
+                setTimeout(() => {
+                    this.categoryPopupService.open(CategoryDialogComponent as Component, new Category);
+                }, 0);
             } else {
-                this.categoryPopupService
-                    .open(CategoryDialogComponent as Component);
+                this.categoryPopupService.open(CategoryDialogComponent as Component, this.categoryService.selectedCategory);
             }
         });
     }

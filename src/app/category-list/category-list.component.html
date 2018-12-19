@@ -1,26 +1,27 @@
 <mat-accordion>
   <mat-expansion-panel id="category-list" *ngFor="let category of categories">
     <mat-expansion-panel-header (click)="selectCategory(category)">
-      {{ category.name }}
+      {{ category.name }}         
     </mat-expansion-panel-header>
       <mat-list>
         <mat-list-item *ngFor="let subcategory of category.subcategories">
           {{ subcategory.name }}
           <div id="subcategory-buttons">
-              <span class="fa fa-edit left-margin button"></span>
+              <span [routerLink]="['/', { outlets: { popup: ['subcategory-dialog', false] } }]" replaceUrl="true" class="fa fa-edit left-margin button"></span>
               <span (click)="deleteSubcategory(subcategory)" class="fa fa-times left-margin button"></span>
           </div>
         </mat-list-item>
         <mat-action-row>
-          <button (click)="deleteCategory(category)" mat-flat-button color="warn" class="left-margin">Delete Category</button>
-          <button mat-flat-button class="left-margin">Add subcateogry</button>
+          <button mat-flat-button class="left-margin" [routerLink]="['/', { outlets: { popup: ['subcategory-dialog', true] } }]" replaceUrl="true" >Add subcateogry</button>
+          <button mat-flat-button [routerLink]="['/', { outlets: { popup: ['category-dialog', false] } }]" replaceUrl="true">Edit category</button>
+          <button mat-flat-button (click)="deleteCategory(category)" color="warn" class="left-margin">Delete Category</button>
         </mat-action-row>
       </mat-list>
 
   </mat-expansion-panel>
   <mat-expansion-panel disabled>
     <mat-expansion-panel-header>
-      <button mat-flat-button	id="add-category-button" type="submit" [routerLink]="['/', { outlets: { popup: ['category-new'] } }]" replaceUrl="true"
+      <button mat-flat-button	id="add-category-button" type="submit" [routerLink]="['/', { outlets: { popup: ['category-dialog', true] } }]" replaceUrl="true"
               queryParamsHandling="merge" color="accent">
         Add category
       </button>

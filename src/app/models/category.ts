@@ -1,4 +1,5 @@
 import { BaseEntity } from './base-entity';
+import { TSMap } from 'typescript-map';
 import { Subcategory } from './subcategory';
 
 enum categoryType { INCOME, EXPENSE }
@@ -12,7 +13,8 @@ export class Category implements BaseEntity {
         public name?: string,
         public type?: categoryType,
         public amount?: number,
-        public subcategories?: Subcategory[]
+        public nextSubcategoryId?: number,
+        public subcategories?: TSMap<number, Subcategory>
     ) {
         this.keys = Object.keys(this.types).filter(f => !isNaN(Number(f)));    }
 }

@@ -5,10 +5,12 @@ import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { Observable ,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { CategoryListComponent } from './category-list.component';
 
 @Injectable()
 export class CategoryService {
   private categoryUrl = 'https://api.budgt.de/category';
+  public selectedCategory: Category;
 
   constructor(private http: HttpClient) { }
 
