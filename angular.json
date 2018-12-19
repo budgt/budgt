@@ -67,6 +67,7 @@
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "src/test/karma.conf.js",
+            "sourceMap": true,
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
