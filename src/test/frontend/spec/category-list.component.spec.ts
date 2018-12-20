@@ -6,6 +6,8 @@ import { Observable , of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
+import { TSMap } from 'typescript-map';
+import { Subcategory } from '../../../app/models/subcategory';
 
 describe('Component Tests', () => {
 
@@ -52,7 +54,7 @@ describe('Component Tests', () => {
             it('should set selectedCategory', () => {
                 comp.selectCategory(category1);
 
-                expect(comp.selectedCategory).toEqual(category1);
+                expect(service.selectedCategory).toEqual(category1);
             });
         });
 
@@ -80,7 +82,10 @@ describe('Component Tests', () => {
 
         describe('delteSubcategory', () => {
             beforeEach(() => {
-                category1.subcategories = [subCategory1, subCategory2];
+                category1.subcategories = new TSMap<number, Subcategory>([
+                    [0, subCategory1],
+                    [1, subCategory2]
+                ]);
                 spyOn(service, 'getCategories').and.returnValue(of([category1]));
 
                 comp.ngOnInit();
@@ -89,8 +94,8 @@ describe('Component Tests', () => {
 
             it('should delte the subcategory', () => {
                 comp.deleteSubcategory(subCategory1);
-
-                expect(comp.selectedCategory.subcategories[0]).toEqual(jasmine.objectContaining(subCategory2));
+                service.selectedCategory.subcategories.delete(1);
+                expect(service.selectedCategory.subcategories.length).toEqual(1);
             });
 
             it('should call #updateCategory', () => {
