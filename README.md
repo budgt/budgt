@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Build Status
 
-![Build Status](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=alert_status "quality gate") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=coverage "coverage") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=code_smells  "code smells") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=security_rating "security")
+![Build Status](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status "quality gate") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage "coverage") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells  "code smells") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating "security")
 
 ## Development server
 
