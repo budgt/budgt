@@ -4,12 +4,12 @@ import { MockRouter } from './spec/helpers/mock-route.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
-    providers: [
-        {
-            provide: Router,
-            useClass: MockRouter
-        }
-    ],
-    imports: [HttpClientTestingModule]
+  providers: [
+    {
+      provide: Router,
+      useClass: MockRouter
+    }
+  ],
+  imports: [HttpClientTestingModule]
 })
-export class BudgtTestModule { }
+export class BudgtTestModule {}

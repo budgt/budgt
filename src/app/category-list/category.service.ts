@@ -3,37 +3,31 @@ import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 
 import { HttpClient } from '@angular/common/http';
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
   private categoryUrl = 'https://api.budgt.de/category';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    /**
+  /**
    * Returns all categories
    */
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoryUrl)
-      .pipe(
-        catchError(this.handleError('getAllCategories', []))
-      );
+    return this.http.get<Category[]>(this.categoryUrl).pipe(catchError(this.handleError('getAllCategories', [])));
   }
 
-    /**
+  /**
    * Returns a specific category
    * @param id - id of the category to fetch
    */
   getCategoryById(id: number): Observable<Category> {
-    return this.http.get<Category>(this.categoryUrl + '/' + id)
-      .pipe(
-        catchError(this.handleError<Category>('getCategory id=' + id))
-      );
+    return this.http.get<Category>(this.categoryUrl + '/' + id).pipe(catchError(this.handleError<Category>('getCategory id=' + id)));
   }
 
-    /**
+  /**
    * Updates a category
    * @param category - the new version of the category
    */
@@ -49,13 +43,12 @@ export class CategoryService {
     return this.http.post<Category>(this.categoryUrl, category);
   }
 
-
   /**
    * Deletes a Category
    * @param category - category to delete
    */
   deleteCatgory(category: Category) {
-    return this.http.delete(this.categoryUrl + '/' + category.id );
+    return this.http.delete(this.categoryUrl + '/' + category.id);
   }
 
   /**
@@ -66,7 +59,6 @@ export class CategoryService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
@@ -77,5 +69,4 @@ export class CategoryService {
       return of(result);
     };
   }
-
 }
