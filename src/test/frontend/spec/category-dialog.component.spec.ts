@@ -16,9 +16,7 @@ describe('CategoryDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        BudgtTestModule
-      ],
+      imports: [BudgtTestModule],
       declarations: [CategoryDialogComponent],
       providers: [
         CategoryService,
@@ -44,39 +42,36 @@ describe('CategoryDialogComponent', () => {
   });
 
   describe('save', () => {
-    it('Should call update categoryService on save for existing entity',
-      inject([],
-        fakeAsync(() => {
-          const entity = new Category(123);
-          spyOn(service, 'updateCategory').and.returnValue(of(entity));
-          component.category = entity;
+    it('Should call update categoryService on save for existing entity', inject(
+      [],
+      fakeAsync(() => {
+        const entity = new Category(123);
+        spyOn(service, 'updateCategory').and.returnValue(of(entity));
+        component.category = entity;
 
-          component.save();
-          tick();
+        component.save();
+        tick();
 
-          expect(service.updateCategory).toHaveBeenCalledWith(entity);
-          expect(component.isSaving).toEqual(false);
-          expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
-        })
-      )
-    );
+        expect(service.updateCategory).toHaveBeenCalledWith(entity);
+        expect(component.isSaving).toEqual(false);
+        expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
+      })
+    ));
 
-    it('Should call create categoryService on save for new entity',
-      inject([],
-        fakeAsync(() => {
-          const entity = new Category();
-          spyOn(service, 'createCategory').and.returnValue(of(entity));
-          component.category = entity;
+    it('Should call create categoryService on save for new entity', inject(
+      [],
+      fakeAsync(() => {
+        const entity = new Category();
+        spyOn(service, 'createCategory').and.returnValue(of(entity));
+        component.category = entity;
 
-          component.save();
-          tick();
+        component.save();
+        tick();
 
-          expect(service.createCategory).toHaveBeenCalledWith(entity);
-          expect(component.isSaving).toEqual(false);
-          expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
-
-        })
-      )
-    );
+        expect(service.createCategory).toHaveBeenCalledWith(entity);
+        expect(component.isSaving).toEqual(false);
+        expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
+      })
+    ));
   });
 });

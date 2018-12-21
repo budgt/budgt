@@ -1,10 +1,11 @@
 # Budget
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Build Status
 
-![Build Status](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=alert_status "quality gate") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=coverage "coverage") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=code_smells  "code smells") ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=security_rating "security")
+![Build Status](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=alert_status 'quality gate') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=coverage 'coverage') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=code_smells 'code smells') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=security_rating 'security')
 
 ## Development server
 
@@ -29,4 +30,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
