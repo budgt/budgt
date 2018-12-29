@@ -7,46 +7,47 @@ import { CategoryService } from './category.service';
 
 @Injectable()
 export class SubcategoryPopupService {
-    private matDialogRef: MatDialogRef<Component>;
+  private matDialogRef: MatDialogRef<Component>;
 
-    constructor(
-        private dialogService: MatDialog,
-        private router: Router,
-    ) {
-        this.matDialogRef = null;
-    }
+  constructor(private dialogService: MatDialog, private router: Router) {
+    this.matDialogRef = null;
+  }
 
-    open(component: Component, category: Category, subcategoryID?: number): Promise<MatDialogRef<Component>> {
-        return new Promise<MatDialogRef<Component>>((resolve, reject) => {
-            const isOpen = this.matDialogRef !== null;
-            if (isOpen) {
-                resolve(this.matDialogRef);
-            }
+  open(component: Component, category: Category, subcategoryID?: number): Promise<MatDialogRef<Component>> {
+    return new Promise<MatDialogRef<Component>>((resolve, reject) => {
+      const isOpen = this.matDialogRef !== null;
+      if (isOpen) {
+        resolve(this.matDialogRef);
+      }
 
-            if (subcategoryID) {
-                this.matDialogRef = this.subcategoryDialogRef(component, category.subcategories.get(subcategoryID));
-                resolve(this.matDialogRef);
-            } else {
-                // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
-                setTimeout(() => {
-                    this.matDialogRef = this.subcategoryDialogRef(component, new Subcategory());
-                    resolve(this.matDialogRef);
-                }, 0);
-            }
-        });
-    }
+      if (subcategoryID) {
+        // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError in dev mode
+        setTimeout(() => {
+          let sc = category.subcategories.find(subcategory => subcategory.id === Number(subcategoryID));
+          this.matDialogRef = this.subcategoryDialogRef(component, sc);
+          resolve(this.matDialogRef);
+        }, 0);
+      } else {
+        // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError in dev mode
+        setTimeout(() => {
+          this.matDialogRef = this.subcategoryDialogRef(component, new Subcategory());
+          resolve(this.matDialogRef);
+        }, 0);
+      }
+    });
+  }
 
-    subcategoryDialogRef(component, subcategory: Subcategory): MatDialogRef<Component> {
-        const dialogRef = this.dialogService.open(component, {
-            data: subcategory,
-            width: '250px'
-        });
+  subcategoryDialogRef(component, subcategory: Subcategory): MatDialogRef<Component> {
+    const dialogRef = this.dialogService.open(component, {
+      data: subcategory,
+      width: '250px'
+    });
 
-        dialogRef.afterClosed().subscribe(result => {
-            this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
-            this.matDialogRef = null;
-        });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
+      this.matDialogRef = null;
+    });
 
-        return dialogRef;
-    }
+    return dialogRef;
+  }
 }

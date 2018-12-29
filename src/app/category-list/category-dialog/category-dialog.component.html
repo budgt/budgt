@@ -1,23 +1,22 @@
 <h1 mat-dialog-title>Create or edit category</h1>
 <div mat-dialog-content>
-    <form name="editForm" role="form" novalidate #editForm="ngForm">
-        <div [hidden]="!category.id">
-            <input matInput type="text" placeholder="Category ID" id="id" name="id" [(ngModel)]="category.id" readonly />
-        </div>
+  <form name="editForm" role="form" novalidate #editForm="ngForm">
+    <div [hidden]="!category.id">
+      <input matInput type="text" placeholder="Category ID" id="id" name="id" [(ngModel)]="category.id" readonly />
+    </div>
 
-        <mat-form-field>
-            <input matInput [(ngModel)]="category.name" placeholder="Category name" name="name" id="field_name"
-                required>
-        </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="category.name" placeholder="Category name" name="name" id="field_name" required />
+    </mat-form-field>
 
-        <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-            <small class="form-text text-danger" [hidden]="!editForm.controls.bame?.errors?.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
-        </div>
-    </form>
+    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+      <small class="form-text text-danger" [hidden]="!editForm.controls.bame?.errors?.required" jhiTranslate="entity.validation.required">
+        This field is required.
+      </small>
+    </div>
+  </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="clear()">No Thanks</button>
-    <button mat-button (click)="save()" [mat-dialog-close]="category" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="clear()">No Thanks</button>
+  <button mat-button (click)="save()" [mat-dialog-close]="category" cdkFocusInitial>Ok</button>
 </div>

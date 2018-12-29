@@ -1,13 +1,12 @@
 <h1 mat-dialog-title>Create or edit subcategory</h1>
 <div mat-dialog-content>
   <form name="editForm" role="form" novalidate #editForm="ngForm">
-      <div [hidden]="!subcategory.id">
+    <div [hidden]="!subcategory.id">
       <input matInput type="text" placeholder="Subcategory ID" id="id" name="id" [(ngModel)]="subcategory.id" readonly />
     </div>
 
     <mat-form-field>
-      <input matInput [(ngModel)]="subcategory.name" placeholder="Subcategory name" name="name" id="field_name"
-             required>
+      <input matInput [(ngModel)]="subcategory.name" placeholder="Subcategory name" name="name" id="field_name" required />
     </mat-form-field>
 
     <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">

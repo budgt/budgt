@@ -6451,6 +6451,11 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
+prettier@1.15.3:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
+  integrity sha512-gAU9AGAPMaKb3NNSUUuhhFAS7SCO4ALTN4nRIn6PJ075Qd28Yn2Ig2ahEJWdJwJmlEBTUfC7mMUSFy8MwsOCfg==
+
 process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
@@ -8346,11 +8351,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typescript-map@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/typescript-map/-/typescript-map-0.0.6.tgz#f2367a2c2a21b1a86ddf5bc213fb546f71f5cd3b"
-  integrity sha512-lZ0zr+GmDPeGDTrnHMLdnZLmbRDe2pyqeGPH5f92JW/n7hmhmGV5jj3wwR6UFY9dPeyDQ0/wqzz7n0QKbxxWiA==
 
 typescript@3.1.6, typescript@~3.1.6:
   version "3.1.6"

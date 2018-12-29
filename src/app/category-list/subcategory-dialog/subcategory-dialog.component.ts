@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,9 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subcategory } from '../../models/subcategory';
 import { SubcategoryService } from '../subcategory.service';
 import { SubcategoryPopupService } from '../subcategory-popup.service';
-import { Category } from '../../models/category';
 import { CategoryService } from '../category.service';
-
 
 @Component({
   selector: 'app-subcategory-dialog',
@@ -16,7 +14,6 @@ import { CategoryService } from '../category.service';
   styleUrls: ['./subcategory-dialog.component.scss']
 })
 export class SubcategoryDialogComponent implements OnInit {
-
   subcategory: Subcategory;
   isSaving: boolean;
 
@@ -25,7 +22,7 @@ export class SubcategoryDialogComponent implements OnInit {
     private subcategoryService: SubcategoryService,
     private categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: Subcategory
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isSaving = false;
@@ -39,17 +36,14 @@ export class SubcategoryDialogComponent implements OnInit {
   save() {
     this.isSaving = true;
     if (this.subcategory.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.subcategoryService.updateSubcategory(this.categoryService.selectedCategory, this.subcategory));
+      this.subscribeToSaveResponse(this.subcategoryService.updateSubcategory(this.categoryService.selectedCategory, this.subcategory));
     } else {
-      this.subscribeToSaveResponse(
-        this.subcategoryService.createSubcategory (this.categoryService.selectedCategory, this.subcategory));
-      }
+      this.subscribeToSaveResponse(this.subcategoryService.createSubcategory(this.categoryService.selectedCategory, this.subcategory));
+    }
   }
 
   private subscribeToSaveResponse(result: Observable<Subcategory>) {
-    result.subscribe((subcategory) =>
-      this.onSaveSuccess(subcategory), (res: HttpErrorResponse) => this.onSaveError());
+    result.subscribe(subcategory => this.onSaveSuccess(subcategory), (res: HttpErrorResponse) => this.onSaveError());
   }
 
   private onSaveSuccess(result: Subcategory) {
@@ -67,29 +61,20 @@ export class SubcategoryDialogComponent implements OnInit {
   template: ''
 })
 export class SubcategoryPopupComponent implements OnInit, OnDestroy {
-
   routeSub: any;
 
   constructor(
     private route: ActivatedRoute,
     private subcategoryPopupService: SubcategoryPopupService,
     private categoryService: CategoryService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.routeSub = this.route.params.subscribe((params) => {
-      if (params['create'] === true) {
-        this.subcategoryPopupService.open(
-          SubcategoryDialogComponent as Component,
-          this.categoryService.selectedCategory,
-          params['id']
-        );
+    this.routeSub = this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.subcategoryPopupService.open(SubcategoryDialogComponent as Component, this.categoryService.selectedCategory, params['id']);
       } else {
-        this.subcategoryPopupService.open(
-          SubcategoryDialogComponent as Component,
-          this.categoryService.selectedCategory,
-          this.categoryService.selectedCategory.nextSubcategoryId
-        );
+        this.subcategoryPopupService.open(SubcategoryDialogComponent as Component, this.categoryService.selectedCategory);
       }
     });
   }
@@ -98,4 +83,3 @@ export class SubcategoryPopupComponent implements OnInit, OnDestroy {
     this.routeSub.unsubscribe();
   }
 }
-

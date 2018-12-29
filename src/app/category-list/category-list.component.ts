@@ -9,18 +9,16 @@ import { Subscription } from 'rxjs';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-
 export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[];
   categorySubscription: Subscription;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit() {
-    this.categorySubscription = this.categoryService.getCategories()
-      .subscribe(categories => {
-        this.categories = categories;
-      });
+    this.categorySubscription = this.categoryService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
   }
 
   selectCategory(category: Category) {
@@ -39,10 +37,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   deleteSubcategory(subcategory: Subcategory) {
-    this.categoryService.selectedCategory.subcategories.delete(subcategory.id);
+    let index: number = this.categoryService.selectedCategory.subcategories.indexOf(subcategory);
+    this.categoryService.selectedCategory.subcategories.splice(index, 1);
+
     this.categoryService.updateCategory(this.categoryService.selectedCategory);
   }
-
 
   ngOnDestroy() {
     if (this.categorySubscription) {
