@@ -22,11 +22,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   selectCategory(category: Category) {
-    if (category === this.categoryService.selectedCategory) {
-      this.categoryService.selectedCategory = null;
-    } else {
-      this.categoryService.selectedCategory = category;
-    }
+    category === this.categoryService.selectedCategory
+      ? (this.categoryService.selectedCategory = null)
+      : (this.categoryService.selectedCategory = category);
   }
 
   deleteCategory(category: Category) {
