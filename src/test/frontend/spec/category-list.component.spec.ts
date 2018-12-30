@@ -1,8 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
@@ -49,7 +48,7 @@ describe('Component Tests', () => {
       it('should set selectedCategory', () => {
         comp.selectCategory(category1);
 
-        expect(comp.selectedCategory).toEqual(category1);
+        expect(service.selectedCategory).toEqual(category1);
       });
     });
 
@@ -87,7 +86,7 @@ describe('Component Tests', () => {
       it('should delte the subcategory', () => {
         comp.deleteSubcategory(subCategory1);
 
-        expect(comp.selectedCategory.subcategories[0]).toEqual(jasmine.objectContaining(subCategory2));
+        expect(service.selectedCategory.subcategories[0]).toEqual(jasmine.objectContaining(subCategory2));
       });
 
       it('should call #updateCategory', () => {

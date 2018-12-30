@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "budget": {
-      "root": "",
+      "root": "e2e",
       "sourceRoot": "src",
       "projectType": "application",
       "architect": {

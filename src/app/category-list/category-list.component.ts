@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[];
-  selectedCategory: Category;
   categorySubscription: Subscription;
 
   constructor(private categoryService: CategoryService) {}
@@ -23,11 +22,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   selectCategory(category: Category) {
-    if (category === this.selectedCategory) {
-      this.selectedCategory = null;
-    } else {
-      this.selectedCategory = category;
-    }
+    category === this.categoryService.selectedCategory
+      ? (this.categoryService.selectedCategory = null)
+      : (this.categoryService.selectedCategory = category);
   }
 
   deleteCategory(category: Category) {
@@ -38,10 +35,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   deleteSubcategory(subcategory: Subcategory) {
-    let index: number = this.selectedCategory.subcategories.indexOf(subcategory);
-    this.selectedCategory.subcategories.splice(index, 1);
+    let index: number = this.categoryService.selectedCategory.subcategories.indexOf(subcategory);
+    this.categoryService.selectedCategory.subcategories.splice(index, 1);
 
-    this.categoryService.updateCategory(this.selectedCategory);
+    this.categoryService.updateCategory(this.categoryService.selectedCategory);
   }
 
   ngOnDestroy() {

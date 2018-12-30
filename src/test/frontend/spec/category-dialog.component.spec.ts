@@ -2,7 +2,7 @@ import { BudgtTestModule } from './../test.module';
 import { Category } from './../../../app/models/category';
 import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angular/core/testing';
 
-import { CategoryDialogComponent } from '../../../app/category-list/category-dialog.component';
+import { CategoryDialogComponent } from '../../../app/category-list/category-dialog/category-dialog.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { of } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';

@@ -10,11 +10,14 @@ import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryService } from './category-list/category.service';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog.component';
+import { CategoryDialogComponent, CategoryPopupComponent } from './category-list/category-dialog/category-dialog.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SubcategoryDialogComponent, SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
+import { SubcategoryService } from './category-list/subcategory.service';
+import { SubcategoryPopupService } from './category-list/subcategory-popup.service';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CategoryListComponent,
     CategoryDialogComponent,
     CategoryPopupComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SubcategoryDialogComponent,
+    SubcategoryPopupComponent
   ],
   imports: [
     BrowserModule, //
-    HttpClientModule,
-    FormsModule,
+    HttpClientModule, 
+    FormsModule, 
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
@@ -36,9 +41,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   providers: [
     CategoryService, //
-    CategoryPopupService
+    CategoryPopupService,
+    SubcategoryService,
+    SubcategoryPopupService
   ],
-  entryComponents: [CategoryDialogComponent],
+  entryComponents: [
+    CategoryDialogComponent, //
+    SubcategoryDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
