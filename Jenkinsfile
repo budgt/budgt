@@ -157,8 +157,9 @@ pipeline {
                     steps {
                         dir("frontend") {
                             unstash('dist')
-                            sh 'docker build -f build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
                         }
+                        sh 'docker build -f build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+
                     }
                 }
 
