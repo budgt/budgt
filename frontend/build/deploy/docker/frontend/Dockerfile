@@ -12,11 +12,11 @@ EXPOSE 80
 LABEL maintainer="hofmann@budgt.de"
 
 # Copy config
-COPY deploy/conf/nginx.conf /etc/nginx/nginx.conf
+COPY frontend/build/deploy/conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy app
 WORKDIR /usr/share/nginx/html
-COPY dist/ .
+COPY frontend/dist/ .
 
 #CMD
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,13 +1,13 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/dist-server
-/tmp
-/out-tsc
+frontend/dist
+frontend/dist-server
+frontend/tmp
+frontend/out-tsc
 
 # dependencies
-/node_modules
+frontend/node_modules
 
 # IDEs and editors
 /.idea
@@ -45,4 +45,5 @@ testem.log
 Thumbs.db
 
 # test reports
-build/
+frontend/build/reports
+backend/build/reports

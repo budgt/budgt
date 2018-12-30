@@ -8,10 +8,10 @@
       "url": "http://localhost:4200/",
       "runtimeExecutable": "/usr/bin/google-chrome-stable",
       "sourceMaps": true,
-      "webRoot": "${workspaceFolder}",
+      "webRoot": "${workspaceFolder}/frontend",
       "breakOnLoad": true,
       "sourceMapPathOverrides": {
-        "*": "${webRoot}/*"
+        "*": "${webRoot}/frontend/*"
       }
     },
     {
@@ -20,10 +20,9 @@
       "request": "attach",
       "url": "http://localhost:9876/debug.html",
       "sourceMaps": true,
-      "webRoot": "${workspaceFolder}",
-      "breakOnLoad": true,
+      "webRoot": "${workspaceFolder}/frontend",
       "sourceMapPathOverrides": {
-        "*": "${webRoot}/src/*"
+        "*": "${webRoot}/frontend/src/*"
       }
     }
   ]
