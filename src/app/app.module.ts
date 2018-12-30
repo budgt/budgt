@@ -32,8 +32,8 @@ import { SubcategoryPopupService } from './category-list/subcategory-popup.servi
   ],
   imports: [
     BrowserModule, //
-    HttpClientModule, 
-    FormsModule, 
+    HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
