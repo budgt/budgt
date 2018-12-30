@@ -19,7 +19,7 @@ pipeline {
         stage('Clean up workspace') {
             agent {
                 dockerfile { 
-                    dir 'deploy/docker/build'
+                    dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
             }
@@ -32,14 +32,16 @@ pipeline {
         stage('Fetch dependencies') {
             agent {
                 dockerfile { 
-                    dir 'deploy/docker/build'
+                    dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
             }
 
             steps {
-                sh 'yarn install'
-                stash includes: 'node_modules/', name: 'node_modules'
+                dir("frontend") {
+                    sh 'yarn install'
+                    stash includes: 'node_modules/', name: 'node_modules'
+                }
             }
         }
 
@@ -49,33 +51,36 @@ pipeline {
                 stage('Check versions') {    
                     agent {
                         dockerfile { 
-                            dir 'deploy/docker/build'
+                            dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
                     }
 
                     steps {
-                        sh 'node --version'
+                        dir("frontend") {
+                            sh 'node --version'
 
-                        sh 'npm -v'
+                            sh 'npm -v'
 
-                        sh 'yarn -v'
+                            sh 'yarn -v'
 
-                        sh 'ng --version'
-
+                            sh 'ng --version'
+                        }
                     }
                 }
 
                 stage('Lint') {
                     agent {
                         dockerfile { 
-                            dir 'deploy/docker/build'
+                            dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
                     }
                     steps {
-                        unstash 'node_modules'
-                        sh 'yarn lint'
+                        dir("frontend") {
+                            unstash 'node_modules'
+                            sh 'yarn lint'
+                        }
                     }
                 }   
             }   
@@ -84,39 +89,43 @@ pipeline {
         stage('Unit test') {
             agent {
                 dockerfile { 
-                    dir 'deploy/docker/build'
+                    dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
             }
 
             steps {
-                unstash 'node_modules'
-                sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
-                script {
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: false,
-                        reportDir: 'build/reports/coverage/report-html/',
-                        reportFiles: 'index.html',
-                        reportName: 'Unit test coverage'
-                    ])
+                dir("frontend") {
+                    unstash 'node_modules'
+                    sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
+                    script {
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: false,
+                            reportDir: 'build/reports/coverage/report-html/',
+                            reportFiles: 'index.html',
+                            reportName: 'Unit test coverage'
+                        ])
+                    }
+                    junit 'build/reports/unit-test/*.xml'
                 }
-                 junit 'build/reports/unit-test/*.xml'
             }
         }
 
         stage('SonarQube analysis') {
             agent {
                 dockerfile { 
-                    dir 'deploy/docker/build'
+                    dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
             }
 
             steps {
                 withSonarQubeEnv('sonarcloud') {
-                    sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+                    dir("frontend") {
+                        sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+                    }
                 }
             }
         }
@@ -124,16 +133,18 @@ pipeline {
         stage('Compile') {
             agent {
                 dockerfile { 
-                    dir 'deploy/docker/build'
+                    dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
             }
 
             steps {
-                unstash 'node_modules'
-                sh 'ng build --configuration=production'
-                stash includes: 'dist/', name: 'dist'
-                stash includes: 'deploy/conf/', name: 'conf'
+                dir("frontend") {
+                    unstash 'node_modules'
+                    sh 'ng build --configuration=production'
+                    stash includes: 'dist/', name: 'dist'
+                    stash includes: 'build/deploy/conf/', name: 'conf'
+                }
             }
         
         }
@@ -144,8 +155,11 @@ pipeline {
                     agent any
 
                     steps {
-                        unstash('dist')
-                        sh 'docker build -f deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+                        dir("frontend") {
+                            unstash('dist')
+                            sh 'docker build -f build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+                        }
+
                     }
                 }
 
@@ -153,7 +167,7 @@ pipeline {
                     agent any
 
                     steps {
-                        sh 'docker build -f deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
+                        sh 'docker build -f backend/build/deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
                     }
                 }
 
@@ -161,7 +175,7 @@ pipeline {
                     agent any
                     
                     when { 
-                        branch 'master' 
+                        branch 'development' 
                     }
                     steps {
                         sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
@@ -176,7 +190,7 @@ pipeline {
 
         stage('Deploy to dev') {
              when { 
-                branch 'master' 
+                branch 'development' 
             }
             parallel {
                 

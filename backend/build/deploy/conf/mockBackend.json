@@ -1,0 +1,85 @@
+{
+  "category": [
+    {
+      "id": 1,
+      "name": "Arbeit",
+      "type": "Income",
+      "amount": 5432,
+      "subcategories": [
+        {
+          "id": 1,
+          "name": "Gehalt",
+          "amount": 5000
+        },
+        {
+          "id": 2,
+          "name": "Spesen",
+          "amount": 432
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Lebenshaltung",
+      "Type": "Expense",
+      "Amount": 321,
+      "subcategories": [
+        {
+          "id": 1,
+          "name": "Miete",
+          "amount": 300
+        },
+        {
+          "id": 2,
+          "name": "Strom",
+          "amount": 21
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Hobbys",
+      "Type": "Expense",
+      "Amount": 765,
+      "subcategories": [
+        {
+          "id": 1,
+          "name": "Pizza",
+          "amount": 765
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Sonstiges",
+      "Type": "Expense",
+      "Amount": 987,
+      "subcategories": [
+        {
+          "id": 1,
+          "name": "Barabhebung",
+          "amount": 87
+        },
+        {
+          "id": 2,
+          "name": "Sonstige Ausgaben",
+          "amount": 900
+        }
+      ]
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "subcategory": "1",
+      "name": "Gehalt Januar 2018",
+      "date": "02.01.2018"
+    },
+    {
+      "id": 2,
+      "subcategory": "2",
+      "name": "Pizza.de",
+      "date": "08.01.2018"
+    }
+  ]
+}

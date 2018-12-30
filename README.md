@@ -1,36 +1,14 @@
 # Budget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
+The Budgt frontend is written in angular, the backend with java and the spring framework.
 
 ## Build Status
 
+### Frontend
+
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 Master:  
-![Build Status Master](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status "quality gate") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage "coverage") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells  "code smells") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating "security")  
+![Build Status Master](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status "quality gate") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage "coverage") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells "code smells") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating "security")  
 Development:  
-![Build Status Development](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/development)  
-
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
+![Build Status Development](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/development)
