@@ -1,5 +1,4 @@
 import { Category } from './../models/category';
-import { CategoryService } from './category.service';
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
@@ -8,11 +7,11 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 export class CategoryPopupService {
   private matDialogRef: MatDialogRef<Component>;
 
-  constructor(private dialogService: MatDialog, private router: Router, private categoryService: CategoryService) {
+  constructor(private dialogService: MatDialog, private router: Router) {
     this.matDialogRef = null;
   }
 
-  open(component: Component, category: Category): Promise<MatDialogRef<Component>> {
+  open(component: Component, category?: Category): Promise<MatDialogRef<Component>> {
     return new Promise<MatDialogRef<Component>>((resolve, reject) => {
       const isOpen = this.matDialogRef !== null;
       if (isOpen) {

@@ -35,11 +35,9 @@ export class SubcategoryDialogComponent implements OnInit {
 
   save() {
     this.isSaving = true;
-    if (this.subcategory.id !== undefined) {
-      this.subscribeToSaveResponse(this.subcategoryService.updateSubcategory(this.categoryService.selectedCategory, this.subcategory));
-    } else {
-      this.subscribeToSaveResponse(this.subcategoryService.createSubcategory(this.categoryService.selectedCategory, this.subcategory));
-    }
+    this.subcategory.id === undefined
+      ? this.subscribeToSaveResponse(this.subcategoryService.createSubcategory(this.categoryService.selectedCategory, this.subcategory))
+      : this.subscribeToSaveResponse(this.subcategoryService.updateSubcategory(this.categoryService.selectedCategory, this.subcategory));
   }
 
   private subscribeToSaveResponse(result: Observable<Subcategory>) {

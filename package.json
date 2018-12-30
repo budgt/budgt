@@ -7,6 +7,7 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
+    "test-debug": "ng test --browsers ChromeDebug",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"

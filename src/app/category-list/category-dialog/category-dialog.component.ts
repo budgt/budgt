@@ -33,11 +33,9 @@ export class CategoryDialogComponent implements OnInit {
 
   save() {
     this.isSaving = true;
-    if (this.category.id !== undefined) {
-      this.subscribeToSaveResponse(this.categoryService.updateCategory(this.category));
-    } else {
-      this.subscribeToSaveResponse(this.categoryService.createCategory(this.category));
-    }
+    this.category.id === undefined
+      ? this.subscribeToSaveResponse(this.categoryService.createCategory(this.category))
+      : this.subscribeToSaveResponse(this.categoryService.updateCategory(this.category));
   }
 
   private subscribeToSaveResponse(result: Observable<Category>) {
