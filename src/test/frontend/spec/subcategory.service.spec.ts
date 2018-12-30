@@ -61,12 +61,12 @@ describe('Service Tests', () => {
 
       it('should call updateCategory', () => {
         subcategory.name = 'New name';
-        spyOn(subcategoryService, 'updateSubcategory').and.callThrough();
+        spyOn(subcategoryService, 'createSubcategory').and.callThrough();
         spyOn(categoryService, 'updateCategory').and.returnValue(of(category));
 
-        subcategoryService.updateSubcategory(category, subcategory);
+        subcategoryService.createSubcategory(category, subcategory);
 
-        expect(subcategoryService.updateSubcategory).toHaveBeenCalledWith(category, subcategory);
+        expect(subcategoryService.createSubcategory).toHaveBeenCalledWith(category, subcategory);
         expect(categoryService.updateCategory).toHaveBeenCalledWith(category);
       });
     });
