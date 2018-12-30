@@ -4,8 +4,7 @@ import { Category } from '../models/category';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { CategoryListComponent } from './category-list.component';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {

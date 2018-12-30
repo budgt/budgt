@@ -3,8 +3,6 @@ import { Subcategory } from '../models/subcategory';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category';
 import { CategoryService } from './category.service';
-import { CategoryPopupComponent } from './category-dialog/category-dialog.component';
-import { type } from 'os';
 
 @Injectable()
 export class SubcategoryService {

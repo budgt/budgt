@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { Subcategory } from '../models/subcategory';
 import { Category } from '../models/category';
-import { CategoryService } from './category.service';
 
 @Injectable()
 export class SubcategoryPopupService {
