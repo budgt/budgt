@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#################
+## Frontend
+#################
+
 # compiled output
 frontend/dist
 frontend/dist-server
@@ -8,6 +12,28 @@ frontend/out-tsc
 
 # dependencies
 frontend/node_modules
+
+# reports
+frontend/build/reports
+
+
+#################
+## Backend
+#################
+
+# java
+bin/
+.gradle
+build/
+
+#reports
+backend/category-service/build/reports
+backend/config-server/build/reports
+
+
+#################
+## Misc
+#################
 
 # IDEs and editors
 /.idea
@@ -43,7 +69,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-# test reports
-frontend/build/reports
-backend/build/reports

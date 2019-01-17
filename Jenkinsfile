@@ -157,7 +157,7 @@ pipeline {
                     steps {
                         dir("frontend") {
                             unstash('dist')
-                            sh 'docker build -f build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+                            sh 'docker build -f frontend/build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
                         }
 
                     }
@@ -167,7 +167,7 @@ pipeline {
                     agent any
 
                     steps {
-                        sh 'docker build -f backend/build/deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
+                        sh 'docker build -f backend/category-service/src/main/deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
                     }
                 }
 

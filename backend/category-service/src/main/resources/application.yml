@@ -1,0 +1,7 @@
+server:
+  port: 1338
+
+logging:
+  level:
+    root: Info
+  file: /var/logs/budgt/category-serivce.log

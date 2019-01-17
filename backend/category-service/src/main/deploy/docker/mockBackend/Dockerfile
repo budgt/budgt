@@ -12,7 +12,7 @@ EXPOSE 3000
 LABEL maintainer="hofmann@budgt.de"
 
 # Copy config
-COPY backend/build/deploy/conf/mockBackend.json /opt/mockBackend.json
+COPY backend/category-service/src/main/deploy/conf/mockBackend/mockBackend.json /opt/mockBackend.json
 
 # Install json-server
 RUN yarn global add json-server
