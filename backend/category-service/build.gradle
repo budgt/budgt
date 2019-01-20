@@ -45,3 +45,14 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+
+task dockerbuild {
+	description 'Build docker image.'
+    doLast {
+        exec {
+            workingDir '../../'
+            commandLine 'sh', '-c', 'docker build -f backend/category-service/src/main/deploy/docker/Dockerfile -t budgt-category-service .'
+
+        }
+    }
+}

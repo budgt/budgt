@@ -65,6 +65,8 @@ pipeline {
                             sh 'yarn -v'
 
                             sh 'ng --version'
+
+                            sh 'java -version'
                         }
                     }
                 }
@@ -129,24 +131,52 @@ pipeline {
                 }
             }
         }
+        parallel {
+            stage('Compile frontend') {
+                agent {
+                    dockerfile { 
+                        dir 'frontend/build/deploy/docker/build'
+                        additionalBuildArgs '-t budgt-build'
+                    }
+                }
 
-        stage('Compile') {
-            agent {
-                dockerfile { 
-                    dir 'frontend/build/deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
+                steps {
+                    dir("frontend") {
+                        unstash 'node_modules'
+                        sh 'ng build --configuration=production'
+                        stash includes: 'dist/', name: 'dist'
+                        stash includes: 'build/deploy/conf/', name: 'conf'
+                    }
                 }
             }
 
-            steps {
-                dir("frontend") {
-                    unstash 'node_modules'
-                    sh 'ng build --configuration=production'
-                    stash includes: 'dist/', name: 'dist'
-                    stash includes: 'build/deploy/conf/', name: 'conf'
+            stage('Compile config-server') {
+                agent {
+                    dockerfile { 
+                        dir 'frontend/build/deploy/docker/build'
+                        additionalBuildArgs '-t budgt-build'
+                    }
+                }
+
+                steps {
+                    sh 'gradle backend:config-server:build'
+                    stash includes: 'backend/config-server/build/lib/', name: 'config-server'
                 }
             }
-        
+
+            stage('Compile category-service') {
+                agent {
+                    dockerfile { 
+                        dir 'frontend/build/deploy/docker/build'
+                        additionalBuildArgs '-t budgt-build'
+                    }
+                }
+
+                steps {
+                    sh 'gradle backend:category-service:build'
+                    stash includes: 'backend/category-service/build/lib/', name: 'category-service'
+                }
+            }
         }
 
         stage('Prepare dev deployment') {
@@ -155,36 +185,38 @@ pipeline {
                     agent any
 
                     steps {
-                        dir("frontend") {
-                            unstash('dist')
-                            sh 'docker build -f frontend/build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
-                        }
-
+                        unstash('dist')
+                        sh 'gradle frontend:dockerbuild'
                     }
                 }
 
-                stage("Build new mock-backend image") {
+                stage("Build new category-service image") {
                     agent any
 
                     steps {
-                        sh 'docker build -f backend/category-service/src/main/deploy/docker/mockBackend/Dockerfile -t budgt-mockbackend .'
+                        sh 'gradle backend:category-service:dockerbuild'
                     }
                 }
 
-                stage("Clean dev environment") {
+                stage("Build new config-server image") {
                     agent any
-                    
-                    when { 
-                        branch 'development' 
-                    }
+
                     steps {
-                        sh 'docker ps -f name=budgt-frontend -q | xargs --no-run-if-empty docker container stop'
-                        sh 'docker container ls -a -fname=budgt-frontend -q | xargs -r docker container rm'
-                            
-                        sh 'docker ps -f name=budgt-mockbackend -q | xargs --no-run-if-empty docker container stop'
-                        sh 'docker container ls -a -fname=budgt-mockbackend -q | xargs -r docker container rm'    
+                        sh 'gradle backend:config-server:dockerbuild'
                     }
                 }
+            }
+        }
+
+
+        stage("Clean dev environment") {
+            agent any        
+            when { 
+                branch 'development' 
+            }
+            steps {
+                sh 'docker-compose down'
+                sh 'docker-compose rm -f'
             }
         }
 
@@ -192,23 +224,10 @@ pipeline {
              when { 
                 branch 'development' 
             }
-            parallel {
-                
-                stage('Deploy mockBackend') {
-                    agent any
+            agent any
                     
-                    steps {
-                        sh 'docker run -p 1338:3000 --name budgt-mockbackend -d budgt-mockbackend'
-                    }
-                }
-
-                stage('Deploy frontend') {
-                    agent any
-
-                    steps {
-                        sh 'docker run -p 1337:80 --name budgt-frontend -d budgt-frontend'
-                    }
-                }
+            steps {
+                sh 'docker-compose up -d'
             }
         }        
     }

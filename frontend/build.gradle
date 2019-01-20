@@ -1,0 +1,36 @@
+group = 'de.budgt'
+version = '0.0.1-SNAPSHOT'
+
+task clean {
+	description 'Clean workspace'
+    doLast {
+        exec {
+            workingDir './'
+            commandLine 'sh', '-c', 'rm -r dist'
+
+        }
+    }
+}
+
+task build {
+	description 'Clean workspace'
+    doLast {
+        exec {
+            workingDir './'
+            commandLine 'sh', '-c', 'ng build --configuration=production'
+
+        }
+    }
+}
+
+task dockerbuild {
+	description 'Build frontend docker image.'
+    doLast {
+        exec {
+            workingDir '../'
+            commandLine 'sh', '-c', 'docker build -f frontend/build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+
+        }
+    }
+}
+

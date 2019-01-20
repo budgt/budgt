@@ -1,0 +1,3 @@
+rootProject.name = 'budgt'
+include "backend:config-server", "backend:category-service", ":frontend"
+
