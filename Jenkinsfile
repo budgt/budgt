@@ -197,6 +197,7 @@ pipeline {
                     agent any
 
                     steps {
+                        unstash('category-service')
                         sh './gradlew backend:category-service:dockerbuild'
                     }
                 }
@@ -205,6 +206,7 @@ pipeline {
                     agent any
 
                     steps {
+                        unstash('config-server')
                         sh './gradlew backend:config-server:dockerbuild'
                     }
                 }
