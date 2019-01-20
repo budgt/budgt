@@ -161,7 +161,7 @@ pipeline {
                     }
 
                     steps {
-                        sh 'gradle backend:config-server:build'
+                        sh './gradlew backend:config-server:build'
                         stash includes: 'backend/config-server/build/lib/', name: 'config-server'
                     }
                 }
@@ -175,7 +175,7 @@ pipeline {
                     }
 
                     steps {
-                        sh 'gradle backend:category-service:build'
+                        sh './gradlew backend:category-service:build'
                         stash includes: 'backend/category-service/build/lib/', name: 'category-service'
                     }
                 }
@@ -189,7 +189,7 @@ pipeline {
 
                     steps {
                         unstash('dist')
-                        sh 'gradle frontend:dockerbuild'
+                        sh './gradlew frontend:dockerbuild'
                     }
                 }
 
@@ -197,7 +197,7 @@ pipeline {
                     agent any
 
                     steps {
-                        sh 'gradle backend:category-service:dockerbuild'
+                        sh './gradlew backend:category-service:dockerbuild'
                     }
                 }
 
@@ -205,7 +205,7 @@ pipeline {
                     agent any
 
                     steps {
-                        sh 'gradle backend:config-server:dockerbuild'
+                        sh './gradlew backend:config-server:dockerbuild'
                     }
                 }
             }
