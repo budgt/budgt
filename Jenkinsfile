@@ -162,7 +162,7 @@ pipeline {
 
                     steps {
                         sh './gradlew backend:config-server:build'
-                        stash includes: 'backend/config-server/build/lib/', name: 'config-server'
+                        stash includes: 'backend/config-server/build/libs/', name: 'config-server'
                     }
                 }
 
@@ -176,7 +176,7 @@ pipeline {
 
                     steps {
                         sh './gradlew backend:category-service:build'
-                        stash includes: 'backend/category-service/build/lib/', name: 'category-service'
+                        stash includes: 'backend/category-service/build/libs/', name: 'category-service'
                     }
                 }
             }
