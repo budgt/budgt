@@ -131,50 +131,53 @@ pipeline {
                 }
             }
         }
-        parallel {
-            stage('Compile frontend') {
-                agent {
-                    dockerfile { 
-                        dir 'frontend/build/deploy/docker/build'
-                        additionalBuildArgs '-t budgt-build'
+
+        stage("Compile modules") {
+            parallel {
+                stage('Compile frontend') {
+                    agent {
+                        dockerfile { 
+                            dir 'frontend/build/deploy/docker/build'
+                            additionalBuildArgs '-t budgt-build'
+                        }
+                    }
+
+                    steps {
+                        dir("frontend") {
+                            unstash 'node_modules'
+                            sh 'ng build --configuration=production'
+                            stash includes: 'dist/', name: 'dist'
+                            stash includes: 'build/deploy/conf/', name: 'conf'
+                        }
                     }
                 }
 
-                steps {
-                    dir("frontend") {
-                        unstash 'node_modules'
-                        sh 'ng build --configuration=production'
-                        stash includes: 'dist/', name: 'dist'
-                        stash includes: 'build/deploy/conf/', name: 'conf'
+                stage('Compile config-server') {
+                    agent {
+                        dockerfile { 
+                            dir 'frontend/build/deploy/docker/build'
+                            additionalBuildArgs '-t budgt-build'
+                        }
                     }
-                }
-            }
 
-            stage('Compile config-server') {
-                agent {
-                    dockerfile { 
-                        dir 'frontend/build/deploy/docker/build'
-                        additionalBuildArgs '-t budgt-build'
+                    steps {
+                        sh 'gradle backend:config-server:build'
+                        stash includes: 'backend/config-server/build/lib/', name: 'config-server'
                     }
                 }
 
-                steps {
-                    sh 'gradle backend:config-server:build'
-                    stash includes: 'backend/config-server/build/lib/', name: 'config-server'
-                }
-            }
-
-            stage('Compile category-service') {
-                agent {
-                    dockerfile { 
-                        dir 'frontend/build/deploy/docker/build'
-                        additionalBuildArgs '-t budgt-build'
+                stage('Compile category-service') {
+                    agent {
+                        dockerfile { 
+                            dir 'frontend/build/deploy/docker/build'
+                            additionalBuildArgs '-t budgt-build'
+                        }
                     }
-                }
 
-                steps {
-                    sh 'gradle backend:category-service:build'
-                    stash includes: 'backend/category-service/build/lib/', name: 'category-service'
+                    steps {
+                        sh 'gradle backend:category-service:build'
+                        stash includes: 'backend/category-service/build/lib/', name: 'category-service'
+                    }
                 }
             }
         }
