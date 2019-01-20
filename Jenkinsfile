@@ -213,6 +213,20 @@ pipeline {
             }
         }
 
+        stage('Publish') {
+            when {
+                branch 'development'
+            }
+
+            steps {
+                withDockerRegistry([ credentialsId: "792ba773-1b3a-48b1-b8d9-1f304cd9607e", url: "" ]) {
+                    sh 'docker push budgt/budgt-frontend:edge'
+                    sh 'docker push budgt/budgt-category-service:edge'
+                    sh 'docker push budgt/budgt-config-server:edge'
+                }
+            }
+        }
+
 
         stage("Clean dev environment") {
             agent any        
