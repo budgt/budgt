@@ -1,0 +1,15 @@
+allprojects {
+}
+
+subprojects {
+}
+
+project('backend:category-service') {
+}
+
+project('backend:config-server') {
+}
+
+project(':frontend') {
+}
+

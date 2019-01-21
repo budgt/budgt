@@ -1,0 +1,77 @@
+# Use root/example as user/password credentials
+version: "3.7"
+
+services:
+  budgt-frontend:
+    image: budgt/budgt-frontend
+    restart: always
+    container_name: budgt-frontend
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-frontend
+    ports:
+      - 1337:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://budgt-frontend:1337"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  budgt-category-service:
+    image: budgt/budgt-category-service
+    restart: always
+    container_name: budgt-category-service
+    depends_on:
+      - budgt-config-server
+      - budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-category-service
+    ports:
+      - 1338:1338
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1338/categories"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  budgt-config-server:
+    image: budgt/budgt-config-server
+    restart: always
+    container_name: budgt-config-server
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-config-server
+    #EXPOSE PORT FOR DEBUGGING
+    ports:
+      - 1339:1339
+    volumes:
+      - /opt/budgt-configuration:/opt/budgt-configuration
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1339/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  budgt-mongodb:
+    image: mongo:xenial
+    restart: always
+    container_name: budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-mongodb
+    volumes:
+      - /opt/docker/mongodb/data:/data/db
+
+networks:
+  budgt-network:
+    external:
+      name: budgt-network

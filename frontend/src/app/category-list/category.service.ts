@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
-  private categoryUrl = 'https://api.budgt.de/category';
+  private categoriesUrl = 'https://api.budgt.de/categories';
   public selectedCategory: Category;
 
   constructor(private http: HttpClient) {}
@@ -17,7 +17,7 @@ export class CategoryService {
    * Returns all categories
    */
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoryUrl).pipe(catchError(this.handleError('getAllCategories', [])));
+    return this.http.get<Category[]>(this.categoriesUrl).pipe(catchError(this.handleError('getAllCategories', [])));
   }
 
   /**
@@ -25,7 +25,7 @@ export class CategoryService {
    * @param id - id of the category to fetch
    */
   getCategoryById(id: number): Observable<Category> {
-    return this.http.get<Category>(this.categoryUrl + '/' + id).pipe(catchError(this.handleError<Category>('getCategory id=' + id)));
+    return this.http.get<Category>(this.categoriesUrl + '/' + id).pipe(catchError(this.handleError<Category>('getCategory id=' + id)));
   }
 
   /**
@@ -33,7 +33,7 @@ export class CategoryService {
    * @param category - the new version of the category
    */
   updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(this.categoryUrl + '/' + category.id, category);
+    return this.http.put<Category>(this.categoriesUrl + '/' + category.id, category);
   }
 
   /**
@@ -41,7 +41,7 @@ export class CategoryService {
    * @param category - the new category
    */
   createCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(this.categoryUrl, category);
+    return this.http.post<Category>(this.categoriesUrl, category);
   }
 
   /**
@@ -49,7 +49,7 @@ export class CategoryService {
    * @param category - category to delete
    */
   deleteCatgory(category: Category) {
-    return this.http.delete(this.categoryUrl + '/' + category.id);
+    return this.http.delete(this.categoriesUrl + '/' + category.id);
   }
 
   /**
