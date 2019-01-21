@@ -58,6 +58,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
+    "lint-staged": "^8.1.0",
     "prettier": "^1.15.3",
     "protractor": "^5.4.0",
     "sonar-scanner": "^3.1.0",
@@ -69,14 +70,14 @@
     "typescript": "~3.1.6"
   },
   "husky": {
-      "hooks": {
-        "pre-commit": "lint-staged"
-      }
-    },
-    "lint-staged": {
-      "*.{js,json,css,md,ts,html,component.html}": [
-        "prettier --write",
-        "git add"
-      ]
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md,ts,html,component.htm}": [
+      "prettier --write",
+      "git add"
+    ]
   }
+}

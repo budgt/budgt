@@ -5,11 +5,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Build Status
 
-![Build Status](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=alert_status 'quality gate') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=coverage 'coverage') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=code_smells 'code smells') ![alt text](https://sonar.pahofmann.com/api/project_badges/measure?project=budget&metric=security_rating 'security')
+Master:  
+![Build Status Master](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status 'quality gate') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage 'coverage') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells 'code smells') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating 'security')  
+Development:  
+![Build Status Development](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/development)
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -21,7 +24,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Run `yarn test-debug` to execute the unit tests in a chrome browser with remote debugging enabled.
 
 ## Running end-to-end tests
 
