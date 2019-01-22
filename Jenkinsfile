@@ -132,9 +132,9 @@ pipeline {
             }
         }
 
-        stage("Compile modules") {
+        stage("Compile") {
             parallel {
-                stage('Compile frontend') {
+                stage('frontend') {
                     agent {
                         dockerfile { 
                             dir 'frontend/build/deploy/docker/build'
@@ -152,7 +152,7 @@ pipeline {
                     }
                 }
 
-                stage('Compile config-server') {
+                stage('config-server') {
                     agent {
                         dockerfile { 
                             dir 'frontend/build/deploy/docker/build'
@@ -166,7 +166,7 @@ pipeline {
                     }
                 }
 
-                stage('Compile category-service') {
+                stage('category-service') {
                     agent {
                         dockerfile { 
                             dir 'frontend/build/deploy/docker/build'
@@ -182,9 +182,9 @@ pipeline {
             }
         }
 
-        stage('Prepare dev deployment') {
+        stage('Build image') {
             parallel {
-                stage("Build new frontend image") {
+                stage("frontend") {
                     agent any
 
                     steps {
@@ -193,7 +193,7 @@ pipeline {
                     }
                 }
 
-                stage("Build new category-service image") {
+                stage("category-service") {
                     agent any
 
                     steps {
@@ -202,7 +202,7 @@ pipeline {
                     }
                 }
 
-                stage("Build new config-server image") {
+                stage("config-server") {
                     agent any
 
                     steps {
@@ -244,6 +244,7 @@ pipeline {
                 script {
                     def remote = [:]
                     remote.name = "docker.budgt.de"
+                    remote.allowAnyHosts = true
                     remote.host = "docker.budgt.de"
 
                     withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
@@ -269,6 +270,7 @@ pipeline {
                 script {
                     def remote = [:]
                     remote.name = "docker.budgt.de"
+                    remote.allowAnyHosts = true
                     remote.host = "docker.budgt.de"
 
                     withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
