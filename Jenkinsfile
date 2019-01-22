@@ -8,9 +8,11 @@ pipeline {
         updateGitlabCommitStatus name: 'build', state: 'success'
       }
     }
+
     options {
         gitLabConnection('pahofmann')
     }
+    
     triggers {
         gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
     }
