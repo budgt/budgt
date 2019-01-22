@@ -221,9 +221,14 @@ pipeline {
 
             steps {
                 script {
-                   withDockerRegistry([ credentialsId: "792ba773-1b3a-48b1-b8d9-1f304cd9607e", url: "" ]) {
+                    withDockerRegistry([ credentialsId: "792ba773-1b3a-48b1-b8d9-1f304cd9607e", url: "" ]) {
+                        sh 'docker tag budgt-frontend budgt/budgt-frontend:edge'
                         sh 'docker push budgt/budgt-frontend:edge'
+
+                        sh 'docker tag budgt-category-serviced budgt/budgt-category-service:edge'
                         sh 'docker push budgt/budgt-category-service:edge'
+
+                        sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
                         sh 'docker push budgt/budgt-config-server:edge'
                     }
                 }
