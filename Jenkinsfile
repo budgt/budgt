@@ -243,7 +243,7 @@ pipeline {
                 branch 'development' 
             }
             steps {
-                sh 'scp -i /var/lib/jenkins/secrets/id_rsa docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
+                sh 'scp -i /var/lib/jenkins/secrets/id_rsa docker/dev/docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
                 sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose down"'
                 sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose rm -f"'
                     }

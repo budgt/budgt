@@ -3,7 +3,7 @@ version: "3.7"
 
 services:
   budgt-frontend:
-    image: budgt/budgt-frontend
+    image: budgt/budgt-frontend:edge
     restart: always
     container_name: budgt-frontend
     networks:
@@ -20,7 +20,7 @@ services:
       start_period: 40s
 
   budgt-category-service:
-    image: budgt/budgt-category-service
+    image: budgt/budgt-category-service:edge
     restart: always
     container_name: budgt-category-service
     depends_on:
@@ -41,7 +41,7 @@ services:
       start_period: 40s
 
   budgt-config-server:
-    image: budgt/budgt-config-server
+    image: budgt/budgt-config-server:edge
     restart: always
     container_name: budgt-config-server
     networks:
