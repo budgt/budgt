@@ -251,7 +251,7 @@ pipeline {
 
                     withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
                         remote.user = sshusername
-                        remote.identityFile = identity
+                        remote.identity = identity
                         stage("Deploy to dev.") {
                             sshPut remote: remote, from: 'docker-compose.yml', into: '.'
                             sshScript remote: remote, script: 'docker-compose down'
@@ -277,7 +277,7 @@ pipeline {
 
                     withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
                         remote.user = sshusername
-                        remote.identityFile = identity
+                        remote.identity = identity
                         stage("Deploy to dev.") {
                             sshPut remote: remote, from: 'docker-compose.yml', into: '.'
                             sshScript remote: remote, script: 'docker-compose up -d'
