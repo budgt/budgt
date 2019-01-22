@@ -214,19 +214,68 @@ pipeline {
         }
 
         stage('Publish') {
+            agent any  
             when {
                 branch 'development'
             }
 
             steps {
                 script {
-                   withDockerRegistry([ credentialsId: "792ba773-1b3a-48b1-b8d9-1f304cd9607e", url: "" ]) {
+                   docker.withDockerRegistry([ credentialsId: "792ba773-1b3a-48b1-b8d9-1f304cd9607e", url: "" ]) {
                         sh 'docker push budgt/budgt-frontend:edge'
                         sh 'docker push budgt/budgt-category-service:edge'
                         sh 'docker push budgt/budgt-config-server:edge'
                     }
                 }
             }
-        }       
+        }
+
+        stage("Clean dev environment") {
+            agent any        
+            when { 
+                branch 'development' 
+            }
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "docker.budgt.de"
+                    remote.host = "docker.budgt.de"
+
+                    withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
+                        remote.user = sshusername
+                        remote.identityFile = identity
+                        stage("Deploy to dev.") {
+                            sshPut remote: remote, from: 'docker-compose.yml', into: '.'
+                            sshScript remote: remote, script: 'docker-compose down'
+                            sshScript remote: remote, script: 'docker-compose rm -f'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to dev') {
+             when { 
+                branch 'development' 
+            }
+            agent any
+                    
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "docker.budgt.de"
+                    remote.host = "docker.budgt.de"
+
+                    withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
+                        remote.user = sshusername
+                        remote.identityFile = identity
+                        stage("Deploy to dev.") {
+                            sshPut remote: remote, from: 'docker-compose.yml', into: '.'
+                            sshScript remote: remote, script: 'docker-compose up -d'
+                        }
+                    }
+                }
+            }
+        }        
     }
 }
