@@ -11,9 +11,12 @@ services:
         aliases:
           - budgt-frontend
     ports:
-      - 1337:80
+      - 80:80
+      - 443:443
+    volumes:
+      - /opt/budgt/certs/:/opt/budgt/certs/
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://budgt-frontend:1337"]
+      test: ["CMD", "curl", "-f", "https://dev.budgt.de"]
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -48,9 +51,6 @@ services:
       budgt-network:
         aliases:
           - budgt-config-server
-    #EXPOSE PORT FOR DEBUGGING
-    ports:
-      - 1339:1339
     volumes:
       - /opt/budgt-configuration:/opt/budgt-configuration
 
