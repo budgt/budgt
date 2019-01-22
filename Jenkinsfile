@@ -225,7 +225,7 @@ pipeline {
                         sh 'docker tag budgt-frontend budgt/budgt-frontend:edge'
                         sh 'docker push budgt/budgt-frontend:edge'
 
-                        sh 'docker tag budgt-category-serviced budgt/budgt-category-service:edge'
+                        sh 'docker tag budgt-category-service budgt/budgt-category-service:edge'
                         sh 'docker push budgt/budgt-category-service:edge'
 
                         sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
