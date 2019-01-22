@@ -243,24 +243,12 @@ pipeline {
                 branch 'development' 
             }
             steps {
-                script {
-                    def remote = [:]
-                    remote.name = "docker.budgt.de"
-                    remote.allowAnyHosts = true
-                    remote.host = "docker.budgt.de"
-
-                    withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
-                        remote.user = sshusername
-                        remote.identity = identity
-                        stage("Deploy to dev.") {
-                            sshPut remote: remote, from: 'docker-compose.yml', into: '.'
-                            sshScript remote: remote, script: 'docker-compose down'
-                            sshScript remote: remote, script: 'docker-compose rm -f'
-                        }
+                sh 'scp -i /var/lib/jenkins/secrets/id_rsa docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
+                sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose down"'
+                sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose rm -f"'
                     }
-                }
-            }
         }
+
 
         stage('Deploy to dev') {
              when { 
@@ -269,21 +257,7 @@ pipeline {
             agent any
                     
             steps {
-                script {
-                    def remote = [:]
-                    remote.name = "docker.budgt.de"
-                    remote.allowAnyHosts = true
-                    remote.host = "docker.budgt.de"
-
-                    withCredentials([sshUserPrivateKey(credentialsId: 'c3551b25-f50a-4443-89fa-dc296a32c46c', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'sshusername')]) {
-                        remote.user = sshusername
-                        remote.identity = identity
-                        stage("Deploy to dev.") {
-                            sshPut remote: remote, from: 'docker-compose.yml', into: '.'
-                            sshScript remote: remote, script: 'docker-compose up -d'
-                        }
-                    }
-                }
+                sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
             }
         }        
     }
