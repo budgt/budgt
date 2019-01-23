@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CategoryService {
-  private categoriesUrl = 'https://api.budgt.de/categories';
+  private categoriesUrl = 'https://dev.budgt.de/api/categories';
   public selectedCategory: Category;
 
   constructor(private http: HttpClient) {}
