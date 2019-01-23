@@ -147,7 +147,11 @@ pipeline {
                     steps {
                         dir("frontend") {
                             unstash 'node_modules'
-                            sh 'ng build --configuration=production'
+                        }
+                        
+                        sh './gradlew frontend:build'
+
+                        dir("frontend") {
                             stash includes: 'dist/', name: 'dist'
                             stash includes: 'build/deploy/conf/', name: 'conf'
                         }
@@ -190,7 +194,9 @@ pipeline {
                     agent any
 
                     steps {
-                        unstash('dist')
+                        dir("frontend") {
+                            unstash('dist')
+                        }
                         sh './gradlew frontend:dockerbuild'
                     }
                 }
