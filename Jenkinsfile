@@ -257,6 +257,7 @@ pipeline {
             agent any
                     
             steps {
+                sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose pull"'
                 sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
             }
         }        
