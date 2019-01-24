@@ -72,6 +72,7 @@ services:
           - budgt-mongodb
     volumes:
       - /opt/docker/mongodb/data:/data/db
+    command: mongod --auth
 
 networks:
   budgt-network:
