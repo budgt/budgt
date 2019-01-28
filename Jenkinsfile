@@ -73,6 +73,17 @@ pipeline {
                     }
                 }
 
+                stage('Prepare environment links') {
+                    agent any  
+                    when {
+                        branch 'development'
+                    }
+                   
+                    dir("frontend/build/deploy/conf") {
+                        sh 'ln -s dev/nginx.conf nginx.conf'
+                    }
+                }
+
                 stage('Lint') {
                     agent {
                         dockerfile { 
