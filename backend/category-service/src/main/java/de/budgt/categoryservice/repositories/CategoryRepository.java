@@ -1,10 +1,10 @@
-package de.budgt.categoryservice.repository;
+package de.budgt.categoryservice.repositories;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import de.budgt.categoryservice.model.Category;
+import de.budgt.categoryservice.models.Category;
 
 /**
  * CategoryRepository

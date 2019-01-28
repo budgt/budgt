@@ -1,4 +1,4 @@
-package de.budgt.categoryservice.model;
+package de.budgt.categoryservice.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -88,7 +88,7 @@ public class Category {
         this.subcategories = subcategories;
     }
 
-    enum CategoryType {
+    public enum CategoryType {
         INCOME, EXPENSE
     }
 }

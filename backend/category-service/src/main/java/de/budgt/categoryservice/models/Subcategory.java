@@ -1,4 +1,4 @@
-package de.budgt.categoryservice.model;
+package de.budgt.categoryservice.models;
 
 /**
  * Subcategory

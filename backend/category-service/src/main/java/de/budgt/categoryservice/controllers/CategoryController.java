@@ -1,4 +1,4 @@
-package de.budgt.categoryservice.controller;
+package de.budgt.categoryservice.controllers;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.budgt.categoryservice.model.Category;
-import de.budgt.categoryservice.repository.CategoryRepository;
+import de.budgt.categoryservice.models.Category;
+import de.budgt.categoryservice.repositories.CategoryRepository;
 
 /**
  * CategoryController
@@ -20,7 +20,7 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @RequestMapping("/category")
+    @RequestMapping("/categories")
     public Category category(@RequestParam(value = "name", defaultValue = "default") String name) {
         Category category = categoryRepository.findByName(name);
         System.out.println(category);
