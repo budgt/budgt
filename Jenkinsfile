@@ -73,17 +73,6 @@ pipeline {
                     }
                 }
 
-                stage('Prepare environment links') {
-                    agent any  
-                    when {
-                        branch 'development'
-                    }
-                   
-                    dir("frontend/build/deploy/conf") {
-                        sh 'ln -s dev/nginx.conf nginx.conf'
-                    }
-                }
-
                 stage('Lint') {
                     agent {
                         dockerfile { 
@@ -97,34 +86,75 @@ pipeline {
                             sh 'yarn lint'
                         }
                     }
+                }
+
+                stage('Prepare environment links') {
+                    agent any  
+                    when {
+                        branch 'development'
+                    }
+
+                    steps {
+                        dir("frontend/build/deploy/conf") {
+                            sh 'ln -s dev/nginx.conf nginx.conf'
+                        }
+                    }
                 }   
             }   
         }
 
-        stage('Unit test') {
-            agent {
-                dockerfile { 
-                    dir 'frontend/build/deploy/docker/build'
-                    additionalBuildArgs '-t budgt-build'
-                }
-            }
-
-            steps {
-                dir("frontend") {
-                    unstash 'node_modules'
-                    sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
-                    script {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: false,
-                            reportDir: 'build/reports/coverage/report-html/',
-                            reportFiles: 'index.html',
-                            reportName: 'Unit test coverage'
-                        ])
+            stage('Unit test') {
+            parallel {
+                stage("frontend") {
+                    agent {
+                        dockerfile { 
+                            dir 'frontend/build/deploy/docker/build'
+                            additionalBuildArgs '-t budgt-build'
+                        }
                     }
-                    junit 'build/reports/unit-test/*.xml'
+
+                    steps {
+                        dir("frontend") {
+                            unstash 'node_modules'
+                            sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
+                            script {
+                                publishHTML([
+                                    allowMissing: false,
+                                    alwaysLinkToLastBuild: false,
+                                    keepAll: false,
+                                    reportDir: 'build/reports/coverage/report-html/',
+                                    reportFiles: 'index.html',
+                                    reportName: 'Unit test coverage'
+                                ])
+                            }
+                            junit 'build/reports/unit-test/*.xml'
+                        }
+                    }
                 }
+
+                stage("category-service") {
+                    agent {
+                        dockerfile { 
+                            dir 'frontend/build/deploy/docker/build'
+                            additionalBuildArgs '-t budgt-build'
+                        }
+                    }
+
+                    steps {
+                        sh './gradlew backend:category-service:test'
+                        script {
+                            publishHTML([
+                                allowMissing: false,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: false,
+                                reportDir: 'backend/category-service/build/reports/',
+                                reportFiles: 'tests/test/index.html',
+                                reportName: 'Unit test'
+                            ])
+                        }
+                        junit 'backend/category-service/build/test-results/**/*.xml'
+                    }
+                }   
             }
         }
 
