@@ -2,6 +2,7 @@ pipeline {
   agent none
   post {
     always {
+      agent any
       deleteDir()
     }
 
