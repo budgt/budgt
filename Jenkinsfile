@@ -304,7 +304,7 @@ pipeline {
       agent any
 
       steps {
-        deletedir()
+        deleteDir()
       }
     }
   }
