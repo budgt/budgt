@@ -304,13 +304,22 @@ pipeline {
       agent any
 
       steps {
+        dir("${env.WORKSPACE}") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@2") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@3") {
+          deleteDir()
+        }
         dir("${env.WORKSPACE}@tmp") {
           deleteDir()
         }
-        dir("${env.WORKSPACE}@script") {
+        dir("${env.WORKSPACE}@2@tmp") {
           deleteDir()
         }
-        dir("${env.WORKSPACE}@script@tmp") {
+        dir("${env.WORKSPACE}@3@tmp") {
           deleteDir()
         }
       }
