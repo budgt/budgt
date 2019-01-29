@@ -62,8 +62,6 @@ pipeline {
                         dir("frontend") {
                             sh 'node --version'
 
-                            sh 'npm -v'
-
                             sh 'yarn -v'
 
                             sh 'ng --version'
