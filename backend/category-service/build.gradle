@@ -56,3 +56,5 @@ task dockerbuild {
         }
     }
 }
+
+test { systemProperties System.properties systemProperties.put("spring.profiles.active","unittest") }
