@@ -89,7 +89,7 @@ pipeline {
                     }
                 }
 
-                stage('Prepare environment links') {
+                stage('Prepare links') {
                     agent any  
                     when {
                         branch 'development'
@@ -231,6 +231,9 @@ pipeline {
         }
 
         stage('Build image') {
+            when {
+                branch 'development'
+            }
             parallel {
                 stage("frontend") {
                     agent any
