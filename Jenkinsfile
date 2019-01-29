@@ -60,6 +60,9 @@ pipeline {
 
                     steps {
                         dir("frontend") {
+                            
+                            unstash 'node_modules'
+
                             sh 'node --version'
 
                             sh 'yarn -v'
