@@ -1,10 +1,6 @@
 pipeline {
-  agent any
+  agent none
   post {
-    always {
-      deleteDir()
-    }
-
     failure {
       updateGitlabCommitStatus name: 'build', state: 'failed'
     }
@@ -23,19 +19,6 @@ pipeline {
   }
 
   stages {
-    stage('Clean up workspace') {
-      agent {
-        dockerfile {
-          dir 'frontend/build/deploy/docker/build'
-          additionalBuildArgs '-t budgt-build'
-        }
-      }
-
-      steps {
-        deleteDir()
-      }
-    }
-
     stage('Fetch dependencies') {
       agent {
         dockerfile {
@@ -316,5 +299,14 @@ pipeline {
         sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
       }
     }
+
+    stage('Clean up workspace') {
+      agent any
+
+      steps {
+        deletedir()
+      }
+    }
   }
+
 }
