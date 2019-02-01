@@ -9,8 +9,10 @@ import de.budgt.categoryservice.models.Category;
  */
 public interface CategoryService {
 
-    public Category findByName(String name);
+  public Category findById(String id);
 
-    public List<Category> findAll();
+  public List<Category> findAll();
+
+  public void deleteById(String id);
 
 }

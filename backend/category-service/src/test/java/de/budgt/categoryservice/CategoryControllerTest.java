@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.bson.types.ObjectId;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,16 +73,27 @@ public class CategoryControllerTest {
   }
 
   @Test
-  public void findByName_CategoriesFound_ShouldReturnFoundCategoryEntries() throws Exception {
+  public void findByID_CategoriesFound_ShouldReturnFoundCategoryEntries() throws Exception {
     String firstID = new ObjectId().toHexString();
     Category first = new Category(firstID, "first", CategoryType.INCOME);
 
-    given(service.findByName("first")).willReturn(first);
+    given(service.findById(firstID)).willReturn(first);
 
-    mvc.perform(get("/categories/first")).andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(first.getId().toString()))).andExpect(jsonPath("$.name", is(first.getName())))
+    mvc.perform(get("/categories/" + firstID)).andExpect(status().isOk()).andExpect(jsonPath("$.id", is(first.getId())))
+        .andExpect(jsonPath("$.name", is(first.getName())))
         .andExpect(jsonPath("$.type", is(first.getType().toString())));
 
-    verify(service, times(1)).findByName(first.getName());
+    verify(service, times(1)).findById(first.getId());
+  }
+
+  @Test
+  public void deleteByID_forExisting_ShouldReturnNoContent() throws Exception {
+    String firstID = new ObjectId().toHexString();
+    Category first = new Category(firstID, "first", CategoryType.INCOME);
+
+    mvc.perform(delete("/categories/" + firstID)).andExpect(status().isNoContent())
+        .andExpect(jsonPath("$").doesNotHaveJsonPath());
+
+    verify(service, times(1)).deleteById(first.getId());
   }
 }

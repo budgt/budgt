@@ -13,20 +13,25 @@ import de.budgt.categoryservice.repositories.CategoryRepository;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
-    private CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+  private CategoryServiceImpl(CategoryRepository categoryRepository) {
+    this.categoryRepository = categoryRepository;
+  }
 
-    @Override
-    public Category findByName(String name) {
-        return categoryRepository.findByName(name);
-    }
+  @Override
+  public Category findById(String id) {
+    return categoryRepository.findByid(id);
+  }
 
-    @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
-    }
+  @Override
+  public List<Category> findAll() {
+    return categoryRepository.findAll();
+  }
+
+  @Override
+  public void deleteById(String id) {
+    categoryRepository.deleteById(id);
+  }
 
 }
