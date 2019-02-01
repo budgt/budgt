@@ -16,20 +16,20 @@ import de.budgt.categoryservice.services.CategoryService;
 @RestController
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+  @Autowired
+  private CategoryService categoryService;
 
-    @RequestMapping("/categories/{name}")
-    public Category category(@PathVariable(value = "name") String name) {
-        Category category = categoryService.findByName(name);
-        System.out.println(category);
-        return category;
-    }
+  @RequestMapping("/categories/{name}")
+  public Category category(@PathVariable(value = "name") String name) {
+    Category category = categoryService.findByName(name);
+    System.out.println(category);
+    return category;
+  }
 
-    @RequestMapping("/categories")
-    public List<Category> categories() {
-        List<Category> categories = categoryService.findAll();
-        System.out.println(categories);
-        return categories;
-    }
+  @RequestMapping("/categories")
+  public List<Category> categories() {
+    List<Category> categories = categoryService.findAll();
+    System.out.println(categories);
+    return categories;
+  }
 }

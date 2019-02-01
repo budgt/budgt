@@ -5,38 +5,53 @@ package de.budgt.categoryservice.models;
  */
 public class Subcategory {
 
-    private String name;
-    private float amount;
+  private String id;
+  private String name;
+  private float amount;
 
-    public Subcategory() {
-    }
+  public Subcategory() {
+  }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    /**
-     * @return the amount
-     */
-    public float getAmount() {
-        return amount;
-    }
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * @param amount the amount to set
-     */
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
+  /**
+   * @param name the name to set
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * @return the amount
+   */
+  public float getAmount() {
+    return amount;
+  }
+
+  /**
+   * @param amount the amount to set
+   */
+  public void setAmount(float amount) {
+    this.amount = amount;
+  }
 
 }

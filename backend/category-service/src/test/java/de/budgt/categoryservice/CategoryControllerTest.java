@@ -53,10 +53,10 @@ public class CategoryControllerTest {
 
   @Test
   public void findAll_CategoriesFound_ShouldReturnFoundCategoryEntries() throws Exception {
-    ObjectId firstID = new ObjectId();
+    String firstID = new ObjectId().toHexString();
     Category first = new Category(firstID, "first", CategoryType.INCOME);
 
-    ObjectId secondID = new ObjectId();
+    String secondID = new ObjectId().toHexString();
     Category second = new Category(secondID, "second", CategoryType.EXPENSE);
 
     given(service.findAll()).willReturn(Arrays.asList(first, second));
@@ -72,7 +72,7 @@ public class CategoryControllerTest {
 
   @Test
   public void findByName_CategoriesFound_ShouldReturnFoundCategoryEntries() throws Exception {
-    ObjectId firstID = new ObjectId();
+    String firstID = new ObjectId().toHexString();
     Category first = new Category(firstID, "first", CategoryType.INCOME);
 
     given(service.findByName("first")).willReturn(first);

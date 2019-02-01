@@ -12,8 +12,8 @@ import de.budgt.categoryservice.models.Category;
 
 public interface CategoryRepository extends MongoRepository<Category, String> {
 
-    public Category findByName(String name);
+  public Category findByName(String name);
 
-    public List<Category> findAll();
+  public List<Category> findAll();
 
 }
