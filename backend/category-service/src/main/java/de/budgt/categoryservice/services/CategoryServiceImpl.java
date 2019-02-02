@@ -30,8 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  public Category create(Category category) {
+    return categoryRepository.insert(category);
+  }
+
+  @Override
   public void deleteById(String id) {
     categoryRepository.deleteById(id);
   }
-
 }

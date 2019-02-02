@@ -13,6 +13,8 @@ public interface CategoryService {
 
   public List<Category> findAll();
 
+  public Category create(Category category);
+
   public void deleteById(String id);
 
 }

@@ -7,9 +7,14 @@ public class Subcategory {
 
   private String id;
   private String name;
-  private float amount;
+  private double amount;
 
   public Subcategory() {
+  }
+
+  public Subcategory(String name, double amount) {
+    this.name = name;
+    this.amount = amount;
   }
 
   /**
@@ -43,14 +48,14 @@ public class Subcategory {
   /**
    * @return the amount
    */
-  public float getAmount() {
+  public double getAmount() {
     return amount;
   }
 
   /**
    * @param amount the amount to set
    */
-  public void setAmount(float amount) {
+  public void setAmount(double amount) {
     this.amount = amount;
   }
 
