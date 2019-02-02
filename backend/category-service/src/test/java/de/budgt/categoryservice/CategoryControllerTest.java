@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -134,6 +135,29 @@ public class CategoryControllerTest {
         .andExpect(jsonPath("$.subcategories[0].amount", is(subcategory.getAmount())));
 
     verify(service, times(1)).create(argument.capture());
+
+    assertEquals(category.toString(), argument.getValue().toString());
+
+  }
+
+  @Test
+  public void updateCategory_ShouldReturnUpdatedCategory() throws Exception {
+    ArgumentCaptor<Category> argument = ArgumentCaptor.forClass(Category.class);
+
+    when(service.update(any())).thenReturn(category);
+
+    mvc.perform(
+        put("/categories").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(category)))
+        .andExpect(status().isOk()) //
+        .andExpect(jsonPath("$.id", is(category.getId()))) //
+        .andExpect(jsonPath("$.name", is(category.getName())))
+        .andExpect(jsonPath("$.type", is(category.getType().toString())))
+        .andExpect(jsonPath("$.amount", is(category.getAmount())))
+        .andExpect(jsonPath("$.subcategories[0].id", is(subcategory.getId())))
+        .andExpect(jsonPath("$.subcategories[0].name", is(subcategory.getName())))
+        .andExpect(jsonPath("$.subcategories[0].amount", is(subcategory.getAmount())));
+
+    verify(service, times(1)).update(argument.capture());
 
     assertEquals(category.toString(), argument.getValue().toString());
 
