@@ -6,13 +6,14 @@ pipeline {
       }
       success {
         updateGitlabCommitStatus name: 'build', state: 'success'
+        createDynatraceDeploymentEvent(entityIds: [[$class: 'Host', entityId: 'HOST-06CCF82DAFF2621A']], envId: 'Dynatrace Development Program', tagMatchRules: [[meTypes: [[meType: 'APPLICATION'], [meType: 'HOST'], [meType: 'PROCESS_GROUP'], [meType: 'SERVICE']], tags: [[context: 'CONTEXTLESS', key: 'budgt', value: '']]]]) { }
       }
     }
 
     options {
         gitLabConnection('pahofmann')
     }
-    
+
     triggers {
         gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
     }
@@ -20,7 +21,7 @@ pipeline {
     stages {
         stage('Clean up workspace') {
             agent {
-                dockerfile { 
+                dockerfile {
                     dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
@@ -33,7 +34,7 @@ pipeline {
 
         stage('Fetch dependencies') {
             agent {
-                dockerfile { 
+                dockerfile {
                     dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
@@ -49,10 +50,10 @@ pipeline {
 
         stage('Preparation') {
             parallel {
-                
-                stage('Check versions') {    
+
+                stage('Check versions') {
                     agent {
-                        dockerfile { 
+                        dockerfile {
                             dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
@@ -75,7 +76,7 @@ pipeline {
 
                 stage('Lint') {
                     agent {
-                        dockerfile { 
+                        dockerfile {
                             dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
@@ -86,13 +87,13 @@ pipeline {
                             sh 'yarn lint'
                         }
                     }
-                }   
-            }   
+                }
+            }
         }
 
         stage('Unit test') {
             agent {
-                dockerfile { 
+                dockerfile {
                     dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
@@ -119,7 +120,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             agent {
-                dockerfile { 
+                dockerfile {
                     dir 'frontend/build/deploy/docker/build'
                     additionalBuildArgs '-t budgt-build'
                 }
@@ -138,7 +139,7 @@ pipeline {
             parallel {
                 stage('frontend') {
                     agent {
-                        dockerfile { 
+                        dockerfile {
                             dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
@@ -148,7 +149,7 @@ pipeline {
                         dir("frontend") {
                             unstash 'node_modules'
                         }
-                        
+
                         sh './gradlew frontend:build'
 
                         dir("frontend") {
@@ -160,7 +161,7 @@ pipeline {
 
                 stage('config-server') {
                     agent {
-                        dockerfile { 
+                        dockerfile {
                             dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
@@ -174,7 +175,7 @@ pipeline {
 
                 stage('category-service') {
                     agent {
-                        dockerfile { 
+                        dockerfile {
                             dir 'frontend/build/deploy/docker/build'
                             additionalBuildArgs '-t budgt-build'
                         }
@@ -222,7 +223,7 @@ pipeline {
         }
 
         stage('Publish') {
-            agent any  
+            agent any
             when {
                 branch 'development'
             }
@@ -244,9 +245,9 @@ pipeline {
         }
 
         stage("Clean dev environment") {
-            agent any        
-            when { 
-                branch 'development' 
+            agent any
+            when {
+                branch 'development'
             }
             steps {
                 sh 'scp -i /var/lib/jenkins/secrets/id_rsa docker/dev/docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
@@ -256,15 +257,15 @@ pipeline {
         }
 
         stage('Deploy to dev') {
-             when { 
-                branch 'development' 
+             when {
+                branch 'development'
             }
             agent any
-                    
+
             steps {
                 sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose pull"'
                 sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
             }
-        }        
+        }
     }
 }
