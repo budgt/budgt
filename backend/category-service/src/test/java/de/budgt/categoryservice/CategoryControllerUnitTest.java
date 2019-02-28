@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,6 +34,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 
 import de.budgt.categoryservice.controllers.CategoryController;
+import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.models.Category.CategoryType;
@@ -42,7 +44,7 @@ import static org.mockito.BDDMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(CategoryController.class)
-public class CategoryControllerTest {
+public class CategoryControllerUnitTest {
 
   @Autowired
   private MockMvc mvc;
@@ -115,6 +117,19 @@ public class CategoryControllerTest {
         .andExpect(jsonPath("$.subcategories[0].amount", is(subcategory.getAmount())));
 
     verify(service, times(1)).findById(category.getId());
+  }
+
+  @Test
+  public void findById_CategoryNotFound_ShouldReturnError404WithBody() throws Exception {
+    String notId = "NotAnID";
+
+    when(service.findById(notId)).thenThrow(new CategoryNotFoundException(notId));
+
+    mvc.perform(get("/categories/" + notId)) //
+        .andExpect(status().isNotFound()) //
+        .andExpect(status().reason("could not find category with ID: 'NotAnID'.")) //
+        .andDo(MockMvcResultHandlers.print());
+    verify(service, times(1)).findById(notId);
   }
 
   @Test
