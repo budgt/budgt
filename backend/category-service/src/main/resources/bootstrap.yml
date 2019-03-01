@@ -1,14 +1,13 @@
 spring:
-    application:
-        name: budgtmongo
-    cloud:
-        config:
-            uri: http://budgt-config-server:1339
-            failFast: true
-            retry:
-                initialInterval: 3000
-                multiplier: 1.3
-                maxInterval: 5000
-                maxAttempts: 20
-            #This should be loaded from env variable in the future
-            profile: dev
+  application:
+    name: category-service
+  cloud:
+    config:
+      uri: http://localhost:1339
+      failFast: true
+      retry:
+          initialInterval: 3000
+          multiplier: 1.3
+          maxInterval: 5000
+          maxAttempts: 20
+      profile: local
