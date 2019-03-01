@@ -7,6 +7,8 @@ pipeline {
 
     success {
       updateGitlabCommitStatus name: 'build', state: 'success'
+      createDynatraceDeploymentEvent(entityIds: [[$class: 'Host', entityId: 'HOST-06CCF82DAFF2621A']], envId: 'Dynatrace Development Program', tagMatchRules: [[meTypes: [[meType: 'APPLICATION'], [meType: 'HOST'], [meType: 'PROCESS_GROUP'], [meType: 'SERVICE']], tags: [[context: 'CONTEXTLESS', key: 'budgt', value: '']]]]) { }
+
     }
   }
 
