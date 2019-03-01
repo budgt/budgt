@@ -2,8 +2,10 @@ package de.budgt.categoryservice.services;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.repositories.CategoryRepository;
 
@@ -11,17 +13,19 @@ import de.budgt.categoryservice.repositories.CategoryRepository;
  * CategoryServiceImpl
  */
 @Service
+@Primary
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
 
-  private CategoryServiceImpl(CategoryRepository categoryRepository) {
+  public CategoryServiceImpl(CategoryRepository categoryRepository) {
     this.categoryRepository = categoryRepository;
   }
 
   @Override
   public Category findById(String id) {
-    return categoryRepository.findByid(id);
+    Category category = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+    return category;
   }
 
   @Override
