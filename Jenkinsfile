@@ -21,6 +21,31 @@ pipeline {
   }
 
   stages {
+    stage('Clean up workspace') {
+      agent any
+
+      steps {
+        dir("${env.WORKSPACE}") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@2") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@3") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@tmp") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@2@tmp") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@3@tmp") {
+          deleteDir()
+        }
+      }
+    }
+
     stage('Fetch dependencies') {
       agent {
         dockerfile {
@@ -299,31 +324,6 @@ pipeline {
       steps {
         sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose pull"'
         sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
-      }
-    }
-
-    stage('Clean up workspace') {
-      agent any
-
-      steps {
-        dir("${env.WORKSPACE}") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@2") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@3") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@tmp") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@2@tmp") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@3@tmp") {
-          deleteDir()
-        }
       }
     }
   }
