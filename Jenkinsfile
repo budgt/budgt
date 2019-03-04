@@ -157,7 +157,7 @@ pipeline {
           }
 
           steps {
-            sh './gradlew backend:category-service:test'
+            sh './gradlew backend:category-service:test jacocoTestReport'
             script {
               publishHTML([
                 allowMissing: false,
@@ -175,21 +175,44 @@ pipeline {
     }
 
     stage('SonarQube analysis') {
-      agent {
-        dockerfile {
-          dir 'frontend/build/deploy/docker/build'
-          additionalBuildArgs '-t budgt-build'
-        }
-      }
+      parallel {
+        stage('Frontend') {
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
 
-      steps {
-        withSonarQubeEnv('sonarcloud') {
-          dir("frontend") {
-            sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+          steps {
+            withSonarQubeEnv('sonarcloud') {
+              dir("frontend") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
           }
         }
+
+        stage('category-service') {
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            withSonarQubeEnv('sonarcloud') {
+              dir("backend/category-service") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
+          }
+        }
+
       }
     }
+
 
     stage("Compile") {
       parallel {
