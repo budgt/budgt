@@ -143,6 +143,7 @@ pipeline {
                   reportName: 'Unit test coverage'
                 ])
               }
+              stash includes: 'frontend/build/reports/coverage/lcov.info', name: 'frontend-coverage'
               junit 'build/reports/unit-test/*.xml'
             }
           }
@@ -168,6 +169,7 @@ pipeline {
                 reportName: 'Unit test'
               ])
             }
+            stash includes: 'backend/category-service/build/reports/jacoco/test', name: 'category-service-coverage'
             junit 'backend/category-service/build/test-results/**/*.xml'
           }
         }
@@ -185,6 +187,7 @@ pipeline {
           }
 
           steps {
+            unstash 'frontend-coverage'
             withSonarQubeEnv('sonarcloud') {
               dir("frontend") {
                 sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
@@ -202,6 +205,7 @@ pipeline {
           }
 
           steps {
+            unstash 'category-service-coverage'
             withSonarQubeEnv('sonarcloud') {
               dir("backend/category-service") {
                 sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
