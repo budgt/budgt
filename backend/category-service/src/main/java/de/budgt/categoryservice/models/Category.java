@@ -107,13 +107,6 @@ public class Category {
     return category;
   }
 
-  // @Override
-  // public boolean equals(Object object) {
-  // boolean equals = false;
-  // if()
-
-  // }
-
   public enum CategoryType {
     INCOME, EXPENSE
   }
