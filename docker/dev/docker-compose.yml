@@ -51,6 +51,8 @@ services:
       budgt-network:
         aliases:
           - budgt-config-server
+    ports:
+      - 1339:1339
     volumes:
       - /opt/budgt-configuration:/opt/budgt-configuration
 
