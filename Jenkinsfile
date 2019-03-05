@@ -143,7 +143,7 @@ pipeline {
                   reportName: 'Unit test coverage'
                 ])
               }
-              stash includes: 'frontend/build/reports/coverage/lcov.info', name: 'frontend-coverage'
+              stash includes: 'build/reports/coverage/lcov.info', name: 'frontend-coverage'
               junit 'build/reports/unit-test/*.xml'
             }
           }
