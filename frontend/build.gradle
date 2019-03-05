@@ -6,14 +6,14 @@ task clean {
     doLast {
         exec {
             workingDir './'
-            commandLine 'sh', '-c', 'rm -r dist'
+            commandLine 'sh', '-c', 'if [ ! -d dist ]; then rm -rf dist; fi'
 
         }
     }
 }
 
 task build {
-	description 'Clean workspace'
+	description 'Build angular app'
     doLast {
         exec {
             workingDir './'
@@ -27,8 +27,8 @@ task dockerbuild {
 	description 'Build frontend docker image.'
     doLast {
         exec {
-            workingDir '../'
-            commandLine 'sh', '-c', 'docker build -f frontend/build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
+            workingDir './'
+            commandLine 'sh', '-c', 'docker build -f build/deploy/docker/frontend/Dockerfile -t budgt-frontend .'
 
         }
     }

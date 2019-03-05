@@ -1,0 +1,30 @@
+{
+  "run": {
+    "default": "",
+    "items": [
+      {
+        "name": "backend",
+        "projectName": "backend",
+        "workingDirectory": "/home/patrick/git/budgt/backend",
+        "args": [],
+        "vmargs": ["-Dspring.profiles.active=unittest"],
+        "env": {},
+        "preLaunchTask": ""
+      }
+    ]
+  },
+  "debug": {
+    "default": "",
+    "items": [
+      {
+        "name": "backend",
+        "projectName": "backend",
+        "workingDirectory": "/home/patrick/git/budgt/backend",
+        "args": [],
+        "vmargs": [],
+        "env": {},
+        "preLaunchTask": ""
+      }
+    ]
+  }
+}

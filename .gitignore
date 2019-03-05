@@ -26,6 +26,7 @@ bin/
 .gradle
 gradle
 build/
+!frontend/build
 
 #reports
 backend/category-service/build/reports

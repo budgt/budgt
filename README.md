@@ -1,6 +1,6 @@
 # Budget
 
-The Budgt frontend is written in angular, the backend with java and the spring framework.
+The budgt frontend is written in angular, the backend with java and the spring framework.
 
 ## Build Status
 
