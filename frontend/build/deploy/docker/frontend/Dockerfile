@@ -10,7 +10,7 @@ FROM nginx:alpine
 LABEL maintainer="hofmann@budgt.de"
 
 # Copy config
-COPY frontend/build/deploy/conf/nginx.conf /etc/nginx/nginx.conf
+COPY build/deploy/conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy app
 WORKDIR /usr/share/nginx/html

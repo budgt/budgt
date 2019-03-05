@@ -104,7 +104,7 @@ pipeline {
           }
         }
 
-        stage('Prepare links') {
+        stage('Prepare config') {
           agent any
           when {
             branch 'development'
@@ -112,7 +112,7 @@ pipeline {
 
           steps {
             dir("frontend/build/deploy/conf") {
-              sh 'ln -s dev/nginx.conf nginx.conf'
+              sh 'cp dev/nginx.conf nginx.conf'
             }
           }
         }
