@@ -21,6 +21,31 @@ pipeline {
   }
 
   stages {
+    stage('Clean up workspace') {
+      agent any
+
+      steps {
+        dir("${env.WORKSPACE}") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@2") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@3") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@tmp") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@2@tmp") {
+          deleteDir()
+        }
+        dir("${env.WORKSPACE}@3@tmp") {
+          deleteDir()
+        }
+      }
+    }
+
     stage('Fetch dependencies') {
       agent {
         dockerfile {
@@ -118,6 +143,7 @@ pipeline {
                   reportName: 'Unit test coverage'
                 ])
               }
+              stash includes: 'build/reports/coverage/lcov.info', name: 'frontend-coverage'
               junit 'build/reports/unit-test/*.xml'
             }
           }
@@ -132,7 +158,7 @@ pipeline {
           }
 
           steps {
-            sh './gradlew backend:category-service:test'
+            sh './gradlew backend:category-service:test jacocoTestReport'
             script {
               publishHTML([
                 allowMissing: false,
@@ -143,6 +169,7 @@ pipeline {
                 reportName: 'Unit test'
               ])
             }
+            stash includes: 'backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml', name: 'category-service-coverage'
             junit 'backend/category-service/build/test-results/**/*.xml'
           }
         }
@@ -150,21 +177,46 @@ pipeline {
     }
 
     stage('SonarQube analysis') {
-      agent {
-        dockerfile {
-          dir 'frontend/build/deploy/docker/build'
-          additionalBuildArgs '-t budgt-build'
-        }
-      }
+      parallel {
+        stage('Frontend') {
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
 
-      steps {
-        withSonarQubeEnv('sonarcloud') {
-          dir("frontend") {
-            sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+          steps {
+            unstash 'frontend-coverage'
+            withSonarQubeEnv('sonarcloud') {
+              dir("frontend") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
           }
         }
+
+        stage('category-service') {
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            unstash 'category-service-coverage'
+            withSonarQubeEnv('sonarcloud') {
+              dir("backend/category-service") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
+          }
+        }
+
       }
     }
+
 
     stage("Compile") {
       parallel {
@@ -299,31 +351,6 @@ pipeline {
       steps {
         sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose pull"'
         sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
-      }
-    }
-
-    stage('Clean up workspace') {
-      agent any
-
-      steps {
-        dir("${env.WORKSPACE}") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@2") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@3") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@tmp") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@2@tmp") {
-          deleteDir()
-        }
-        dir("${env.WORKSPACE}@3@tmp") {
-          deleteDir()
-        }
       }
     }
   }

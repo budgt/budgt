@@ -92,27 +92,22 @@ public class Category {
 
   @Override
   public String toString() {
-    String category = "Category:\n";
-    category += "  ID: " + this.id + "\n";
-    category += "  Name: " + this.name + "\n";
-    category += "  Type: " + this.type + "\n";
-    category += "  Amount: " + this.amount + "\n";
-    category += "  Subcategories: " + this.amount + "\n";
+    StringBuilder sbld = new StringBuilder();
+
+    sbld.append("Categodry:\n");
+    sbld.append("  ID: " + this.id + "\n");
+    sbld.append("  Name: " + this.name + "\n");
+    sbld.append("  Type: " + this.type + "\n");
+    sbld.append("  Amount: " + this.amount + "\n");
+    sbld.append("  Subcategories: " + this.amount + "\n");
 
     for (Subcategory subcategory : this.subcategories) {
-      category += "    Name: " + subcategory.getName() + "\n";
-      category += "    Amount: " + subcategory.getAmount() + "\n";
+      sbld.append("    Name: " + subcategory.getName() + "\n");
+      sbld.append("    Amount: " + subcategory.getAmount() + "\n");
     }
 
-    return category;
+    return sbld.toString();
   }
-
-  // @Override
-  // public boolean equals(Object object) {
-  // boolean equals = false;
-  // if()
-
-  // }
 
   public enum CategoryType {
     INCOME, EXPENSE
