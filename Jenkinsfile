@@ -169,7 +169,7 @@ pipeline {
                 reportName: 'Unit test'
               ])
             }
-            stash includes: 'backend/category-service/build/reports/jacoco/test', name: 'category-service-coverage'
+            stash includes: 'backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml', name: 'category-service-coverage'
             junit 'backend/category-service/build/test-results/**/*.xml'
           }
         }
