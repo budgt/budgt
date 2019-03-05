@@ -65,3 +65,10 @@ test {
   systemProperties.put("spring.profiles.active","unittest")
   systemProperties['user.dir'] = workingDir
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
+}
