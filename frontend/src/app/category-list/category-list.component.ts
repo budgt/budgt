@@ -31,7 +31,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     let index: number = this.categories.indexOf(category);
     this.categories.splice(index, 1);
 
-    this.categoryService.deleteCatgory(category);
+    this.categoryService.deleteCatgory(category).subscribe();
   }
 
   deleteSubcategory(subcategory: Subcategory) {
