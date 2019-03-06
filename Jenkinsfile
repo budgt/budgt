@@ -105,7 +105,6 @@ pipeline {
         }
       }
     }
-  }
 
       stage('Unit test') {
       parallel {
@@ -205,7 +204,6 @@ pipeline {
       }
     }
 
-
     stage("Compile") {
       parallel {
         stage('frontend') {
@@ -272,6 +270,7 @@ pipeline {
             dir("frontend") {
               unstash('dist')
             }
+
             dir("frontend/build/deploy/conf") {
               sh 'cp dev/nginx.conf nginx.conf'
             }
