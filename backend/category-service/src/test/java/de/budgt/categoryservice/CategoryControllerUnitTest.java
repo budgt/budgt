@@ -161,9 +161,8 @@ public class CategoryControllerUnitTest {
 
     when(service.update(any())).thenReturn(category);
 
-    mvc.perform(
-        put("/categories").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(category)))
-        .andExpect(status().isOk()) //
+    mvc.perform(put("/categories/" + category.getId()).contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(category))).andExpect(status().isOk()) //
         .andExpect(jsonPath("$.id", is(category.getId()))) //
         .andExpect(jsonPath("$.name", is(category.getName())))
         .andExpect(jsonPath("$.type", is(category.getType().toString())))
