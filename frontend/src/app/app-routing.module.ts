@@ -11,7 +11,7 @@ const appRoutes: Routes = [
     path: 'category-dialog/edit/:id',
     component: CategoryPopupComponent,
     data: {
-      pageTitle: 'Create/Edit Category'
+      pageTitle: 'Edit Category'
     },
     outlet: 'popup'
   },
@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     path: 'category-dialog/create',
     component: CategoryPopupComponent,
     data: {
-      pageTitle: 'Create/Edit Category'
+      pageTitle: 'Create Category'
     },
     outlet: 'popup'
   },
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     path: 'subcategory-dialog/create',
     component: SubcategoryPopupComponent,
     data: {
-      pageTitle: 'Create/Edit Subcategory'
+      pageTitle: 'Create Subcategory'
     },
     outlet: 'popup'
   },
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
     path: 'subcategory-dialog/edit/:id',
     component: SubcategoryPopupComponent,
     data: {
-      pageTitle: 'Create/Edit Subcategory'
+      pageTitle: 'Edit Subcategory'
     },
     outlet: 'popup'
   },
