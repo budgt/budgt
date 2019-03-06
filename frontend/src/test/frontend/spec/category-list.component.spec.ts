@@ -90,7 +90,7 @@ describe('Component Tests', () => {
       });
 
       it('should call #updateCategory', () => {
-        spyOn(service, 'updateCategory');
+        spyOn(service, 'updateCategory').and.returnValue(of(subCategory2));
 
         comp.deleteSubcategory(subCategory2);
 

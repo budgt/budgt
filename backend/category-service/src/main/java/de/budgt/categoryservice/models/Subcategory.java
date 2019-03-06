@@ -1,10 +1,13 @@
 package de.budgt.categoryservice.models;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Subcategory
  */
 public class Subcategory {
 
+  @Id
   private String id;
   private String name;
   private double amount;
