@@ -48,8 +48,8 @@ export class CategoryService {
    * Deletes a Category
    * @param category - category to delete
    */
-  deleteCatgory(category: Category) {
-    return this.http.delete(this.categoriesUrl + '/' + category.id);
+  deleteCatgory(category: Category): Observable<Category> {
+    return this.http.delete<Category>(this.categoriesUrl + '/' + category.id);
   }
 
   /**

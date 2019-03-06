@@ -7,7 +7,7 @@ import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
 
 describe('Component Tests', () => {
-  describe('Category Management Component', () => {
+  describe('Category List Component', () => {
     let comp: CategoryListComponent;
     let fixture: ComponentFixture<CategoryListComponent>;
     let service: CategoryService;
@@ -66,7 +66,7 @@ describe('Component Tests', () => {
       });
 
       it('should call #deleteCatgory', () => {
-        spyOn(service, 'deleteCatgory');
+        spyOn(service, 'deleteCatgory').and.returnValue(of(category2));
 
         comp.deleteCategory(category2);
 
