@@ -103,21 +103,9 @@ pipeline {
             }
           }
         }
-
-        stage('Prepare config') {
-          agent any
-          when {
-            branch 'development'
-          }
-
-          steps {
-            dir("frontend/build/deploy/conf") {
-              sh 'cp dev/nginx.conf nginx.conf'
-            }
-          }
-        }
       }
     }
+  }
 
       stage('Unit test') {
       parallel {
@@ -284,6 +272,10 @@ pipeline {
             dir("frontend") {
               unstash('dist')
             }
+            dir("frontend/build/deploy/conf") {
+              sh 'cp dev/nginx.conf nginx.conf'
+            }
+
             sh './gradlew frontend:dockerbuild'
           }
         }

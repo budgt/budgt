@@ -46,7 +46,7 @@ public class CategoryController {
     return new ResponseEntity<>(category, HttpStatus.OK);
   }
 
-  @PutMapping("/categories")
+  @PutMapping("/categories/{id}")
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
     category = categoryService.update(category);
     return new ResponseEntity<>(category, HttpStatus.OK);
