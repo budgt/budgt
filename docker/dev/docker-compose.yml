@@ -35,6 +35,8 @@ services:
           - budgt-category-service
     ports:
       - 1338:1338
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
     healthcheck:
       test:
         ["CMD", "curl", "-f", "http://budgt-category-service:1338/categories"]
