@@ -1,5 +1,6 @@
 package de.budgt.categoryservice.models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -16,6 +17,7 @@ public class Subcategory {
   }
 
   public Subcategory(String name, double amount) {
+    this.id = new ObjectId().toHexString();
     this.name = name;
     this.amount = amount;
   }
