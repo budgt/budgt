@@ -1,10 +1,7 @@
-<h1 mat-dialog-title>Create or edit category</h1>
+<div [hidden]="!category.id"><h1 mat-dialog-title>Edit category</h1></div>
+<div [hidden]="category.id"><h1 mat-dialog-title>Create category</h1></div>
 <div mat-dialog-content>
   <form name="editForm" role="form" novalidate #editForm="ngForm">
-    <div [hidden]="!category.id">
-      <input matInput type="text" placeholder="Category ID" id="id" name="id" [(ngModel)]="category.id" readonly />
-    </div>
-
     <mat-form-field>
       <input matInput [(ngModel)]="category.name" placeholder="Category name" name="name" id="field_name" required />
     </mat-form-field>
