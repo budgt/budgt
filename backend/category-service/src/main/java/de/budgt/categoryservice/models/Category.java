@@ -1,5 +1,8 @@
 package de.budgt.categoryservice.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 
 /**
@@ -12,7 +15,7 @@ public class Category {
   private String name;
   private CategoryType type;
   private double amount;
-  private Subcategory[] subcategories;
+  private List<Subcategory> subcategories;
 
   public Category() {
   }
@@ -21,6 +24,7 @@ public class Category {
     this.id = id;
     this.setName(name);
     this.type = type;
+    this.subcategories = new ArrayList<>();
   }
 
   /**
@@ -79,14 +83,14 @@ public class Category {
   /**
    * @return the subcategories
    */
-  public Subcategory[] getSubcategories() {
+  public List<Subcategory> getSubcategories() {
     return subcategories;
   }
 
   /**
    * @param subcategories the subcategories to set
    */
-  public void setSubcategories(Subcategory[] subcategories) {
+  public void setSubcategories(List<Subcategory> subcategories) {
     this.subcategories = subcategories;
   }
 

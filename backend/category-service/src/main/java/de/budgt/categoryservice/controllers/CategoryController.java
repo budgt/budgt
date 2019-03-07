@@ -1,6 +1,8 @@
 package de.budgt.categoryservice.controllers;
 
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +50,12 @@ public class CategoryController {
 
   @PutMapping("/categories/{id}")
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
+    category.getSubcategories().forEach(subcategory -> {
+      if (subcategory.getId().equals(null)) {
+        subcategory.setId(new ObjectId().toHexString());
+      }
+    });
+
     category = categoryService.update(category);
     return new ResponseEntity<>(category, HttpStatus.OK);
   }

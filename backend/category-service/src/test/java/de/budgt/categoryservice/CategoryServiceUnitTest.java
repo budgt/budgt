@@ -46,8 +46,8 @@ public class CategoryServiceUnitTest {
     category = new Category("ID", "category", CategoryType.INCOME);
     subcategory = new Subcategory("subcategory", 999);
     subcategory.setId("ID");
-    Subcategory[] subcategories = new Subcategory[1];
-    subcategories[0] = subcategory;
+    List<Subcategory> subcategories = new ArrayList<>();
+    subcategories.add(subcategory);
 
     category.setAmount(1);
     category.setSubcategories(subcategories);
@@ -55,8 +55,8 @@ public class CategoryServiceUnitTest {
     category2 = new Category("ID2", "category2", CategoryType.EXPENSE);
     subcategory = new Subcategory("subcategory2", 0);
     subcategory.setId("ID2");
-    Subcategory[] subcategories2 = new Subcategory[1];
-    subcategories2[0] = subcategory2;
+    List<Subcategory> subcategories2 = new ArrayList<>();
+    subcategories2.add(subcategory2);
 
     category2.setAmount(1);
     category2.setSubcategories(subcategories2);

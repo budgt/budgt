@@ -3,7 +3,7 @@
     <mat-expansion-panel-header (click)="selectCategory(category)"> {{ category.name }} </mat-expansion-panel-header>
     <mat-list>
       <mat-list-item *ngFor="let subcategory of category.subcategories">
-        {{ subcategory.name }}
+        {{ subcategory.name }} {{ subcategory.id }}
         <div id="subcategory-buttons">
           <span
             [routerLink]="['/', { outlets: { popup: ['subcategory-dialog', 'edit', subcategory.id] } }]"

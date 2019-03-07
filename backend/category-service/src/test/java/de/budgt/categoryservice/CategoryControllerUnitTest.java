@@ -3,7 +3,9 @@ package de.budgt.categoryservice;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -72,8 +74,8 @@ public class CategoryControllerUnitTest {
     category2 = new Category("ID2", "category2", CategoryType.EXPENSE);
     subcategory = new Subcategory("subcategory", 999);
     subcategory.setId("ID");
-    Subcategory[] subcategories = new Subcategory[1];
-    subcategories[0] = subcategory;
+    List<Subcategory> subcategories = new ArrayList<>();
+    subcategories.add(subcategory);
 
     category.setAmount(1);
     category.setSubcategories(subcategories);
