@@ -51,7 +51,7 @@ public class CategoryController {
   @PutMapping("/categories/{id}")
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
     category.getSubcategories().forEach(subcategory -> {
-      if (subcategory.getId() != null) {
+      if (subcategory.getId() == null) {
         subcategory.setId(new ObjectId().toHexString());
       }
     });
