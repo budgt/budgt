@@ -7,6 +7,7 @@ import { Subcategory } from '../../models/subcategory';
 import { SubcategoryService } from '../subcategory.service';
 import { SubcategoryPopupService } from '../subcategory-popup.service';
 import { CategoryService } from '../category.service';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-subcategory-dialog',
@@ -40,17 +41,24 @@ export class SubcategoryDialogComponent implements OnInit {
       : this.subscribeToSaveResponse(this.subcategoryService.updateSubcategory(this.categoryService.selectedCategory, this.subcategory));
   }
 
-  private subscribeToSaveResponse(result: Observable<Subcategory>) {
+  private subscribeToSaveResponse(result: Observable<Category>) {
     result.subscribe(subcategory => this.onSaveSuccess(subcategory), (res: HttpErrorResponse) => this.onSaveError());
   }
 
-  private onSaveSuccess(result: Subcategory) {
+  private onSaveSuccess(result: Category) {
+    let newSubcategory = result.subcategories.find(subcategory => subcategory.name === this.subcategory.name);
+
+    let oldIndex = this.categoryService.selectedCategory.subcategories.findIndex(s => s.name === newSubcategory.name);
+
+    this.categoryService.selectedCategory.subcategories[oldIndex] = newSubcategory;
+
     this.isSaving = false;
     this.activeDialog.close(result);
   }
 
   private onSaveError() {
     this.isSaving = false;
+    // TODO: Handle save error. Remove category from array and display error.
   }
 }
 
