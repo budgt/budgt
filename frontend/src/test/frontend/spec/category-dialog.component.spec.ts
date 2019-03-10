@@ -64,6 +64,7 @@ describe('CategoryDialogComponent', () => {
         const entity = new Category();
         spyOn(service, 'createCategory').and.returnValue(of(entity));
         component.category = entity;
+        service.categories = [];
 
         component.save();
         tick();

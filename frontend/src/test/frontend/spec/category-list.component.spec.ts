@@ -40,7 +40,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(service.getCategories).toHaveBeenCalled();
-        expect(comp.categories[0]).toEqual(jasmine.objectContaining(category1));
+        expect(service.categories[0]).toEqual(jasmine.objectContaining(category1));
       });
     });
 
@@ -62,7 +62,7 @@ describe('Component Tests', () => {
       it('should remove the category from the list', () => {
         comp.deleteCategory(category1);
 
-        expect(comp.categories[0]).toEqual(jasmine.objectContaining(category2));
+        expect(service.categories[0]).toEqual(jasmine.objectContaining(category2));
       });
 
       it('should call #deleteCatgory', () => {
