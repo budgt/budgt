@@ -1,6 +1,5 @@
 package de.budgt.categoryservice.services;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
 import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
-import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.repositories.CategoryRepository;
 
 /**
@@ -61,10 +59,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   public Category setSubcategoryIds(Category category) {
     category.getSubcategories().forEach(subcategory -> {
-      if (subcategory != null) {
-        if (subcategory.getId() == null) {
-          subcategory.setId(new ObjectId().toHexString());
-        }
+      if (subcategory != null && subcategory.getId() == null) {
+        subcategory.setId(new ObjectId().toHexString());
       }
     });
     return category;

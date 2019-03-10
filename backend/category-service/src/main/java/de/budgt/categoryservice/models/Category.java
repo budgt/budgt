@@ -120,11 +120,7 @@ public class Category {
     subcategories.forEach(subcategory -> subcategoryNames.add(subcategory.getName()));
     Set<String> set = new HashSet<>(subcategoryNames);
 
-    if (set.size() < subcategoryNames.size()) {
-      return true;
-    }
-
-    return false;
+    return set.size() < subcategoryNames.size();
   }
 
   // Statt über HashSet, hier heue Methode die vergleicht.
