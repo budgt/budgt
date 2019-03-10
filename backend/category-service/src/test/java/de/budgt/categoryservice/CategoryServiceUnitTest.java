@@ -145,12 +145,11 @@ public class CategoryServiceUnitTest {
   public void update_WithDupicateSubcategory_shouldCallSave_andReturnUpdateddCategory() {
     category.getSubcategories().add(subcategory);
 
-    when(repository.save(category)).thenThrow(new DuplicateSubcategoryException(subcategory.getName()));
+    when(repository.save(category)).thenThrow(new DuplicateSubcategoryException());
 
     assertThatExceptionOfType(DuplicateSubcategoryException.class).isThrownBy(() -> {
       service.update(category);
-    }).withMessage("Duplicate subcategory name detected. Subcategory with name '" + subcategory.getName()
-        + "' already exists for this category.");
+    }).withMessage("Subcategory names must be unique within a given category.");
 
     verify(repository, never()).save(category);
     verify(service, never()).setSubcategoryIds(category);

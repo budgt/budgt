@@ -43,24 +43,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Category update(Category category) {
-    String duplicateSubcategoryName = "none";
 
-    HashSet<Subcategory> subcategories = new HashSet<>();
-
-    for (Subcategory currentSubcategory : category.getSubcategories()) {
-      if (!subcategories.add(currentSubcategory)) {
-        duplicateSubcategoryName = currentSubcategory.getName();
-        break;
-      }
-    }
-
-    if (duplicateSubcategoryName.equals("none")) {
+    if (category.checkForSubcategoryDuplicate()) {
+      throw new DuplicateSubcategoryException();
+    } else {
       // generate IDs for new Subcategories
       category = setSubcategoryIds(category);
 
       return categoryRepository.save(category);
-    } else {
-      throw new DuplicateSubcategoryException(duplicateSubcategoryName);
     }
   }
 
