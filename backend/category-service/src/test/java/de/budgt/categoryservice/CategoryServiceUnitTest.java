@@ -4,6 +4,9 @@ import static org.mockito.ArgumentMatchers.any;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
+
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,6 +23,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.models.Category.CategoryType;
@@ -30,6 +34,7 @@ import de.budgt.categoryservice.services.CategoryServiceImpl;
 public class CategoryServiceUnitTest {
 
   @InjectMocks
+  @Spy
   private CategoryServiceImpl service;
 
   @Mock
@@ -53,8 +58,8 @@ public class CategoryServiceUnitTest {
     category.setSubcategories(subcategories);
 
     category2 = new Category("ID2", "category2", CategoryType.EXPENSE);
-    subcategory = new Subcategory("subcategory2", 0);
-    subcategory.setId("ID2");
+    subcategory2 = new Subcategory("subcategory2", 0);
+    subcategory2.setId("ID2");
     List<Subcategory> subcategories2 = new ArrayList<>();
     subcategories2.add(subcategory2);
 
@@ -123,13 +128,32 @@ public class CategoryServiceUnitTest {
   }
 
   @Test
-  public void update_shouldCallSave_andReturnUpdateddCategory() {
+  public void update_WithoutDupicateSubcategory_shouldCallSave_andReturnUpdateddCategory() {
+    subcategory2.setId(null);
+    category.getSubcategories().add(subcategory2);
+
     when(repository.save(category)).thenReturn(category);
 
     Category updated = service.update(category);
 
     assertThat(updated).isEqualTo(category);
     verify(repository, times(1)).save(category);
+    verify(service, times(1)).setSubcategoryIds(category);
+  }
+
+  @Test
+  public void update_WithDupicateSubcategory_shouldCallSave_andReturnUpdateddCategory() {
+    category.getSubcategories().add(subcategory);
+
+    when(repository.save(category)).thenThrow(new DuplicateSubcategoryException(subcategory.getName()));
+
+    assertThatExceptionOfType(DuplicateSubcategoryException.class).isThrownBy(() -> {
+      service.update(category);
+    }).withMessage("Duplicate subcategory name detected. Subcategory with name '" + subcategory.getName()
+        + "' already exists for this category.");
+
+    verify(repository, never()).save(category);
+    verify(service, never()).setSubcategoryIds(category);
   }
 
   @Test

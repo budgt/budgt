@@ -1,12 +1,16 @@
 package de.budgt.categoryservice.services;
 
+import java.util.HashSet;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
+import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.repositories.CategoryRepository;
 
 /**
@@ -39,11 +43,41 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Category update(Category category) {
-    return categoryRepository.save(category);
+    String duplicateSubcategoryName = "none";
+
+    HashSet<Subcategory> subcategories = new HashSet<>();
+
+    for (Subcategory currentSubcategory : category.getSubcategories()) {
+      if (!subcategories.add(currentSubcategory)) {
+        duplicateSubcategoryName = currentSubcategory.getName();
+        break;
+      }
+    }
+
+    if (duplicateSubcategoryName.equals("none")) {
+      // generate IDs for new Subcategories
+      category = setSubcategoryIds(category);
+
+      return categoryRepository.save(category);
+    } else {
+      throw new DuplicateSubcategoryException(duplicateSubcategoryName);
+    }
   }
 
   @Override
   public void deleteById(String id) {
     categoryRepository.deleteById(id);
   }
+
+  public Category setSubcategoryIds(Category category) {
+    category.getSubcategories().forEach(subcategory -> {
+      if (subcategory != null) {
+        if (subcategory.getId() == null) {
+          subcategory.setId(new ObjectId().toHexString());
+        }
+      }
+    });
+    return category;
+  }
+
 }
