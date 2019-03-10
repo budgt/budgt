@@ -33,7 +33,9 @@ export class CategoryService {
    * @param category - the new version of the category
    */
   updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(this.categoriesUrl + '/' + category.id, category);
+    return this.http
+      .put<Category>(this.categoriesUrl + '/' + category.id, category)
+      .pipe(catchError(this.handleError<Category>('putCategory id=' + category.id)));
   }
 
   /**
