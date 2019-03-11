@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <form name="editForm" role="form" novalidate #editForm="ngForm">
     <mat-form-field>
-      <input matInput [(ngModel)]="subcategory.name" placeholder="Subcategory name" name="name" id="field_name" required />
+      <input matInput [(ngModel)]="subcategory.name" placeholder="Subcategory name" name="name" id="field_name" cdkFocusInitial required />
     </mat-form-field>
 
     <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
@@ -13,6 +13,5 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="clear()">Cancel</button>
-  <button mat-button (click)="save()" [mat-dialog-close]="subcategory" cdkFocusInitial>Save</button>
+  <button mat-button (click)="clear()">Cancel</button> <button mat-button (click)="save()" [mat-dialog-close]="subcategory">Save</button>
 </div>
