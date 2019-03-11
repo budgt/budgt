@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class CategoryListComponent implements OnInit, OnDestroy {
   categorySubscription: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService) {}
 
   ngOnInit() {
     this.categorySubscription = this.categoryService.getCategories().subscribe(categories => {

@@ -18,7 +18,7 @@ export class CategoryDialogComponent implements OnInit {
 
   constructor(
     public activeDialog: MatDialogRef<Component>,
-    public categoryService: CategoryService,
+    categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: Category
   ) {}
 
