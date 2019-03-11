@@ -10,14 +10,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  categories: Category[];
   categorySubscription: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService) {}
 
   ngOnInit() {
     this.categorySubscription = this.categoryService.getCategories().subscribe(categories => {
-      this.categories = categories;
+      this.categoryService.categories = categories;
     });
   }
 
@@ -28,8 +27,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   deleteCategory(category: Category) {
-    let index: number = this.categories.indexOf(category);
-    this.categories.splice(index, 1);
+    let index: number = this.categoryService.categories.indexOf(category);
+    this.categoryService.categories.splice(index, 1);
 
     this.categoryService.deleteCatgory(category).subscribe();
   }
