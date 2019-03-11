@@ -1,5 +1,5 @@
 <mat-accordion>
-  <mat-expansion-panel id="category-list" *ngFor="let category of categories">
+  <mat-expansion-panel id="category-list" *ngFor="let category of categoryService.categories">
     <mat-expansion-panel-header (click)="selectCategory(category)"> {{ category.name }} </mat-expansion-panel-header>
     <mat-list>
       <mat-list-item *ngFor="let subcategory of category.subcategories">
