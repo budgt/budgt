@@ -3,6 +3,7 @@ import { Category } from '../models/category';
 import { CategoryService } from './category.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LoaderService } from './loader.service.service';
 
 @Component({
   selector: 'category-list',
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class CategoryListComponent implements OnInit, OnDestroy {
   categorySubscription: Subscription;
 
-  constructor(public categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService, public loaderService: LoaderService) {}
 
   ngOnInit() {
     this.categorySubscription = this.categoryService.getCategories().subscribe(categories => {

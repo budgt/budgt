@@ -11,9 +11,18 @@
 }
 
 #category-list {
-  min-width: 550px;
+  width: 400px;
 }
 
 #add-category-button {
+  margin: auto;
+}
+
+.loadingIndicatorContainer {
+  width: 400px;
+  height: 120px;
+}
+
+#progress-spinner {
   margin: auto;
 }
