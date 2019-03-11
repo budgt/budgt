@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.services.CategoryService;
 
@@ -51,7 +52,7 @@ public class CategoryController {
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
     try {
       return new ResponseEntity<>(categoryService.update(category), HttpStatus.OK);
-    } catch (CategoryNotFoundException ex) {
+    } catch (DuplicateSubcategoryException ex) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
   }
