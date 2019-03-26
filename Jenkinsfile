@@ -47,6 +47,9 @@ pipeline {
     }
 
     stage('Fetch dependencies') {
+      when {
+        changeset "**/frontend/*.*"
+      }
       agent {
         dockerfile {
           dir 'frontend/build/deploy/docker/build'
@@ -63,6 +66,9 @@ pipeline {
     }
 
     stage('Preparation') {
+      when {
+        changeset "**/frontend/*.*"
+      }
       parallel {
 
         stage('Check versions') {
@@ -106,9 +112,12 @@ pipeline {
       }
     }
 
-      stage('Unit test') {
+    stage('Unit test') {
       parallel {
         stage("frontend") {
+          when {
+            changeset "**/frontend/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -137,6 +146,9 @@ pipeline {
         }
 
         stage("category-service") {
+          when {
+            changeset "**/backend/category-service/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -166,6 +178,9 @@ pipeline {
     stage('SonarQube analysis') {
       parallel {
         stage('Frontend') {
+          when {
+            changeset "**/frontend/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -184,6 +199,9 @@ pipeline {
         }
 
         stage('category-service') {
+          when {
+            changeset "**/backend/category-service/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -207,6 +225,9 @@ pipeline {
     stage("Compile") {
       parallel {
         stage('frontend') {
+          when {
+            changeset "**/frontend/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -229,6 +250,9 @@ pipeline {
         }
 
         stage('config-server') {
+          when {
+            changeset "**/backend/config-server/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -243,6 +267,9 @@ pipeline {
         }
 
         stage('category-service') {
+          when {
+            changeset "**/backend/category-service/*.*"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -264,6 +291,9 @@ pipeline {
       }
       parallel {
         stage("frontend") {
+          when {
+            changeset "**/frontend/*.*"
+          }
           agent any
 
           steps {
@@ -280,6 +310,9 @@ pipeline {
         }
 
         stage("category-service") {
+          when {
+            changeset "**/backend/category-service/*.*"
+          }
           agent any
 
           steps {
@@ -289,6 +322,9 @@ pipeline {
         }
 
         stage("config-server") {
+          when {
+            changeset "**/backend/config-server/*.*"
+          }
           agent any
 
           steps {
