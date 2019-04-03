@@ -11,8 +11,10 @@ services:
         aliases:
           - budgt-gateway
     ports:
-      - 80:80
-      - 443:443
+      - 80:8080
+      - 443:8443
+    volumes:
+      - /opt/budgt/certs/:/opt/budgt/certs/
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     healthcheck:
