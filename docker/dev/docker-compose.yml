@@ -13,6 +13,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
     healthcheck:
       test: ["CMD", "curl", "-f", "https://dev.budgt.de"]
       interval: 1m30s
