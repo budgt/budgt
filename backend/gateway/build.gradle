@@ -17,17 +17,19 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'de.budgt'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-ext['springCloudVersion'] = 'Greenwich.SR1'
+ext {
+	set('springCloudVersion', 'Greenwich.SR1')
+}
 
 dependencies {
-	implementation('org.springframework.cloud:spring-cloud-config-server')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
@@ -42,9 +44,8 @@ task dockerbuild {
     doLast {
         exec {
             workingDir '../../'
-            commandLine 'sh', '-c', 'docker build -f backend/config-server/src/main/deploy/docker/Dockerfile -t budgt-config-server .'
+            commandLine 'sh', '-c', 'docker build -f backend/gateway/src/main/deploy/docker/Dockerfile -t budgt-gateway .'
 
         }
     }
 }
-

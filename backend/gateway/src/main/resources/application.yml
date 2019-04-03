@@ -1,0 +1,12 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
+zuul:
+  routes:
+    ui:
+      url: http://budgt-frontend:1443/
+      # sensitive-headers:
+    category-service:
+      path: /api/category-service/**
+      url: http://category-service:1338/
+      # sensitive-headers:

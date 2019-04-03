@@ -266,6 +266,23 @@ pipeline {
           }
         }
 
+        stage('gateway') {
+          when {
+            changeset "**/backend/gateway/*.*"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:gateway:build'
+            stash includes: 'backend/gateway/build/libs/', name: 'gateway'
+          }
+        }
+
         stage('category-service') {
           when {
             changeset "**/backend/category-service/*.*"
@@ -332,6 +349,18 @@ pipeline {
             sh './gradlew backend:config-server:dockerbuild'
           }
         }
+
+        stage("gateway") {
+          when {
+            changeset "**/backend/gateway/*.*"
+          }
+          agent any
+
+          steps {
+            unstash('gateway')
+            sh './gradlew backend:gateway:dockerbuild'
+          }
+        }
       }
     }
 
@@ -352,6 +381,9 @@ pipeline {
 
             sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
             sh 'docker push budgt/budgt-config-server:edge'
+
+            sh 'docker tag budgt-gateway budgt/budgt-gateway:edge'
+            sh 'docker push budgt/budgt-gateway:edge'
           }
         }
       }
