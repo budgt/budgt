@@ -4,7 +4,7 @@ logging:
 zuul:
   routes:
     ui:
-      url: http://budgt-frontend:1443/
+      url: https://budgt-frontend:1443/
       # sensitive-headers:
     category-service:
       path: /api/category-service/**
