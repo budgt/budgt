@@ -48,7 +48,7 @@ pipeline {
 
     stage('Fetch dependencies') {
       when {
-        changeset "**/frontend/*.*"
+        changeset "**/frontend/**"
       }
       agent {
         dockerfile {
@@ -67,7 +67,7 @@ pipeline {
 
     stage('Preparation') {
       when {
-        changeset "**/frontend/*.*"
+        changeset "**/frontend/**"
       }
       parallel {
 
@@ -116,7 +116,7 @@ pipeline {
       parallel {
         stage("frontend") {
           when {
-            changeset "**/frontend/*.*"
+            changeset "**/frontend/**"
           }
           agent {
             dockerfile {
@@ -147,7 +147,7 @@ pipeline {
 
         stage("category-service") {
           when {
-            changeset "**/backend/category-service/*.*"
+            changeset "**/backend/category-service/**"
           }
           agent {
             dockerfile {
@@ -179,7 +179,7 @@ pipeline {
       parallel {
         stage('Frontend') {
           when {
-            changeset "**/frontend/*.*"
+            changeset "**/frontend/**"
           }
           agent {
             dockerfile {
@@ -200,7 +200,7 @@ pipeline {
 
         stage('category-service') {
           when {
-            changeset "**/backend/category-service/*.*"
+            changeset "**/backend/category-service/**"
           }
           agent {
             dockerfile {
@@ -226,7 +226,7 @@ pipeline {
       parallel {
         stage('frontend') {
           when {
-            changeset "**/frontend/*.*"
+            changeset "**/frontend/**"
           }
           agent {
             dockerfile {
@@ -251,7 +251,7 @@ pipeline {
 
         stage('config-server') {
           when {
-            changeset "**/backend/config-server/*.*"
+            changeset "**/backend/config-server/**"
           }
           agent {
             dockerfile {
@@ -268,7 +268,7 @@ pipeline {
 
         stage('gateway') {
           when {
-            changeset "**/backend/gateway/*.*"
+            changeset "**/backend/gateway/**"
           }
           agent {
             dockerfile {
@@ -285,7 +285,7 @@ pipeline {
 
         stage('category-service') {
           when {
-            changeset "**/backend/category-service/*.*"
+            changeset "**/backend/category-service/**"
           }
           agent {
             dockerfile {
@@ -309,7 +309,7 @@ pipeline {
       parallel {
         stage("frontend") {
           when {
-            changeset "**/frontend/*.*"
+            changeset "**/frontend/**"
           }
           agent any
 
@@ -328,7 +328,7 @@ pipeline {
 
         stage("category-service") {
           when {
-            changeset "**/backend/category-service/*.*"
+            changeset "**/backend/category-service/**"
           }
           agent any
 
@@ -340,7 +340,7 @@ pipeline {
 
         stage("config-server") {
           when {
-            changeset "**/backend/config-server/*.*"
+            changeset "**/backend/config-server/**"
           }
           agent any
 
@@ -352,7 +352,7 @@ pipeline {
 
         stage("gateway") {
           when {
-            changeset "**/backend/gateway/*.*"
+            changeset "**/backend/gateway/**"
           }
           agent any
 
