@@ -2,7 +2,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './not-found.component';
 import { CategoryPopupService } from './category-list/category-popup.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -18,6 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SubcategoryDialogComponent, SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
 import { SubcategoryService } from './category-list/subcategory.service';
 import { SubcategoryPopupService } from './category-list/subcategory-popup.service';
+import { LoadingInterceptor } from './category-list/loading-interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,12 @@ import { SubcategoryPopupService } from './category-list/subcategory-popup.servi
     CategoryService, //
     CategoryPopupService,
     SubcategoryService,
-    SubcategoryPopupService
+    SubcategoryPopupService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [
     CategoryDialogComponent, //

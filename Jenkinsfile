@@ -47,6 +47,9 @@ pipeline {
     }
 
     stage('Fetch dependencies') {
+      when {
+        changeset "**/frontend/**"
+      }
       agent {
         dockerfile {
           dir 'frontend/build/deploy/docker/build'
@@ -63,6 +66,9 @@ pipeline {
     }
 
     stage('Preparation') {
+      when {
+        changeset "**/frontend/**"
+      }
       parallel {
 
         stage('Check versions') {
@@ -106,9 +112,12 @@ pipeline {
       }
     }
 
-      stage('Unit test') {
+    stage('Unit test') {
       parallel {
         stage("frontend") {
+          when {
+            changeset "**/frontend/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -137,6 +146,9 @@ pipeline {
         }
 
         stage("category-service") {
+          when {
+            changeset "**/backend/category-service/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -166,6 +178,9 @@ pipeline {
     stage('SonarQube analysis') {
       parallel {
         stage('Frontend') {
+          when {
+            changeset "**/frontend/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -184,6 +199,9 @@ pipeline {
         }
 
         stage('category-service') {
+          when {
+            changeset "**/backend/category-service/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -207,6 +225,9 @@ pipeline {
     stage("Compile") {
       parallel {
         stage('frontend') {
+          when {
+            changeset "**/frontend/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -229,6 +250,9 @@ pipeline {
         }
 
         stage('config-server') {
+          when {
+            changeset "**/backend/config-server/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -242,7 +266,27 @@ pipeline {
           }
         }
 
+        stage('gateway') {
+          when {
+            changeset "**/backend/gateway/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:gateway:build'
+            stash includes: 'backend/gateway/build/libs/', name: 'gateway'
+          }
+        }
+
         stage('category-service') {
+          when {
+            changeset "**/backend/category-service/**"
+          }
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -264,6 +308,9 @@ pipeline {
       }
       parallel {
         stage("frontend") {
+          when {
+            changeset "**/frontend/**"
+          }
           agent any
 
           steps {
@@ -280,6 +327,9 @@ pipeline {
         }
 
         stage("category-service") {
+          when {
+            changeset "**/backend/category-service/**"
+          }
           agent any
 
           steps {
@@ -289,11 +339,26 @@ pipeline {
         }
 
         stage("config-server") {
+          when {
+            changeset "**/backend/config-server/**"
+          }
           agent any
 
           steps {
             unstash('config-server')
             sh './gradlew backend:config-server:dockerbuild'
+          }
+        }
+
+        stage("gateway") {
+          when {
+            changeset "**/backend/gateway/**"
+          }
+          agent any
+
+          steps {
+            unstash('gateway')
+            sh './gradlew backend:gateway:dockerbuild'
           }
         }
       }
@@ -316,6 +381,9 @@ pipeline {
 
             sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
             sh 'docker push budgt/budgt-config-server:edge'
+
+            sh 'docker tag budgt-gateway budgt/budgt-gateway:edge'
+            sh 'docker push budgt/budgt-gateway:edge'
           }
         }
       }

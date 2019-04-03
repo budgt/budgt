@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CodeLens (Launch) - GatewayApplication",
+      "request": "launch",
+      "mainClass": "de.budgt.gateway.GatewayApplication",
+      "projectName": "gateway"
+    },
+    {
+      "type": "java",
       "name": "CodeLens (Launch) - CategoryService",
       "request": "launch",
       "mainClass": "de.budgt.categoryservice.CategoryService",

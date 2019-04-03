@@ -37,6 +37,7 @@ import static org.junit.Assert.assertEquals;
 
 import de.budgt.categoryservice.controllers.CategoryController;
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.models.Category.CategoryType;
@@ -177,6 +178,18 @@ public class CategoryControllerUnitTest {
 
     assertEquals(category.toString(), argument.getValue().toString());
 
+  }
+
+  @Test
+  public void updateCategory_withDuplicateSubcategoryName_shouldThrowDuplicateSubcategoryException() throws Exception {
+    when(service.update(any())).thenThrow(new DuplicateSubcategoryException());
+
+    mvc.perform(put("/categories/" + category.getId()).contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(category))) //
+        .andExpect(status().isBadRequest()) //
+        .andExpect(status().reason("Subcategory names must be unique within a given category."));
+
+    verify(service, times(1)).update(any());
   }
 
   @Test

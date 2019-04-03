@@ -3,7 +3,7 @@
 <div mat-dialog-content>
   <form name="editForm" role="form" novalidate #editForm="ngForm">
     <mat-form-field>
-      <input matInput [(ngModel)]="category.name" placeholder="Category name" name="name" id="field_name" required />
+      <input matInput [(ngModel)]="category.name" placeholder="Category name" name="name" id="field_name" cdkFocusInitial required />
     </mat-form-field>
 
     <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
@@ -14,6 +14,5 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="clear()">No Thanks</button>
-  <button mat-button (click)="save()" [mat-dialog-close]="category" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="clear()">Cancel</button> <button mat-button (click)="save()" [mat-dialog-close]="category">Save</button>
 </div>
