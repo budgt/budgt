@@ -11,7 +11,7 @@ services:
         aliases:
           - budgt-gateway
     ports:
-      - 80:8080
+      - 80:1336
       - 443:8443
     volumes:
       - /opt/budgt/certs/:/opt/budgt/certs/
