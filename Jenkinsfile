@@ -278,7 +278,7 @@ pipeline {
           }
 
           steps {
-            sh './gradlew backend:gateway:build'
+            sh './gradlew backend:gateway:build -x test'
             stash includes: 'backend/gateway/build/libs/', name: 'gateway'
           }
         }
