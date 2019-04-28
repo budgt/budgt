@@ -1,6 +1,6 @@
 spring:
   application:
-    name: category-service
+    name: gateway
   cloud:
     config:
       discovery:
