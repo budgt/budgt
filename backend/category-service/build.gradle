@@ -60,6 +60,14 @@ task dockerbuild {
     }
 }
 
+task cleanBuildDocker {
+    dependsOn 'clean'
+    dependsOn 'build'
+    dependsOn 'dockerbuild'
+    tasks.findByName('build').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'build'
+}
+
 test {
   systemProperties System.properties
   systemProperties.put("spring.profiles.active","unittest")

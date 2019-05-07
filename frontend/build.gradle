@@ -23,6 +23,17 @@ task build {
     }
 }
 
+task buildLocal{
+	description 'Build angular app'
+    doLast {
+        exec {
+            workingDir './'
+            commandLine 'sh', '-c', 'ng build'
+
+        }
+    }
+}
+
 task dockerbuild {
 	description 'Build frontend docker image.'
     doLast {
@@ -32,5 +43,13 @@ task dockerbuild {
 
         }
     }
+}
+
+task cleanBuildDockerLocal {
+    dependsOn 'clean'
+    dependsOn 'buildLocal'
+    dependsOn 'dockerbuild'
+    tasks.findByName('buildLocal').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'buildLocal'
 }
 
