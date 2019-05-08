@@ -2,8 +2,23 @@
 version: "3.7"
 
 services:
+  budgt-gateway:
+    image: budgt-gateway:latest
+    restart: always
+    container_name: budgt-gateway
+    depends_on:
+      - budgt-config-server
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-gateway
+    ports:
+      - 80:1336
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+
   budgt-frontend:
-    image: budgt/budgt-frontend:edge
+    image: budgt-frontend:latest
     restart: always
     container_name: budgt-frontend
     networks:
@@ -11,20 +26,10 @@ services:
         aliases:
           - budgt-frontend
     ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /opt/budgt/certs/:/opt/budgt/certs/
-      - /home/patrick/git/budgt/frontend/build/deploy/conf/local/nginx.conf:/etc/nginx/nginx.conf
-    healthcheck:
-      test: ["CMD", "curl", "-f", "https://dev.budgt.de"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      - 1380:1380
 
   budgt-category-service:
-    image: budgt-category-service
+    image: budgt-category-service:latest
     restart: always
     container_name: budgt-category-service
     depends_on:
@@ -36,34 +41,21 @@ services:
           - budgt-category-service
     ports:
       - 1338:1338
-    healthcheck:
-      test:
-        ["CMD", "curl", "-f", "http://budgt-category-service:1338/categories"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
 
   budgt-config-server:
-    image: budgt/budgt-config-server:edge
+    image: budgt-config-server:latest
     restart: always
     container_name: budgt-config-server
     networks:
       budgt-network:
         aliases:
           - budgt-config-server
-    volumes:
-      - /opt/budgt-configuration:/opt/budgt-configuration
     ports:
       - 1339:1339
-
-    healthcheck:
-      test:
-        ["CMD", "curl", "-f", "http://budgt-config-server:1339/actuator/health"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    volumes:
+      - /opt/budgt-configuration:/opt/budgt-configuration
 
   budgt-mongodb:
     image: mongo:xenial
@@ -75,8 +67,6 @@ services:
           - budgt-mongodb
     volumes:
       - /opt/docker/mongodb/data:/data/db
-    ports:
-      - 27017:27017
     command: mongod --auth
 
 networks:

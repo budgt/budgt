@@ -3,7 +3,7 @@
 # Based on openjdk:8-jdk-alpine
 ##########################################
 
-# Set the base image to node
+# Set the base image to openjdk 8 alpine
 FROM openjdk:8-jdk-alpine
 
 # File Author / Maintainer

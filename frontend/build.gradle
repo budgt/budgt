@@ -17,7 +17,7 @@ task build {
     doLast {
         exec {
             workingDir './'
-            commandLine 'sh', '-c', 'ng build --configuration=production'
+            commandLine 'sh', '-c', 'ng build --configuration=production --base-href /ui/ --deploy-url /ui/'
 
         }
     }
@@ -28,7 +28,7 @@ task buildLocal{
     doLast {
         exec {
             workingDir './'
-            commandLine 'sh', '-c', 'ng build'
+            commandLine 'sh', '-c', 'ng build --base-href /ui/ --deploy-url /ui/'
 
         }
     }
