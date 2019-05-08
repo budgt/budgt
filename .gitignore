@@ -16,6 +16,8 @@ frontend/node_modules
 # reports
 frontend/build/reports
 
+#local nginx conf
+frontend/build/deploy/conf/nginx.conf
 
 #################
 ## Backend

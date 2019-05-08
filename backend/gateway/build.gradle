@@ -50,3 +50,11 @@ task dockerbuild {
         }
     }
 }
+
+task cleanBuildDocker {
+    dependsOn 'clean'
+    dependsOn 'build'
+    dependsOn 'dockerbuild'
+    tasks.findByName('build').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'build'
+}

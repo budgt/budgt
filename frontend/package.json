@@ -6,7 +6,7 @@
     "ng": "ng",
     "prettier": "prettier --write \"**/*.{js,json,css,md,ts,html,component.html}\"",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod -base-href /ui/ --deploy-url /ui/",
     "test": "ng test",
     "test-debug": "ng test --browsers ChromeDebug",
     "lint": "ng lint",

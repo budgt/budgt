@@ -13,3 +13,9 @@ project('backend:config-server') {
 project(':frontend') {
 }
 
+task cleanBuildDockerLocal {
+    dependsOn 'frontend:cleanBuildDockerLocal'
+    dependsOn 'backend:category-service:cleanBuildDocker'
+    dependsOn 'backend:gateway:cleanBuildDocker'
+    dependsOn 'backend:config-server:cleanBuildDocker'
+}
