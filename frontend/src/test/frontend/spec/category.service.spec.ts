@@ -9,7 +9,7 @@ describe('Service Tests', () => {
     let service: CategoryService;
     let httpMock: HttpTestingController;
 
-    const resourceUrl = 'https://dev.budgt.de/api/categories';
+    const resourceUrl = 'http://localhost/api/category-service/categories';
     let category1 = new Category(123);
 
     beforeEach(() => {
