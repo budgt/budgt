@@ -13,7 +13,7 @@ services:
         aliases:
           - budgt-gateway
     ports:
-      - 443:8443
+      - 443:443
     volumes:
       - /opt/budgt/certs/:/opt/budgt/certs/
     environment:
