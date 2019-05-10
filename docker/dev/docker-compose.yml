@@ -6,12 +6,13 @@ services:
     image: budgt/budgt-gateway:edge
     restart: always
     container_name: budgt-gateway
+    depends_on:
+      - budgt-config-server
     networks:
       budgt-network:
         aliases:
           - budgt-gateway
     ports:
-      - 80:1336
       - 443:8443
     volumes:
       - /opt/budgt/certs/:/opt/budgt/certs/
@@ -34,7 +35,6 @@ services:
           - budgt-frontend
     ports:
       - 1380:1380
-      - 1443:1443
     volumes:
       - /opt/budgt/certs/:/opt/budgt/certs/
     healthcheck:
