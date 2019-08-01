@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationBarComponent } from '../../../app/navigation-bar/navigation-bar.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 describe('NavigationBarComponent', () => {
   let component: NavigationBarComponent;
