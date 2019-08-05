@@ -67,4 +67,5 @@ public class AuthController {
     model.put("message", "User registered successfully");
     return ok(model);
   }
+
 }

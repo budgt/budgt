@@ -26,6 +26,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'category-dialog/edit/:id',
+    canActivate: [AuthGuard],
     component: CategoryPopupComponent,
     data: {
       pageTitle: 'Edit Category'
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'category-dialog/create',
+    canActivate: [AuthGuard],
     component: CategoryPopupComponent,
     data: {
       pageTitle: 'Create Category'
@@ -42,6 +44,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'subcategory-dialog/create',
+    canActivate: [AuthGuard],
     component: SubcategoryPopupComponent,
     data: {
       pageTitle: 'Create Subcategory'
@@ -50,6 +53,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'subcategory-dialog/edit/:id',
+    canActivate: [AuthGuard],
     component: SubcategoryPopupComponent,
     data: {
       pageTitle: 'Edit Subcategory'
