@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.budgt.gateway.config.JwtTokenProvider;
+import de.budgt.gateway.exceptions.PasswordToShortException;
 import de.budgt.gateway.models.User;
 import de.budgt.gateway.repositories.UserRepository;
 import de.budgt.gateway.services.CustomUserDetailsService;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -38,6 +42,8 @@ public class AuthController {
 
   @Autowired
   private CustomUserDetailsService userService;
+
+  Logger logger = LogManager.getLogger(AuthController.class);
 
   @SuppressWarnings("rawtypes")
   @PostMapping("/login")
@@ -62,6 +68,11 @@ public class AuthController {
     if (userExists != null) {
       throw new BadCredentialsException("User with username: " + user.getEmail() + " already exists");
     }
+
+    if (user.getPassword().length() < 8) {
+      throw new PasswordToShortException();
+    }
+
     userService.saveUser(user);
     Map<Object, Object> model = new HashMap<>();
     model.put("message", "User registered successfully");
