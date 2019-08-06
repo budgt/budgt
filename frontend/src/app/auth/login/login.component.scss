@@ -1,0 +1,39 @@
+@import '~_variables.scss';
+
+.login-container {
+  height: 100%;
+  display: grid;
+  grid-row: 2fr, 1fr, 2fr;
+}
+
+#login-card {
+  align-self: center;
+  justify-self: center;
+  justify-items: center;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr, 2fr, 1fr;
+  grid-gap: 10px;
+}
+
+img {
+  height: 80px;
+  display: block; //replace with grid...
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+#register {
+  display: block; //replace with grid...
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.7);
+}
+#register-link {
+  color: $primary;
+  cursor: pointer;
+}
