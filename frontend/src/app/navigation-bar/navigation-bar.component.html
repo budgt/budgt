@@ -11,8 +11,4 @@
   <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()" mat-flat-button color="accent">
     <span class="fa fa-sign-out"></span> Logout
   </button>
-
-  <button *ngIf="!authService.isLoggedIn()" routerLink="/register" mat-stroked-button color="accent">
-    <span class="fa fa-user"></span> Sign Up
-  </button>
 </mat-toolbar>

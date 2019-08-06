@@ -3,6 +3,7 @@ import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Valida
 import { Router } from '@angular/router';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../auth.service';
+import { MustMatch } from '../../helpers/must-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -14,16 +15,22 @@ export class RegisterComponent implements OnInit {
   fullName = '';
   email = '';
   password = '';
-  matcher = new MyErrorStateMatcher();
+  passwordRepeat = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      fullName: [null, Validators.required],
-      email: [null, Validators.required],
-      password: [null, Validators.required]
-    });
+    this.registerForm = this.formBuilder.group(
+      {
+        fullName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', Validators.required]
+      },
+      {
+        validator: MustMatch('password', 'confirmPassword')
+      }
+    );
   }
 
   onFormSubmit(form: NgForm) {
@@ -36,13 +43,5 @@ export class RegisterComponent implements OnInit {
         alert(err.error);
       }
     );
-  }
-}
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }

@@ -1,0 +1,28 @@
+@import '~_variables.scss';
+
+.register-container {
+  height: 100%;
+  display: grid;
+  grid-row: 2fr, 1fr, 2fr;
+}
+
+#register-card {
+  align-self: center;
+  justify-self: center;
+  justify-items: center;
+}
+
+.form-container {
+  display: grid;
+  min-width: 256px;
+  grid-template-columns: 1fr, 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+img {
+  height: 80px;
+  display: block; //replace with grid...
+  margin: auto;
+  margin-bottom: 20px;
+}

@@ -14,6 +14,7 @@
 
 .form-container {
   display: grid;
+  min-width: 256px;
   grid-template-columns: 1fr;
   grid-template-rows: 2fr, 2fr, 1fr;
   grid-gap: 10px;
