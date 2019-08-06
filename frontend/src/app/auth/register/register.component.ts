@@ -14,7 +14,6 @@ export class RegisterComponent implements OnInit {
   fullName = '';
   email = '';
   password = '';
-  isLoadingResults = false;
   matcher = new MyErrorStateMatcher();
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {}

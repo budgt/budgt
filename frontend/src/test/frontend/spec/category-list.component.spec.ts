@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('Component Tests', () => {
   describe('Category List Component', () => {
@@ -19,7 +20,7 @@ describe('Component Tests', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, RouterTestingModule],
         declarations: [CategoryListComponent],
         providers: [CategoryService]
       })

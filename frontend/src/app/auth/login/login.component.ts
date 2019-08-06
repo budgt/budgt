@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
   matcher = new MyErrorStateMatcher();
-  isLoadingResults = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {}
 
