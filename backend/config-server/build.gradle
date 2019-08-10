@@ -28,6 +28,7 @@ ext['springCloudVersion'] = 'Greenwich.SR2'
 
 dependencies {
 	implementation('org.springframework.cloud:spring-cloud-config-server')
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 

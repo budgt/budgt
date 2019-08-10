@@ -30,7 +30,9 @@ ext {
 
 dependencies {
 	implementation('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
   implementation('org.springframework.cloud:spring-cloud-starter-config')
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 

@@ -39,6 +39,7 @@ ext {
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
