@@ -57,6 +57,21 @@ services:
     volumes:
       - /opt/budgt-configuration:/opt/budgt-configuration
 
+  budgt-registry-service:
+    image: budgt-registry-service:latest
+    restart: always
+    container_name: budgt-registry-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-registry-service
+    ports:
+      - 1340:1340
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    depends_on:
+      - budgt-config-server
+
   budgt-mongodb:
     image: mongo:xenial
     restart: always
