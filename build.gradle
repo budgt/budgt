@@ -26,4 +26,5 @@ task cleanBuildDockerLocal {
     dependsOn 'backend:config-server:cleanBuildDocker'
     dependsOn 'backend:registry-service:cleanBuildDocker'
     dependsOn 'backend:auth-service:cleanBuildDocker'
+    dependsOn 'backend:account-service:cleanBuildDocker'
 }
