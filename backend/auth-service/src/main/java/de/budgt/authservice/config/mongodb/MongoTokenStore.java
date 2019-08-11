@@ -1,4 +1,4 @@
-package de.budgt.authservice.config;
+package de.budgt.authservice.config.mongodb;
 
 import de.budgt.authservice.domain.MongoAccessToken;
 import de.budgt.authservice.domain.MongoRefreshToken;

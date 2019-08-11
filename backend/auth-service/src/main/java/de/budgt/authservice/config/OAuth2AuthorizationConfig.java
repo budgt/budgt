@@ -1,5 +1,6 @@
 package de.budgt.authservice.config;
 
+import de.budgt.authservice.config.mongodb.MongoTokenStore;
 import de.budgt.authservice.services.AuthClientDetailsService;
 import de.budgt.authservice.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
