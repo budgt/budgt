@@ -1,4 +1,4 @@
-package de.budgt.authservice.config.mongodb.changelog;
+package de.budgt.authservice.config.mongodb.changelogs;
 
 import de.budgt.authservice.domain.AuthClientDetails;
 import de.budgt.authservice.domain.User;

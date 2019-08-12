@@ -2,7 +2,6 @@ package de.budgt.authservice.config.mongodb;
 
 import com.github.mongobee.Mongobee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -13,7 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class MongoBeeConfig {
 
   private static final String MONGODB_URL_FORMAT = "mongodb://%s:%s@%s:%d/%s";
-  private static final String MONGODB_CHANGELOGS_PACKAGE = "de.budgt.authservice.config.mongodb.changelog";
+  private static final String MONGODB_CHANGELOGS_PACKAGE = "de.budgt.authservice.config.mongodb.changelogs";
 
   @Autowired
   private MongoProperties mongoProperties;
