@@ -87,6 +87,21 @@ services:
     depends_on:
       - budgt-config-server
 
+  budgt-account-service:
+    image: budgt-account-service:latest
+    restart: always
+    container_name: budgt-account-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-account-service
+    ports:
+      - 1332:1332
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    depends_on:
+      - budgt-config-server
+
   budgt-mongodb:
     image: mongo:xenial
     restart: always
