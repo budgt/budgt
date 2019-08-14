@@ -4,6 +4,13 @@ import { Router } from '@angular/router';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../auth.service';
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -41,12 +48,5 @@ export class LoginComponent implements OnInit {
 
   register() {
     this.router.navigate(['register']);
-  }
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
