@@ -2,12 +2,12 @@ import { BudgtTestModule } from './../test.module';
 import { Category } from './../../../app/models/category';
 import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angular/core/testing';
 
-import { CategoryService } from '../../../app/category-list/category.service';
+import { CategoryService } from '../../../app/services/category.service';
 import { of } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';
 import { SubcategoryDialogComponent } from '../../../app/category-list/subcategory-dialog/subcategory-dialog.component';
-import { SubcategoryService } from '../../../app/category-list/subcategory.service';
+import { SubcategoryService } from '../../../app/services/subcategory.service';
 import { Subcategory } from '../../../app/models/subcategory';
 import { FormsModule } from '@angular/forms';
 

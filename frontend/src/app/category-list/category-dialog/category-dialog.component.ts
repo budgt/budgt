@@ -1,4 +1,4 @@
-import { CategoryService } from '../category.service';
+import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Observable } from 'rxjs';

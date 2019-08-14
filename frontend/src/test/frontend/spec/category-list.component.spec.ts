@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
-import { CategoryService } from '../../../app/category-list/category.service';
+import { CategoryService } from '../../../app/services/category.service';
 import { Category } from '../../../app/models/category';
 
 describe('Component Tests', () => {

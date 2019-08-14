@@ -3,7 +3,7 @@ import { Category } from './../../../app/models/category';
 import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angular/core/testing';
 
 import { CategoryDialogComponent } from '../../../app/category-list/category-dialog/category-dialog.component';
-import { CategoryService } from '../../../app/category-list/category.service';
+import { CategoryService } from '../../../app/services/category.service';
 import { of } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';

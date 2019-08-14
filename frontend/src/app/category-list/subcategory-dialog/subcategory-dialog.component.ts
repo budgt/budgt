@@ -4,9 +4,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subcategory } from '../../models/subcategory';
-import { SubcategoryService } from '../subcategory.service';
+import { SubcategoryService } from '../../services/subcategory.service';
 import { SubcategoryPopupService } from '../subcategory-popup.service';
-import { CategoryService } from '../category.service';
+import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 
 @Component({

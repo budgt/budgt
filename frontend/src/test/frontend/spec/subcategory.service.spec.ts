@@ -1,9 +1,9 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SubcategoryService } from '../../../app/category-list/subcategory.service';
+import { SubcategoryService } from '../../../app/services/subcategory.service';
 import { Subcategory } from '../../../app/models/subcategory';
 import { Category } from '../../../app/models/category';
-import { CategoryService } from '../../../app/category-list/category.service';
+import { CategoryService } from '../../../app/services/category.service';
 import { of } from 'rxjs';
 
 describe('Service Tests', () => {

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './not-found.component';
 import { CategoryPopupComponent } from './category-list/category-dialog/category-dialog.component';
 import { SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
+import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 
 const appRoutes: Routes = [
   { path: 'category-list', component: CategoryListComponent },
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     },
     outlet: 'popup'
   },
+  { path: 'budget-overview', component: BudgetOverviewComponent },
   { path: '', redirectTo: '/category-list', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

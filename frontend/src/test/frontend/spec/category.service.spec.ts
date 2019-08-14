@@ -1,6 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { CategoryService } from '../../../app/category-list/category.service';
+import { CategoryService } from '../../../app/services/category.service';
 import { Category } from '../../../app/models/category';
 
 describe('Service Tests', () => {

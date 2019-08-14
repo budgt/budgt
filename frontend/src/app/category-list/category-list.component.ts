@@ -1,9 +1,9 @@
 import { Subcategory } from '../models/subcategory';
 import { Category } from '../models/category';
-import { CategoryService } from './category.service';
+import { CategoryService } from '../services/category.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LoaderService } from './loader.service.service';
+import { LoaderService } from '../services/loader.service.service';
 
 @Component({
   selector: 'category-list',

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LoaderService } from '../../../app/category-list/loader.service.service';
+import { LoaderService } from '../../../app/services/loader.service.service';
 
 describe('LoaderService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
