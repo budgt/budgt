@@ -1,5 +1,5 @@
 #############################################
-# Dockerfile to run budget auth service
+# Dockerfile to run budget account service
 # Based on alpine:latest
 #############################################
 
@@ -10,8 +10,8 @@ FROM openjdk:8-jdk-alpine
 LABEL maintainer="hofmann@budgt.de"
 
 #Copy config server jar
-COPY backend/auth-service/build/libs/*.jar /opt/lib/authService.jar
+COPY backend/account-service/build/libs/*.jar /opt/lib/accountService.jar
 
 #ENTRY POint
 ENTRYPOINT ["/usr/bin/java"]
-CMD ["-jar", "/opt/lib/authService.jar"]
+CMD ["-jar", "/opt/lib/accountService.jar"]
