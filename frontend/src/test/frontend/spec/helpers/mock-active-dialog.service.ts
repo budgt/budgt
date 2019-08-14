@@ -1,6 +1,6 @@
 import { SpyObject } from './spyobject';
 import Spy = jasmine.Spy;
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export class MockActiveDialog<T, R = any> extends SpyObject {
   dismissSpy: Spy;

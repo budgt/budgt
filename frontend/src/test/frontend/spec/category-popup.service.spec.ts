@@ -3,7 +3,7 @@ import { Category } from '../../../app/models/category';
 import { CategoryPopupService } from '../../../app/category-list/category-popup.service';
 import { Component } from '@angular/core';
 import { MockComponent } from './helpers/mock-component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';
 import { BudgtTestModule } from '../test.module';
 

@@ -1,6 +1,6 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Subcategory } from '../models/subcategory';
 import { Category } from '../models/category';
 

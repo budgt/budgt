@@ -1,7 +1,7 @@
 import { TestBed, getTestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { MockComponent } from './helpers/mock-component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';
 import { BudgtTestModule } from '../test.module';
 import { SubcategoryPopupService } from '../../../app/category-list/subcategory-popup.service';
