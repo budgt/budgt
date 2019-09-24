@@ -36,6 +36,7 @@ public class UserController {
     UserDto userDto = new UserDto();
     userDto.setId(user.getId());
     userDto.setUsername(user.getUsername());
+    userDto.setEmail(user.getEmail());
     return userDto;
   }
 
@@ -43,6 +44,7 @@ public class UserController {
     User user = new User();
     user.setUsername(userRegistration.getUsername());
     user.setPassword(userRegistration.getPassword());
+    user.setEmail(userRegistration.getEmail());
     return user;
   }
 

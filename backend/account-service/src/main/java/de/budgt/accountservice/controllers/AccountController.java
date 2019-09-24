@@ -16,7 +16,7 @@ public class AccountController {
     this.accountService = accountService;
   }
 
-  @PostMapping
+  @PostMapping("/accounts")
   public UserDto createNewAccount(@RequestBody UserRegistrationDto user) {
     return accountService.create(user);
   }

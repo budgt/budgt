@@ -6,10 +6,12 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "auth-service")
+//DEBUGGING: 404 via name only what to do?
+// @FeignClient(name = "auth-service")
+
+@FeignClient(name = "authClient", url = "http://budgt-auth-service:1331/")
 public interface AuthServiceFeignClient {
 
-  @PostMapping(value = "/uaa/user")
+  @PostMapping(value = "/user")
   UserDto createUser(@RequestBody UserRegistrationDto user);
-
 }

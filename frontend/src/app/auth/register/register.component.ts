@@ -12,7 +12,7 @@ import { MustMatch } from '../../helpers/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  fullName = '';
+  username = '';
   email = '';
   password = '';
   passwordRepeat = '';
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group(
       {
-        fullName: ['', Validators.required],
+        username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required]

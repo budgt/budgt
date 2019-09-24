@@ -5,9 +5,9 @@
       <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit(registerForm.value)">
         <div class="form-container">
           <mat-form-field>
-            <input matInput type="fullName" placeholder="Full Name" formControlName="fullName" />
+            <input matInput type="username" placeholder="User name" formControlName="username" />
             <mat-error>
-              <span *ngIf="!registerForm.get('fullName').valid && registerForm.get('fullName').touched">Please enter your Full Name</span>
+              <span *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched">Please enter your Full Name</span>
             </mat-error>
           </mat-form-field>
           <mat-form-field>

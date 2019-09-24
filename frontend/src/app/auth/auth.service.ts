@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -10,14 +10,24 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private baseUrl = environment.baseUrl;
-  private authUrl = this.baseUrl + '/auth/';
+  private authUrl = this.baseUrl + '/uaa/';
+  private accountUrl = this.baseUrl + '/account-service/';
   loggedIn = false;
   redirectUrl: string;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(data: any): Observable<any> {
-    return this.http.post<any>(this.authUrl + 'login', data).pipe(
+    let params = new URLSearchParams();
+    params.append('username', data.username);
+    params.append('password', data.password);
+    params.append('grant_type', 'password');
+    let headers = new HttpHeaders({
+      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
+      Authorization: 'Basic YnJvd3NlcjoxMjM0'
+    });
+
+    return this.http.post<any>(this.authUrl + 'oauth/token', params.toString(), { headers: headers }).pipe(
       tap(_ => (this.loggedIn = true)),
       catchError(this.handleError('login', []))
     );
@@ -34,7 +44,7 @@ export class AuthService {
   }
 
   register(data: any): Observable<any> {
-    return this.http.post<any>(this.authUrl + 'register', data).pipe(
+    return this.http.post<any>(this.accountUrl + 'accounts', data).pipe(
       tap(_ => this.log('login')),
       catchError(this.handleError('login', []))
     );

@@ -4,9 +4,9 @@
     <mat-card>
       <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
         <mat-form-field>
-          <input matInput class="account" type="email" placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" />
+          <input matInput class="account" type="username" placeholder="username" formControlName="username" [errorStateMatcher]="matcher" />
           <mat-error>
-            <span *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Please enter your email</span>
+            <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">Please enter your username</span>
           </mat-error>
         </mat-form-field>
         <mat-form-field>
