@@ -15,7 +15,9 @@ export class AuthService {
   loggedIn = false;
   redirectUrl: string;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    localStorage.getItem('token') ? (this.loggedIn = true) : (this.loggedIn = false);
+  }
 
   login(data: any): Observable<any> {
     let params = new URLSearchParams();
