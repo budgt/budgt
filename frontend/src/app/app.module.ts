@@ -14,7 +14,6 @@ import { CategoryDialogComponent, CategoryPopupComponent } from './category-list
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SubcategoryDialogComponent, SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
 import { SubcategoryService } from './category-list/subcategory.service';
 import { SubcategoryPopupService } from './category-list/subcategory-popup.service';
@@ -37,7 +36,6 @@ import { LoadingInterceptor } from './category-list/loading-interceptor';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     MaterialModule
   ],
   providers: [
