@@ -40,6 +40,8 @@ dependencies {
 	compile("org.springframework.retry:spring-retry")
 	compile("org.springframework.boot:spring-boot-starter-aop")
   compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
+  compile("org.javassist:javassist:3.18.2-GA")
+  compile("com.github.mongobee:mongobee:0.13")
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
   testCompile(group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.3')
