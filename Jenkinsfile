@@ -153,6 +153,62 @@ pipeline {
             junit 'backend/category-service/build/test-results/**/*.xml'
           }
         }
+
+        stage("auth-service") {
+          when {
+            changeset "**/backend/auth-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:auth-service:test jacocoTestReport'
+            script {
+              publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: false,
+                reportDir: 'backend/auth-service/build/reports/',
+                reportFiles: 'tests/test/index.html',
+                reportName: 'Unit test'
+              ])
+            }
+            stash includes: 'backend/auth-service/build/reports/jacoco/test/jacocoTestReport.xml', name: 'auth-service-coverage'
+            junit 'backend/auth-service/build/test-results/**/*.xml'
+          }
+        }
+
+        stage("accout-service") {
+          when {
+            changeset "**/backend/account-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:account-service:test jacocoTestReport'
+            script {
+              publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: false,
+                reportDir: 'backend/account-service/build/reports/',
+                reportFiles: 'tests/test/index.html',
+                reportName: 'Unit test'
+              ])
+            }
+            stash includes: 'backend/account-service/build/reports/jacoco/test/jacocoTestReport.xml', name: 'account-service-coverage'
+            junit 'backend/account-service/build/test-results/**/*.xml'
+          }
+        }
       }
     }
 
@@ -194,6 +250,48 @@ pipeline {
             unstash 'category-service-coverage'
             withSonarQubeEnv('sonarcloud') {
               dir("backend/category-service") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
+          }
+        }
+
+        stage('auth-service') {
+          when {
+            changeset "**/backend/auth-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            unstash 'auth-service-coverage'
+            withSonarQubeEnv('sonarcloud') {
+              dir("backend/auth-service") {
+                sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
+              }
+            }
+          }
+        }
+
+        stage('account-service') {
+          when {
+            changeset "**/backend/account-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            unstash 'account-service-coverage'
+            withSonarQubeEnv('sonarcloud') {
+              dir("backend/account-service") {
                 sh "sonar-scanner -Dsonar.branch.name=$BRANCH_NAME"
               }
             }
@@ -280,6 +378,40 @@ pipeline {
             stash includes: 'backend/category-service/build/libs/', name: 'category-service'
           }
         }
+
+        stage('auth-service') {
+          when {
+            changeset "**/backend/auth-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:auth-service:build'
+            stash includes: 'backend/auth-service/build/libs/', name: 'auth-service'
+          }
+        }
+
+        stage('account-service') {
+          when {
+            changeset "**/backend/account-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:account-service:build'
+            stash includes: 'backend/account-service/build/libs/', name: 'account-service'
+          }
+        }
       }
     }
 
@@ -316,6 +448,30 @@ pipeline {
           steps {
             unstash('category-service')
             sh './gradlew backend:category-service:dockerbuild'
+          }
+        }
+
+        stage("auth-service") {
+          when {
+            changeset "**/backend/auth-service/**"
+          }
+          agent any
+
+          steps {
+            unstash('auth-service')
+            sh './gradlew backend:auth-service:dockerbuild'
+          }
+        }
+
+        stage("account-service") {
+          when {
+            changeset "**/backend/account-service/**"
+          }
+          agent any
+
+          steps {
+            unstash('account-service')
+            sh './gradlew backend:account-service:dockerbuild'
           }
         }
 
@@ -359,6 +515,12 @@ pipeline {
 
             sh 'docker tag budgt-category-service budgt/budgt-category-service:edge'
             sh 'docker push budgt/budgt-category-service:edge'
+
+            sh 'docker tag budgt-auth-service budgt/budgt-auth-service:edge'
+            sh 'docker push budgt/budgt-auth-service:edge'
+
+            sh 'docker tag budgt-account-service budgt/budgt-account-service:edge'
+            sh 'docker push budgt/budgt-account-service:edge'
 
             sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
             sh 'docker push budgt/budgt-config-server:edge'
