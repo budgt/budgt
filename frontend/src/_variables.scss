@@ -1,1 +1,8 @@
+@import '~@angular/material/theming';
+
 $fa-font-path: '../node_modules/font-awesome/fonts';
+
+// Create your Sass color vars (will be available in all the project)
+$primary: #7b1fa2;
+$accent: #69f0ae;
+$warn: #f44336;

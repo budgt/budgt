@@ -20,10 +20,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.*;
 
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
 import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
+import de.budgt.categoryservice.exceptions.NoAccessToCategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.models.Category.CategoryType;
@@ -55,6 +57,7 @@ public class CategoryServiceUnitTest {
     subcategories.add(subcategory);
 
     category.setAmount(1);
+    category.setUserId("user");
     category.setSubcategories(subcategories);
 
     category2 = new Category("ID2", "category2", CategoryType.EXPENSE);
@@ -64,11 +67,13 @@ public class CategoryServiceUnitTest {
     subcategories2.add(subcategory2);
 
     category2.setAmount(1);
+    category2.setUserId("user2");
     category2.setSubcategories(subcategories2);
 
   }
 
   @Test
+  @WithMockUser
   public void findById_whenValidID_thenCategoryShouldBeFound() {
 
     when(repository.findById(any())).thenReturn(Optional.of(category));
@@ -92,32 +97,46 @@ public class CategoryServiceUnitTest {
   }
 
   @Test
-  public void findAll_thenCategoriesShouldBeFound() {
+  public void findById_whenOtherUsersID_throwNoAccessToCategoryException() {
+
+    when(repository.findById(any())).thenThrow(new NoAccessToCategoryException("user2"));
+
+    assertThatExceptionOfType(NoAccessToCategoryException.class).isThrownBy(() -> {
+      service.findById(category2.getId());
+    }).withMessage("No access to category with ID: 'user2'.");
+
+    verify(repository, times(1)).findById(any());
+  }
+
+  @Test
+  @WithMockUser
+  public void findByUserId_thenCategoriesShouldBeFound() {
     List<Category> categories = new ArrayList<Category>();
     categories.add(category);
-    categories.add(category2);
 
-    when(repository.findAll()).thenReturn(categories);
+    when(repository.findByUserId("user")).thenReturn(categories);
 
     List<Category> found = service.findAll();
     assertThat(found).isEqualTo(categories);
 
-    verify(repository, times(1)).findAll();
+    verify(repository, times(1)).findByUserId("user");
   }
 
   @Test
+  @WithMockUser
   public void findAll_shouldReturnEmptyList_ifNoCategories() {
     List<Category> categories = new ArrayList<Category>();
 
-    when(repository.findAll()).thenReturn(categories);
+    when(repository.findByUserId("user")).thenReturn(categories);
 
     List<Category> found = service.findAll();
 
     assertThat(found).isEmpty();
-    verify(repository, times(1)).findAll();
+    verify(repository, times(1)).findByUserId("user");
   }
 
   @Test
+  @WithMockUser
   public void create_shouldCallInsert_andReturnCreatedCategory() {
     when(repository.insert(category)).thenReturn(category);
 
@@ -128,6 +147,7 @@ public class CategoryServiceUnitTest {
   }
 
   @Test
+  @WithMockUser
   public void update_WithoutDupicateSubcategory_shouldCallSave_andReturnUpdateddCategory() {
     subcategory2.setId(null);
     category.getSubcategories().add(subcategory2);
@@ -142,6 +162,7 @@ public class CategoryServiceUnitTest {
   }
 
   @Test
+  @WithMockUser
   public void update_WithDupicateSubcategory_shouldCallSave_andReturnUpdateddCategory() {
     category.getSubcategories().add(subcategory);
 
@@ -156,9 +177,25 @@ public class CategoryServiceUnitTest {
   }
 
   @Test
-  public void deleteById_shouldCallDeleteById() {
+  @WithMockUser
+  public void deleteById_withCorrectUserId_shouldCallDeleteById() {
+    when(repository.findById(any())).thenReturn(Optional.of(category));
+
     service.deleteById(category.getId());
 
     verify(repository, times(1)).deleteById(category.getId());
+  }
+
+  @Test
+  @WithMockUser
+  public void deleteById_withInvalidUserId_shouldCallDeleteById() {
+    when(repository.findById(any())).thenReturn(Optional.of(category2));
+
+    assertThatExceptionOfType(NoAccessToCategoryException.class).isThrownBy(() -> {
+      service.deleteById(category2.getId());
+    }).withMessage("No access to category with ID: 'user2'.");
+
+    verify(repository, times(0)).deleteById(category2.getId());
+
   }
 }

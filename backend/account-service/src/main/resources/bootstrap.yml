@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: account-service
+  cloud:
+    config:
+      uri: http://budgt-config-server:1339
+      failFast: true
+      retry:
+        initialInterval: 3000
+        multiplier: 1.3
+        maxInterval: 5000
+        maxAttempts: 20
+  main:
+    allow-bean-definition-overriding: true

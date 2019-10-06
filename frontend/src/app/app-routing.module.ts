@@ -4,11 +4,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './not-found.component';
 import { CategoryPopupComponent } from './category-list/category-dialog/category-dialog.component';
 import { SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
-  { path: 'category-list', component: CategoryListComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login' }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: { title: 'Register' }
+  },
+  {
+    path: 'category-list',
+    canActivate: [AuthGuard],
+    component: CategoryListComponent
+  },
   {
     path: 'category-dialog/edit/:id',
+    canActivate: [AuthGuard],
     component: CategoryPopupComponent,
     data: {
       pageTitle: 'Edit Category'
@@ -17,6 +35,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'category-dialog/create',
+    canActivate: [AuthGuard],
     component: CategoryPopupComponent,
     data: {
       pageTitle: 'Create Category'
@@ -25,6 +44,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'subcategory-dialog/create',
+    canActivate: [AuthGuard],
     component: SubcategoryPopupComponent,
     data: {
       pageTitle: 'Create Subcategory'
@@ -33,6 +53,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'subcategory-dialog/edit/:id',
+    canActivate: [AuthGuard],
     component: SubcategoryPopupComponent,
     data: {
       pageTitle: 'Edit Subcategory'

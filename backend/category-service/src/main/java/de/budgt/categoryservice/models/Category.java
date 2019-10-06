@@ -18,6 +18,7 @@ public class Category {
   private CategoryType type;
   private double amount;
   private List<Subcategory> subcategories;
+  private String userId;
 
   public Category() {
   }
@@ -96,12 +97,27 @@ public class Category {
     this.subcategories = subcategories;
   }
 
+  /**
+   * @return the userId
+   */
+  public String getUserId() {
+    return userId;
+  }
+
+  /**
+   * @param userId the userId to set
+   */
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
   @Override
   public String toString() {
     StringBuilder sbld = new StringBuilder();
 
     sbld.append("Categodry:\n");
     sbld.append("  ID: " + this.id + "\n");
+    sbld.append("  UserId: " + this.userId + "\n");
     sbld.append("  Name: " + this.name + "\n");
     sbld.append("  Type: " + this.type + "\n");
     sbld.append("  Amount: " + this.amount + "\n");
@@ -123,10 +139,8 @@ public class Category {
     return set.size() < subcategoryNames.size();
   }
 
-  // Statt über HashSet, hier heue Methode die vergleicht.
-  // ArrayListe mit Namen erstellen -> dann durchgehen und contains
-
   public enum CategoryType {
     INCOME, EXPENSE
   }
+
 }

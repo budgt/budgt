@@ -4,7 +4,7 @@ import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angu
 
 import { CategoryService } from '../../../app/category-list/category.service';
 import { of } from 'rxjs';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';
 import { SubcategoryDialogComponent } from '../../../app/category-list/subcategory-dialog/subcategory-dialog.component';
 import { SubcategoryService } from '../../../app/category-list/subcategory.service';

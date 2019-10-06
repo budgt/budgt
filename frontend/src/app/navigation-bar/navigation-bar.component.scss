@@ -1,6 +1,4 @@
 .fill-remaining-space {
-  /* This fills the remaining space, by using flexbox.
-     Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
 }
 
@@ -14,4 +12,8 @@ button {
 
 a:hover {
   text-decoration: none;
+}
+
+img {
+  height: 40px;
 }

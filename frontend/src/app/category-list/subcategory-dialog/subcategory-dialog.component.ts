@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subcategory } from '../../models/subcategory';
 import { SubcategoryService } from '../subcategory.service';
 import { SubcategoryPopupService } from '../subcategory-popup.service';

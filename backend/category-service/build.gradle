@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.1.RELEASE'
+		springBootVersion = '2.1.7.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -26,21 +26,29 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', 'Greenwich.SR1')
+	set('springCloudVersion', 'Greenwich.SR2')
 }
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
+  implementation('org.springframework.boot:spring-boot-starter-security')
 	implementation('org.springframework.cloud:spring-cloud-starter-config')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
   implementation('com.google.code.gson:gson:2.8.5')
+  implementation('org.springframework.cloud:spring-cloud-starter-oauth2')
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.retry:spring-retry")
 	compile("org.springframework.boot:spring-boot-starter-aop")
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
+  compile("org.javassist:javassist:3.18.2-GA")
+  compile("com.github.mongobee:mongobee:0.13")
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
   testCompile(group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.3')
   compile(group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.3')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+
 }
 
 dependencyManagement {

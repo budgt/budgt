@@ -4,7 +4,7 @@ import { CategoryPopupService } from './category-list/category-popup.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -17,7 +17,10 @@ import { MaterialModule } from './material.module';
 import { SubcategoryDialogComponent, SubcategoryPopupComponent } from './category-list/subcategory-dialog/subcategory-dialog.component';
 import { SubcategoryService } from './category-list/subcategory.service';
 import { SubcategoryPopupService } from './category-list/subcategory-popup.service';
-import { LoadingInterceptor } from './category-list/loading-interceptor';
+import { LoadingInterceptor } from './interceptors/loading-interceptor';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { LoadingInterceptor } from './category-list/loading-interceptor';
     CategoryPopupComponent,
     PageNotFoundComponent,
     SubcategoryDialogComponent,
-    SubcategoryPopupComponent
+    SubcategoryPopupComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, //
@@ -36,6 +41,7 @@ import { LoadingInterceptor } from './category-list/loading-interceptor';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   providers: [
@@ -46,6 +52,11 @@ import { LoadingInterceptor } from './category-list/loading-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true
     }
   ],
