@@ -47,6 +47,8 @@ dependencies {
   testCompile(group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.3')
   compile(group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.3')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+
 }
 
 dependencyManagement {

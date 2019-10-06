@@ -69,8 +69,13 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public void deleteById(String id) {
-    // TODO: Add check for authorization
-    categoryRepository.deleteById(id);
+    Category categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+
+    if (getCurrentUserId().equals(categoryToDelete.getUserId())) {
+      categoryRepository.deleteById(id);
+    } else {
+      throw (new NoAccessToCategoryException(categoryToDelete.getUserId()));
+    }
   }
 
   public Category setSubcategoryIds(Category category) {
