@@ -29,7 +29,7 @@ export class AuthService {
       Authorization: 'Basic YnJvd3NlcjoxMjM0'
     });
 
-    return this.http.post<any>(this.authUrl + 'oauth/token', params.toString(), { headers: headers }).pipe(
+    return this.http.post<any>(this.authUrl + 'oauth/token', params.toString(), { headers }).pipe(
       tap(_ => (this.loggedIn = true)),
       catchError(this.handleError('login', []))
     );
