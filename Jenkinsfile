@@ -109,7 +109,7 @@ pipeline {
           steps {
             dir("frontend") {
               unstash 'node_modules'
-              sh 'ng test --browsers PhantomJS --watch=false --code-coverage'
+              sh 'ng test --browsers ChromeHeadless --watch=false --code-coverage'
               script {
                 publishHTML([
                   allowMissing: false,
