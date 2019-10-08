@@ -46,7 +46,7 @@ pipeline {
       }
     }
 
-    stage('Preparation') {
+    stage('Preparation') {chchchch
       when {
         changeset "**/frontend/**"
       }
@@ -109,7 +109,7 @@ pipeline {
           steps {
             dir("frontend") {
               unstash 'node_modules'
-              sh 'ng test --browsers ChromeHeadless --watch=false --code-coverage'
+              sh 'ng test --browsers ChromeHeadlessNoSandbox --watch=false --code-coverage'
               script {
                 publishHTML([
                   allowMissing: false,
