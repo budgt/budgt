@@ -60,7 +60,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.getCategoryById(1).subscribe((_error: any) => {
+        service.getCategoryById(1).subscribe(null, (_error: any) => {
           expect(_error.status).toEqual(404);
         });
 
@@ -91,7 +91,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.updateCategory(new Category(456)).subscribe((_error: any) => {
+        service.updateCategory(new Category(456)).subscribe(null, (_error: any) => {
           expect(_error.status).toEqual(404);
         });
 
@@ -141,7 +141,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.deleteCatgory(new Category(456)).subscribe((_error: any) => {
+        service.deleteCatgory(new Category(456)).subscribe(null, (_error: any) => {
           expect(_error.status).toEqual(404);
         });
 
