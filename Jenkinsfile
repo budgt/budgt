@@ -46,7 +46,7 @@ pipeline {
       }
     }
 
-    stage('Preparation') {chchchch
+    stage('Preparation') {
       when {
         changeset "**/frontend/**"
       }
