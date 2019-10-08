@@ -44,12 +44,16 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
     singleRun: false,
     customLaunchers: {
       ChromeDebug: {
         base: 'Chrome',
         flags: ['--remote-debugging-port=9229']
+      },
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
       }
     }
   });
