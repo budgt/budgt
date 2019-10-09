@@ -16,3 +16,8 @@ Development
 ### Category Service
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=alert_status "quality gate") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=coverage "coverage") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=code_smells "code smells") ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=security_rating "security")
+
+
+## Build
+
+Run `gradle cleanBuildDockerLocal` to build the project. It will build the frontend and all microservices, and create new docker images according to the relevant docker files.
