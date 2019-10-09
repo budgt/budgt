@@ -35,13 +35,13 @@ stages:
         configMode: 'manual'
         cliProjectKey: 'budgt-category-service'
         cliProjectName: 'budgt-category-service'
-        cliSources: 'budgt/backend/category-service/src/main/java'
+        cliSources: 'backend/category-service/src/main/java'
         extraProperties: |
           sonar.core.codeCoveragePlugin=jacoco
-          sonar.coverage.jacoco.xmlReportPaths=budgt/backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml
-          sonar.jacoco.reportPath=budgt/backend/category-service/build/jacoco/test.exec
+          sonar.coverage.jacoco.xmlReportPaths=backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml
+          sonar.jacoco.reportPath=backend/category-service/build/jacoco/test.exec
           sonar.dynamicAnalysis=reuseReports
-          sonar.java.binaries=budgt/backend/category-service/build/classes/
+          sonar.java.binaries=backend/category-service/build/classes/
     - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
