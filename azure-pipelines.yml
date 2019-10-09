@@ -33,10 +33,11 @@ stages:
         organization: 'pahofmann-gitlab'
         scannerMode: 'CLI'
         configMode: 'file'
+        configFile: '$(Build.SourcesDirectory)/backend/category-service/sonar-project.properties'
     - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
-  - job: 'categoryS_srvice'
+  - job: 'category_service'
     steps:
     - task: Gradle@2
       inputs:
