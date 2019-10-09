@@ -2,7 +2,7 @@ trigger:
 - feature/*
 
 pool:
-- vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: 'Prepare'
