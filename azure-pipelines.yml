@@ -9,6 +9,11 @@ stages:
   jobs:
   - job: 'category_service'
     steps:
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonarcloud'
+        organization: 'pahofmann-gitlab'
+        scannerMode: 'Other'
     - task: Gradle@1
       displayName: category service
       inputs:
@@ -16,25 +21,13 @@ stages:
         workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
         tasks: 'clean test jacocoTestReport'
         publishJUnitResults: false
-        sonarQubeRunAnalysis: false
+        sonarQubeRunAnalysis: true
     - task: PublishCodeCoverageResults@1
       displayName: Publish Coverage Results
       inputs:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: '**/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml'
         reportDirectory: '**/build/reports/jacoco/jacocoRootReport/html'
-- stage: sonar_scan
-  jobs:
-  - job: 'category_service'
-    steps:
-    - task: SonarCloudPrepare@1
-      inputs:
-        SonarCloud: 'sonarcloud'
-        organization: 'pahofmann-gitlab'
-        scannerMode: 'CLI'
-        configMode: 'file'
-        configFile: '/home/vsts/work/1/s/budgt/backend/category-service/sonar-project.properties'
-    - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
   - job: 'category_service'
@@ -46,4 +39,5 @@ stages:
         tasks: 'build'
         publishJUnitResults: false
         sonarQubeRunAnalysis: false
+
 
