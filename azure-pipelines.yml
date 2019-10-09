@@ -9,11 +9,6 @@ stages:
   jobs:
   - job: 'category_service'
     steps:
-    - task: SonarCloudPrepare@1
-      inputs:
-        SonarCloud: 'sonarcloud'
-        organization: 'pahofmann-gitlab'
-        scannerMode: 'Other'
     - task: Gradle@1
       displayName: category service
       inputs:
@@ -21,13 +16,33 @@ stages:
         workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
         tasks: 'clean test jacocoTestReport'
         publishJUnitResults: false
-        sonarQubeRunAnalysis: true
+        sonarQubeRunAnalysis: false
     - task: PublishCodeCoverageResults@1
       displayName: Publish Coverage Results
       inputs:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: '**/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml'
         reportDirectory: '**/build/reports/jacoco/jacocoRootReport/html'
+- stage: sonar_scan
+  jobs:
+  - job: 'category_service'
+    steps:
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonarcloud'
+        organization: 'pahofmann-gitlab'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'budgt-category-service'
+        cliProjectName: 'budgt-category-service'
+        cliSources: '**/backend/category-service/src/main/java'
+        extraProperties: |
+          sonar.core.codeCoveragePlugin=jacoco
+          sonar.coverage.jacoco.xmlReportPaths=**/backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml
+          sonar.jacoco.reportPath=**/backend/category-service/build/jacoco/test.exec
+          sonar.dynamicAnalysis=reuseReports
+          sonar.java.binaries=**/backend/category-service/build/classes/
+    - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
   - job: 'category_service'
@@ -39,5 +54,4 @@ stages:
         tasks: 'build'
         publishJUnitResults: false
         sonarQubeRunAnalysis: false
-
 
