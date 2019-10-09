@@ -23,18 +23,6 @@ stages:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: '**/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml'
         reportDirectory: '**/build/reports/jacoco/jacocoRootReport/html'
-- stage: sonar_scan
-  jobs:
-  - job: 'category_service'
-    steps:
-    - task: Gradle@1
-      displayName: category service
-      inputs:
-        gradleWrapperFile: 'gradlew'
-        workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
-        tasks: 'clean build'
-        publishJUnitResults: false
-        sonarQubeRunAnalysis: false
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'sonarcloud'
@@ -51,14 +39,4 @@ stages:
           sonar.dynamicAnalysis=reuseReports
           sonar.java.binaries=backend/category-service/build/classes/
     - task: SonarCloudAnalyze@1
-- stage: Compile
-  jobs:
-  - job: 'category_service'
-    steps:
-    - task: Gradle@2
-      inputs:
-        gradleWrapperFile: 'gradlew'
-        workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
-        tasks: 'build'
-        publishJUnitResults: false
-        sonarQubeRunAnalysis: false
+
