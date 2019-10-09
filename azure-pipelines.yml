@@ -23,7 +23,7 @@ stages:
       inputs:
         gradleWrapperFile: 'gradlew'
         workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
-        tasks: 'clean test'
+        tasks: 'clean test jacocoTestReport'
         publishJUnitResults: true
         testResultsFiles: '$(Build.SourcesDirectory)/backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml'
         codeCoverageToolOption: 'jaCoCo'
