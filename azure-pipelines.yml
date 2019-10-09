@@ -33,7 +33,7 @@ stages:
         organization: 'pahofmann-gitlab'
         scannerMode: 'CLI'
         configMode: 'file'
-        configFile: '**/backend/category-service/sonar-project.properties'
+        configFile: '/home/vsts/work/1/s/budgt/backend/category-service/sonar-project.properties'
     - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
