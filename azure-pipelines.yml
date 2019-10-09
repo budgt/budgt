@@ -27,6 +27,14 @@ stages:
   jobs:
   - job: 'category_service'
     steps:
+    - task: Gradle@1
+      displayName: category service
+      inputs:
+        gradleWrapperFile: 'gradlew'
+        workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
+        tasks: 'clean build'
+        publishJUnitResults: false
+        sonarQubeRunAnalysis: false
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'sonarcloud'
@@ -54,4 +62,3 @@ stages:
         tasks: 'build'
         publishJUnitResults: false
         sonarQubeRunAnalysis: false
-
