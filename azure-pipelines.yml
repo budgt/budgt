@@ -5,16 +5,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- stage: 'Prepare'
-  jobs:
-  - job: 'Prepare_Sonarcloud_Environment'
-    steps:
-    - task: SonarCloudPrepare@1
-      inputs:
-        SonarCloud: 'sonarcloud'
-        organization: 'pahofmann-gitlab'
-        scannerMode: 'CLI'
-        configMode: 'file'
 - stage: 'Unit_Test'
   jobs:
   - job: 'category_service'
@@ -37,6 +27,12 @@ stages:
   jobs:
   - job: 'category_service'
     steps:
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonarcloud'
+        organization: 'pahofmann-gitlab'
+        scannerMode: 'CLI'
+        configMode: 'file'
     - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
