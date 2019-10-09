@@ -13,9 +13,11 @@ frontend/out-tsc
 # dependencies
 frontend/node_modules
 
+#local config
+frontend/build/deploy/conf/nginx.conf
+
 # reports
 frontend/build/reports
-
 
 #################
 ## Backend
@@ -31,7 +33,6 @@ build/
 #reports
 backend/category-service/build/reports
 backend/config-server/build/reports
-
 
 #################
 ## Misc

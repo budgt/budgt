@@ -2,12 +2,12 @@ trigger:
 - feature/*
 
 pool:
-  vmImage: 'ubuntu-latest'
+- vmImage: 'ubuntu-latest'
 
 stages:
 - stage: 'Prepare'
   jobs:
-  - job: 'PrepareSonarcloudEnvironment'
+  - job: 'Prepare_Sonarcloud_Environment'
     steps:
     - task: SonarCloudPrepare@1
       inputs:
@@ -15,28 +15,28 @@ stages:
         organization: 'pahofmann-gitlab'
         scannerMode: 'CLI'
         configMode: 'file'
-- stage: 'Unit Test'
+- stage: 'Unit_Test'
   jobs:
-  - job: 'categoryService'
+  - job: 'category_service'
     steps:
     - task: Gradle@1
       inputs:
-        gradleWrapperFile: 'gradlew' 
+        gradleWrapperFile: 'gradlew'
         workingDirectory: '$(Build.SourcesDirectory)/backend/category-service/'
         tasks: 'clean test'
-        publishJUnitResults: true 
+        publishJUnitResults: true
         testResultsFiles: '$(Build.SourcesDirectory)/backend/category-service/build/reports/jacoco/test/jacocoTestReport.xml'
         codeCoverageToolOption: 'jaCoCo'
         codeCoverageClassFilesDirectories: '$(Build.SourcesDirectory)/backend/category-service/build/classes/main/'
         sonarQubeRunAnalysis: false
-- stage: sonar-scan
+- stage: sonar_scan
   jobs:
-  - job: 'categoryService'
+  - job: 'category_service'
     steps:
     - task: SonarCloudAnalyze@1
 - stage: Compile
   jobs:
-  - job: 'categoryService'
+  - job: 'categoryS_srvice'
     steps:
     - task: Gradle@2
       inputs:
