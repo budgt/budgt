@@ -16,6 +16,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
   nodejs \
+  npm \
   yarn \
   gconf-service \
   libasound2 \
@@ -56,11 +57,15 @@ RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
   lsb-release \
   xdg-utils \
   wget \
+  openssh-client \
   && rm -rf /var/lib/apt/lists/*
 
 # Install angular cli and sonarqube-scanner
 RUN yarn global add @angular/cli
 RUN yarn global add sonarqube-scanner
+RUN npm install -g --engine-strict sonarqube-scanner --unsafe-perm=true
+RUN mkdir /.sonar
+RUN chown 1000:1000 /.sonar
 
 ##################### INSTALLATION END #####################
 

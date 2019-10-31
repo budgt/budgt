@@ -5,9 +5,9 @@
 ## Build Status
 
 Master:  
-![Build Status Master](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status 'quality gate') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage 'coverage') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells 'code smells') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating 'security')  
+![Build Status Master](https://jenkins.hfmnn.com/buildStatus/icon?job=budgt/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=alert_status 'quality gate') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=coverage 'coverage') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=code_smells 'code smells') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-frontend&metric=security_rating 'security')  
 Development:  
-![Build Status Development](https://jenkins.pahofmann.com/buildStatus/icon?job=budget/development)
+![Build Status Development](https://jenkins.hfmnn.com/buildStatus/icon?job=budgt/development)
 
 ## Development server
 
@@ -25,6 +25,6 @@ For local, development and production docker builds use gradle.
 
 ## Running unit tests
 
-Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `yarn test` to execute the unit tests via [jest](https://jestjs.io/).
 
 Run `yarn test-debug` to execute the unit tests in a chrome browser with remote debugging enabled.

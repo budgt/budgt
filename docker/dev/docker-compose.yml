@@ -100,6 +100,47 @@ services:
       - /opt/docker/mongodb/data:/data/db
     command: mongod --auth
 
+  budgt-registry-service:
+    image: budgt/budgt-registry-service:edge
+    restart: always
+    container_name: budgt-registry-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-registry-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
+
+  budgt-auth-service:
+    image: budgt-auth-service:edge
+    restart: always
+    container_name: budgt-auth-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-auth-service
+    ports:
+      - 1331:1331
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
+
+  budgt-account-service:
+    image: budgt-account-service:edge
+    restart: always
+    container_name: budgt-account-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-account-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
+
 networks:
   budgt-network:
     external:

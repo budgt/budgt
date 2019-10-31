@@ -43,7 +43,7 @@ describe('Service Tests', () => {
       it('should call subcategoryDialogRef with existing subcategory when id is provided', fakeAsync(() => {
         let dialogref = new MockActiveDialog<Component>();
 
-        spyOn(service, 'subcategoryDialogRef').and.returnValue(dialogref);
+        jest.spyOn(service, 'subcategoryDialogRef').mockReturnValue(dialogref as any);
 
         service.open(component, category, 123);
         tick();
@@ -54,7 +54,7 @@ describe('Service Tests', () => {
       it('should call subcategoryDialogRef with new subcategory if no id is provided', fakeAsync(() => {
         let dialogref = new MockActiveDialog<Component>();
 
-        spyOn(service, 'subcategoryDialogRef').and.returnValue(dialogref);
+        jest.spyOn(service, 'subcategoryDialogRef').mockReturnValue(dialogref as any);
 
         service.open(component, category);
         tick();

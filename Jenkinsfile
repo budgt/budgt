@@ -46,37 +46,10 @@ pipeline {
       }
     }
 
-    stage('Preparation') {
+    stage('Lint') {
       when {
         changeset "**/frontend/**"
       }
-      parallel {
-
-        stage('Check versions') {
-          agent {
-            dockerfile {
-              dir 'frontend/build/deploy/docker/build'
-              additionalBuildArgs '-t budgt-build'
-            }
-          }
-
-          steps {
-            dir("frontend") {
-
-              unstash 'node_modules'
-
-              sh 'node --version'
-
-              sh 'yarn -v'
-
-              sh 'ng --version'
-
-              sh 'java -version'
-            }
-          }
-        }
-
-        stage('Lint') {
           agent {
             dockerfile {
               dir 'frontend/build/deploy/docker/build'
@@ -88,9 +61,7 @@ pipeline {
               unstash 'node_modules'
               sh 'yarn lint'
             }
-          }
         }
-      }
     }
 
     stage('Unit test') {
@@ -109,19 +80,18 @@ pipeline {
           steps {
             dir("frontend") {
               unstash 'node_modules'
-              sh 'ng test --browsers ChromeHeadlessNoSandbox --watch=false --code-coverage'
+              sh 'yarn test-coverage'
               script {
                 publishHTML([
                   allowMissing: false,
                   alwaysLinkToLastBuild: false,
                   keepAll: false,
-                  reportDir: 'build/reports/coverage/report-html/',
+                  reportDir: 'build/reports/coverage/lcov-report/',
                   reportFiles: 'index.html',
                   reportName: 'Unit test coverage'
                 ])
               }
               stash includes: 'build/reports/coverage/lcov.info', name: 'frontend-coverage'
-              junit 'build/reports/unit-test/*.xml'
             }
           }
         }
@@ -212,7 +182,7 @@ pipeline {
       }
     }
 
-    stage('SonarQube analysis') {
+    stage('SonarCloud analysis') {
       parallel {
         stage('Frontend') {
           when {
@@ -412,6 +382,23 @@ pipeline {
             stash includes: 'backend/account-service/build/libs/', name: 'account-service'
           }
         }
+
+        stage('registry-service') {
+          when {
+            changeset "**/backend/registry-service/**"
+          }
+          agent {
+            dockerfile {
+              dir 'frontend/build/deploy/docker/build'
+              additionalBuildArgs '-t budgt-build'
+            }
+          }
+
+          steps {
+            sh './gradlew backend:registry-service:build'
+            stash includes: 'backend/registry-service/build/libs/', name: 'registry-service'
+          }
+        }
       }
     }
 
@@ -475,6 +462,18 @@ pipeline {
           }
         }
 
+        stage("registry-service") {
+          when {
+            changeset "**/backend/registry-service/**"
+          }
+          agent any
+
+          steps {
+            unstash('registry-service')
+            sh './gradlew backend:registry-service:dockerbuild'
+          }
+        }
+
         stage("config-server") {
           when {
             changeset "**/backend/config-server/**"
@@ -522,6 +521,9 @@ pipeline {
             sh 'docker tag budgt-account-service budgt/budgt-account-service:edge'
             sh 'docker push budgt/budgt-account-service:edge'
 
+            sh 'docker tag budgt-registry-service budgt/budgt-registry-service:edge'
+            sh 'docker push budgt/budgt-registry-service:edge'
+
             sh 'docker tag budgt-config-server budgt/budgt-config-server:edge'
             sh 'docker push budgt/budgt-config-server:edge'
 
@@ -538,10 +540,11 @@ pipeline {
         branch 'development'
       }
       steps {
-        sh 'scp -i /var/lib/jenkins/secrets/id_rsa docker/dev/docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
-        sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose down"'
-        sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose rm -f"'
-          }
+        sshagent(['88d5d798-30d2-49aa-b6cd-8470b97bc9b3']) {
+            sh 'scp -o StrictHostKeyChecking=no docker/dev/docker-compose.yml budgt@docker.budgt.de:/opt/budgt/'
+            sh 'ssh -o StrictHostKeyChecking=no budgt@docker.budgt.de "cd /opt/budgt && docker-compose rm -f"'
+        }
+      }
     }
 
     stage('Deploy to dev') {
@@ -551,8 +554,9 @@ pipeline {
       agent any
 
       steps {
-        sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose pull"'
-        sh 'ssh -i /var/lib/jenkins/secrets/id_rsa budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
+        sshagent(['88d5d798-30d2-49aa-b6cd-8470b97bc9b3']) {
+          sh 'ssh -o StrictHostKeyChecking=no budgt@docker.budgt.de "cd /opt/budgt && docker-compose up -d"'
+        }
       }
     }
   }
