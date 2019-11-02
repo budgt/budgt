@@ -3,7 +3,9 @@ package de.budgt.categoryservice;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,6 +37,7 @@ import static org.junit.Assert.assertEquals;
 
 import de.budgt.categoryservice.controllers.CategoryController;
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.models.Subcategory;
 import de.budgt.categoryservice.models.Category.CategoryType;
@@ -72,8 +75,8 @@ public class CategoryControllerUnitTest {
     category2 = new Category("ID2", "category2", CategoryType.EXPENSE);
     subcategory = new Subcategory("subcategory", 999);
     subcategory.setId("ID");
-    Subcategory[] subcategories = new Subcategory[1];
-    subcategories[0] = subcategory;
+    List<Subcategory> subcategories = new ArrayList<>();
+    subcategories.add(subcategory);
 
     category.setAmount(1);
     category.setSubcategories(subcategories);
@@ -161,9 +164,8 @@ public class CategoryControllerUnitTest {
 
     when(service.update(any())).thenReturn(category);
 
-    mvc.perform(
-        put("/categories").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(category)))
-        .andExpect(status().isOk()) //
+    mvc.perform(put("/categories/" + category.getId()).contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(category))).andExpect(status().isOk()) //
         .andExpect(jsonPath("$.id", is(category.getId()))) //
         .andExpect(jsonPath("$.name", is(category.getName())))
         .andExpect(jsonPath("$.type", is(category.getType().toString())))
@@ -176,6 +178,18 @@ public class CategoryControllerUnitTest {
 
     assertEquals(category.toString(), argument.getValue().toString());
 
+  }
+
+  @Test
+  public void updateCategory_withDuplicateSubcategoryName_shouldThrowDuplicateSubcategoryException() throws Exception {
+    when(service.update(any())).thenThrow(new DuplicateSubcategoryException());
+
+    mvc.perform(put("/categories/" + category.getId()).contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(category))) //
+        .andExpect(status().isBadRequest()) //
+        .andExpect(status().reason("Subcategory names must be unique within a given category."));
+
+    verify(service, times(1)).update(any());
   }
 
   @Test

@@ -9,8 +9,11 @@ export class SubcategoryService {
   constructor(private categoryService: CategoryService) {}
 
   createSubcategory(category: Category, subcategory: Subcategory): Observable<Category> {
-    category.subcategories.push(subcategory);
+    if (category.subcategories === null) {
+      category.subcategories = new Array(0);
+    }
 
+    category.subcategories.push(subcategory);
     return this.categoryService.updateCategory(category);
   }
 

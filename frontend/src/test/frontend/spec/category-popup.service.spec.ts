@@ -1,11 +1,11 @@
 import { TestBed, getTestBed, fakeAsync, tick } from '@angular/core/testing';
-import { Category } from '../../../app/models/category';
-import { CategoryPopupService } from '../../../app/category-list/category-popup.service';
 import { Component } from '@angular/core';
-import { MockComponent } from './helpers/mock-component';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { MockActiveDialog } from './helpers/mock-active-dialog.service';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { CategoryPopupService } from '../../../app/category-list/category-popup.service';
+import { Category } from '../../../app/models/category';
 import { BudgtTestModule } from '../test.module';
+import { MockActiveDialog } from './helpers/mock-active-dialog.service';
+import { MockComponent } from './helpers/mock-component';
 
 describe('Service Tests', () => {
   describe('Category Popup Service', () => {
@@ -39,9 +39,9 @@ describe('Service Tests', () => {
       it('should call categoryDialogRef with existing category if provided', fakeAsync(() => {
         let dialogref = new MockActiveDialog<Component>();
 
-        spyOn(service, 'categoryDialogRef').and.returnValue(dialogref);
-
+        jest.spyOn(CategoryPopupService.prototype, 'categoryDialogRef').mockReturnValue(dialogref as any);
         service.open(component, category);
+
         tick();
 
         expect(service.categoryDialogRef).toHaveBeenCalledWith(component, category);
@@ -50,7 +50,7 @@ describe('Service Tests', () => {
       it('should call categoryDialogRef with new category if none provided', fakeAsync(() => {
         let dialogref = new MockActiveDialog<Component>();
 
-        spyOn(service, 'categoryDialogRef').and.returnValue(dialogref);
+        jest.spyOn(CategoryPopupService.prototype, 'categoryDialogRef').mockReturnValue(dialogref as any);
 
         service.open(component);
         tick();

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryPopupService } from '../category-popup.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-category-dialog',
@@ -18,7 +18,7 @@ export class CategoryDialogComponent implements OnInit {
 
   constructor(
     public activeDialog: MatDialogRef<Component>,
-    private categoryService: CategoryService,
+    public categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: Category
   ) {}
 
@@ -34,16 +34,21 @@ export class CategoryDialogComponent implements OnInit {
   save() {
     this.isSaving = true;
     this.category.id === undefined
-      ? this.subscribeToSaveResponse(this.categoryService.createCategory(this.category))
-      : this.subscribeToSaveResponse(this.categoryService.updateCategory(this.category));
+      ? this.subscribeToSaveResponse(this.categoryService.createCategory(this.category), true)
+      : this.subscribeToSaveResponse(this.categoryService.updateCategory(this.category), false);
   }
 
-  private subscribeToSaveResponse(result: Observable<Category>) {
-    result.subscribe(category => this.onSaveSuccess(category), (res: HttpErrorResponse) => this.onSaveError());
+  private subscribeToSaveResponse(result: Observable<Category>, save?: boolean) {
+    result.subscribe(category => this.onSaveSuccess(category, save), (res: HttpErrorResponse) => this.onSaveError());
   }
 
-  private onSaveSuccess(result: Category) {
+  private onSaveSuccess(result: Category, save?: boolean) {
     this.isSaving = false;
+
+    if (save) {
+      this.categoryService.categories.push(result);
+    }
+
     this.activeDialog.close(result);
   }
 

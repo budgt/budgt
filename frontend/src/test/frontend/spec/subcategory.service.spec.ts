@@ -1,10 +1,11 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { of } from 'rxjs';
 import { SubcategoryService } from '../../../app/category-list/subcategory.service';
+import { CategoryService } from '../../../app/category-list/category.service';
 import { Subcategory } from '../../../app/models/subcategory';
 import { Category } from '../../../app/models/category';
-import { CategoryService } from '../../../app/category-list/category.service';
-import { of } from 'rxjs';
 
 describe('Service Tests', () => {
   describe('Subcategory Service', () => {
@@ -39,8 +40,8 @@ describe('Service Tests', () => {
 
       it('should call updateCategory', () => {
         subcategory.name = 'New name';
-        spyOn(subcategoryService, 'updateSubcategory').and.callThrough();
-        spyOn(categoryService, 'updateCategory').and.returnValue(of(category));
+        jest.spyOn(subcategoryService, 'updateSubcategory');
+        jest.spyOn(categoryService, 'updateCategory').mockReturnValue(of(category));
 
         subcategoryService.updateSubcategory(category, subcategory);
 
@@ -61,8 +62,8 @@ describe('Service Tests', () => {
 
       it('should call updateCategory', () => {
         subcategory.name = 'New name';
-        spyOn(subcategoryService, 'createSubcategory').and.callThrough();
-        spyOn(categoryService, 'updateCategory').and.returnValue(of(category));
+        jest.spyOn(subcategoryService, 'createSubcategory');
+        jest.spyOn(categoryService, 'updateCategory').mockReturnValue(of(category));
 
         subcategoryService.createSubcategory(category, subcategory);
 

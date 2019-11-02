@@ -1,0 +1,62 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'de.budgt'
+version = '0.2.2-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+ext {
+	set('springCloudVersion', 'Greenwich.SR2')
+}
+
+dependencies {
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+  implementation('org.springframework.cloud:spring-cloud-starter-config')
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+task dockerbuild {
+	description 'Build docker image.'
+    doLast {
+        exec {
+            workingDir '../../'
+            commandLine 'sh', '-c', 'docker build -f backend/gateway/src/main/deploy/docker/Dockerfile -t budgt-gateway .'
+
+        }
+    }
+}
+
+task cleanBuildDocker {
+    dependsOn 'clean'
+    dependsOn 'build'
+    dependsOn 'dockerbuild'
+    tasks.findByName('build').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'build'
+}

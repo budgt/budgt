@@ -4,4 +4,8 @@ server:
 logging:
   level:
     root: Info
-  file: /var/logs/budgt/category-serivce.log
+  file: /var/log/budgt/category-serivce.log
+
+spring:
+  main:
+    allow-bean-definition-overriding: true

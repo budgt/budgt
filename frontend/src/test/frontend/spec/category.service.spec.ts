@@ -1,7 +1,7 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
+import { CategoryService } from '../../../app/category-list/category.service';
 
 describe('Service Tests', () => {
   describe('Category Service', () => {
@@ -9,7 +9,7 @@ describe('Service Tests', () => {
     let service: CategoryService;
     let httpMock: HttpTestingController;
 
-    const resourceUrl = 'https://dev.budgt.de/api/categories';
+    const resourceUrl = 'http://localhost/api/category-service/categories';
     let category1 = new Category(123);
 
     beforeEach(() => {
@@ -60,7 +60,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.getCategoryById(1).subscribe(null, (_error: any) => {
+        service.getCategoryById(1).subscribe((_error: any) => {
           expect(_error.status).toEqual(404);
         });
 
@@ -91,7 +91,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.updateCategory(new Category(456)).subscribe(null, (_error: any) => {
+        service.updateCategory(new Category(456)).subscribe((_error: any) => {
           expect(_error.status).toEqual(404);
         });
 
@@ -141,7 +141,7 @@ describe('Service Tests', () => {
       });
 
       it('should propagate a not found response', () => {
-        service.deleteCatgory(new Category(456)).subscribe(null, (_error: any) => {
+        service.deleteCatgory(new Category(456)).subscribe((_error: any) => {
           expect(_error.status).toEqual(404);
         });
 

@@ -1,6 +1,10 @@
-<navigation-bar></navigation-bar>
+<div class="wrapper">
+  <div class="header">
+    <navigation-bar></navigation-bar>
+  </div>
 
-<div class="category-list-wrapper" fxLayout fxLayout.xs="column" fxLayoutAlign="left" fxLayoutGap="10px" fxLayoutGap.xs="0">
-  <router-outlet fxFlex="1 1 10%"></router-outlet>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 <router-outlet name="popup"></router-outlet>

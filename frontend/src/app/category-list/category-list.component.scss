@@ -1,3 +1,15 @@
+#category-list-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+#category-list-accorion {
+  max-width: 440px;
+  margin-top: 20px;
+}
+
 .left-margin {
   margin-left: 8px;
 }
@@ -10,10 +22,15 @@
   cursor: pointer;
 }
 
-#category-list {
-  min-width: 550px;
+#add-category-button {
+  margin: auto;
 }
 
-#add-category-button {
+.loadingIndicatorContainer {
+  width: 440px;
+  height: 120px;
+}
+
+#progress-spinner {
   margin: auto;
 }

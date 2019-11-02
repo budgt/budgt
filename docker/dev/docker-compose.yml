@@ -2,6 +2,29 @@
 version: "3.7"
 
 services:
+  budgt-gateway:
+    image: budgt/budgt-gateway:edge
+    restart: always
+    container_name: budgt-gateway
+    depends_on:
+      - budgt-config-server
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-gateway
+    ports:
+      - 443:443
+    volumes:
+      - /opt/budgt/certs/:/opt/budgt/certs/
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://dev.budgt.de"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
   budgt-frontend:
     image: budgt/budgt-frontend:edge
     restart: always
@@ -11,12 +34,11 @@ services:
         aliases:
           - budgt-frontend
     ports:
-      - 80:80
-      - 443:443
+      - 1380:1380
     volumes:
       - /opt/budgt/certs/:/opt/budgt/certs/
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://dev.budgt.de"]
+      test: ["CMD", "curl", "-f", "https://dev.budgt.de/ui"]
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -35,6 +57,8 @@ services:
           - budgt-category-service
     ports:
       - 1338:1338
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
     healthcheck:
       test:
         ["CMD", "curl", "-f", "http://budgt-category-service:1338/categories"]
@@ -75,6 +99,45 @@ services:
     volumes:
       - /opt/docker/mongodb/data:/data/db
     command: mongod --auth
+
+  budgt-registry-service:
+    image: budgt/budgt-registry-service:edge
+    restart: always
+    container_name: budgt-registry-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-registry-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
+
+  budgt-auth-service:
+    image: budgt/budgt-auth-service:edge
+    restart: always
+    container_name: budgt-auth-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-auth-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
+
+  budgt-account-service:
+    image: budgt/budgt-account-service:edge
+    restart: always
+    container_name: budgt-account-service
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-account-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    depends_on:
+      - budgt-config-server
 
 networks:
   budgt-network:

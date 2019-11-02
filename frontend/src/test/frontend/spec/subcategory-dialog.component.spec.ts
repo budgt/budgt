@@ -1,22 +1,22 @@
 import { BudgtTestModule } from './../test.module';
-import { Category } from './../../../app/models/category';
 import { fakeAsync, ComponentFixture, TestBed, inject, tick, async } from '@angular/core/testing';
 
-import { CategoryService } from '../../../app/category-list/category.service';
 import { of } from 'rxjs';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MockActiveDialog } from './helpers/mock-active-dialog.service';
+import { FormsModule } from '@angular/forms';
 import { SubcategoryDialogComponent } from '../../../app/category-list/subcategory-dialog/subcategory-dialog.component';
 import { SubcategoryService } from '../../../app/category-list/subcategory.service';
+import { CategoryService } from '../../../app/category-list/category.service';
+import { Category } from '../../../app/models/category';
 import { Subcategory } from '../../../app/models/subcategory';
-import { FormsModule } from '@angular/forms';
 
 describe('SubcategoryDialogComponent', () => {
   let component: SubcategoryDialogComponent;
   let fixture: ComponentFixture<SubcategoryDialogComponent>;
   let subcategoryService: SubcategoryService;
   let categoryService: CategoryService;
-  let mockActiveDialog: any;
+  let mockActiveDialog: MockActiveDialog<any, any>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,6 +36,11 @@ describe('SubcategoryDialogComponent', () => {
       ]
     })
       .overrideTemplate(SubcategoryDialogComponent, '')
+      .overrideComponent(SubcategoryDialogComponent, {
+        set: {
+          styleUrls: []
+        }
+      })
       .compileComponents();
   }));
 
@@ -58,8 +63,9 @@ describe('SubcategoryDialogComponent', () => {
         component.subcategory = subcategory;
         categoryService.selectedCategory = category;
 
-        spyOn(subcategoryService, 'updateSubcategory').and.callThrough();
-        spyOn(categoryService, 'updateCategory').and.returnValue(of(category));
+        jest.spyOn(subcategoryService, 'updateSubcategory');
+        jest.spyOn(categoryService, 'updateCategory').mockReturnValue(of(category));
+        jest.spyOn(mockActiveDialog, 'close').mockReturnValue();
 
         component.subcategory = subcategory;
 
@@ -69,7 +75,7 @@ describe('SubcategoryDialogComponent', () => {
         expect(subcategoryService.updateSubcategory).toHaveBeenCalledWith(category, subcategory);
         expect(categoryService.updateCategory).toHaveBeenCalledWith(category);
         expect(component.isSaving).toEqual(false);
-        expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
+        expect(mockActiveDialog.close).toHaveBeenCalledWith(category);
       })
     ));
 
@@ -83,8 +89,9 @@ describe('SubcategoryDialogComponent', () => {
         component.subcategory = subcategory;
         categoryService.selectedCategory = category;
 
-        spyOn(subcategoryService, 'createSubcategory').and.callThrough();
-        spyOn(categoryService, 'updateCategory').and.returnValue(of(category));
+        jest.spyOn(subcategoryService, 'createSubcategory');
+        jest.spyOn(categoryService, 'updateCategory').mockReturnValue(of(category));
+        jest.spyOn(mockActiveDialog, 'close').mockReturnValue();
 
         component.save();
         tick();
@@ -92,7 +99,7 @@ describe('SubcategoryDialogComponent', () => {
         expect(subcategoryService.createSubcategory).toHaveBeenCalledWith(category, subcategory);
         expect(categoryService.updateCategory).toHaveBeenCalledWith(category);
         expect(component.isSaving).toEqual(false);
-        expect(mockActiveDialog.dismissSpy).toHaveBeenCalled();
+        expect(mockActiveDialog.close).toHaveBeenCalledWith(category);
       })
     ));
   });

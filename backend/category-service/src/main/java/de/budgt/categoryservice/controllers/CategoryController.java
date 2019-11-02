@@ -1,6 +1,7 @@
 package de.budgt.categoryservice.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.budgt.categoryservice.exceptions.CategoryNotFoundException;
+import de.budgt.categoryservice.exceptions.DuplicateSubcategoryException;
 import de.budgt.categoryservice.models.Category;
 import de.budgt.categoryservice.services.CategoryService;
 
@@ -46,10 +48,13 @@ public class CategoryController {
     return new ResponseEntity<>(category, HttpStatus.OK);
   }
 
-  @PutMapping("/categories")
+  @PutMapping("/categories/{id}")
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
-    category = categoryService.update(category);
-    return new ResponseEntity<>(category, HttpStatus.OK);
+    try {
+      return new ResponseEntity<>(categoryService.update(category), HttpStatus.OK);
+    } catch (DuplicateSubcategoryException ex) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
   }
 
   @DeleteMapping("/categories/{id}")

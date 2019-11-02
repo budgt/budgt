@@ -1,8 +1,8 @@
-export interface GuinessCompatibleSpy extends jasmine.Spy {
+export interface GuinessCompatibleSpy {
   /** By chaining the spy with and.returnValue, all calls to the function will return a specific value. */
-  andReturn(val: any): void;
+  mockReturnValue(val: any): void;
   /** By chaining the spy with and.callFake, all calls to the spy will delegate to the supplied function. */
-  andCallFake(fn: () => void): GuinessCompatibleSpy;
+  mockImplementation(fn: () => void): GuinessCompatibleSpy;
   /** removes all recorded calls */
   reset();
 }
@@ -19,7 +19,7 @@ export class SpyObject {
     Object.keys(config).forEach(key => (m[key] = config[key]));
     Object.keys(overrides).forEach(key => (m[key] = overrides[key]));
     Object.keys(m).forEach(key => {
-      object.spy(key).andReturn(m[key]);
+      object.spy(key).mockReturnValue(m[key]);
     });
     return object;
   }
@@ -56,12 +56,10 @@ export class SpyObject {
 
   /** @internal */
   _createGuinnessCompatibleSpy(name): GuinessCompatibleSpy {
-    const newSpy: GuinessCompatibleSpy = jasmine.createSpy(name) as any;
-    newSpy.andCallFake = newSpy.and.callFake as any;
-    newSpy.andReturn = newSpy.and.returnValue as any;
-    newSpy.reset = newSpy.calls.reset as any;
-    // revisit return null here (previously needed for rtts_assert).
-    newSpy.and.returnValue(null);
+    const newSpy: GuinessCompatibleSpy = jest.fn() as any;
+    newSpy.mockImplementation = jest.fn().mockImplementation as any;
+    newSpy.mockReturnValue = jest.fn().mockReturnValue as any;
+    newSpy.reset = jest.fn().mockClear;
     return newSpy;
   }
 }

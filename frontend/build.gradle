@@ -1,5 +1,5 @@
 group = 'de.budgt'
-version = '0.0.1-SNAPSHOT'
+version = '0.2.2-SNAPSHOT'
 
 task clean {
 	description 'Clean workspace'
@@ -17,7 +17,18 @@ task build {
     doLast {
         exec {
             workingDir './'
-            commandLine 'sh', '-c', 'ng build --configuration=production'
+            commandLine 'sh', '-c', 'ng build --configuration=production --base-href /ui/ --deploy-url /ui/'
+
+        }
+    }
+}
+
+task buildLocal{
+	description 'Build angular app'
+    doLast {
+        exec {
+            workingDir './'
+            commandLine 'sh', '-c', 'ng build --base-href /ui/ --deploy-url /ui/'
 
         }
     }
@@ -32,5 +43,13 @@ task dockerbuild {
 
         }
     }
+}
+
+task cleanBuildDockerLocal {
+    dependsOn 'clean'
+    dependsOn 'buildLocal'
+    dependsOn 'dockerbuild'
+    tasks.findByName('buildLocal').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'buildLocal'
 }
 

@@ -3,6 +3,8 @@ import { Category } from '../models/category';
 import { CategoryService } from './category.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LoaderService } from './loader.service.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'category-list',
@@ -10,14 +12,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  categories: Category[];
   categorySubscription: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService, public loaderService: LoaderService, private authService: AuthService) {}
 
   ngOnInit() {
     this.categorySubscription = this.categoryService.getCategories().subscribe(categories => {
-      this.categories = categories;
+      this.categoryService.categories = categories;
     });
   }
 
@@ -28,17 +29,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   deleteCategory(category: Category) {
-    let index: number = this.categories.indexOf(category);
-    this.categories.splice(index, 1);
+    let index: number = this.categoryService.categories.indexOf(category);
+    this.categoryService.categories.splice(index, 1);
 
-    this.categoryService.deleteCatgory(category);
+    this.categoryService.deleteCatgory(category).subscribe();
   }
 
   deleteSubcategory(subcategory: Subcategory) {
     let index: number = this.categoryService.selectedCategory.subcategories.indexOf(subcategory);
     this.categoryService.selectedCategory.subcategories.splice(index, 1);
 
-    this.categoryService.updateCategory(this.categoryService.selectedCategory);
+    this.categoryService.updateCategory(this.categoryService.selectedCategory).subscribe();
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Subcategory } from '../models/subcategory';
 import { Category } from '../models/category';
 
@@ -22,7 +22,7 @@ export class SubcategoryPopupService {
       if (subcategoryID) {
         // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError in dev mode
         setTimeout(() => {
-          let sc = category.subcategories.find(subcategory => subcategory.id === Number(subcategoryID));
+          let sc = category.subcategories.find(subcategory => subcategory.id === subcategoryID);
           this.matDialogRef = this.subcategoryDialogRef(component, sc);
           resolve(this.matDialogRef);
         }, 0);

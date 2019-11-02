@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NavigationBarComponent } from '../../../app/navigation-bar/navigation-bar.component';
-import { MatToolbarModule } from '@angular/material';
 
 describe('NavigationBarComponent', () => {
   let component: NavigationBarComponent;
@@ -9,8 +10,18 @@ describe('NavigationBarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NavigationBarComponent],
-      imports: [MatToolbarModule]
-    }).compileComponents();
+      imports: [
+        HttpClientTestingModule, //
+        RouterTestingModule
+      ]
+    })
+      .overrideTemplate(NavigationBarComponent, '')
+      .overrideComponent(NavigationBarComponent, {
+        set: {
+          styleUrls: []
+        }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

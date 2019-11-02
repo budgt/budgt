@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div id="login-card">
+    <img alt="budgt logo" src="assets/budgt-logo-white-transparent.png" />
+    <mat-card>
+      <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
+        <mat-form-field>
+          <input matInput class="account" type="username" placeholder="username" formControlName="username" [errorStateMatcher]="matcher" />
+          <mat-error>
+            <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">Please enter your username</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password" [errorStateMatcher]="matcher" />
+          <mat-error>
+            <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter your password</span>
+          </mat-error>
+        </mat-form-field>
+        <button type="submit" [disabled]="!loginForm.valid" mat-flat-button color="primary">Login</button>
+      </form>
+    </mat-card>
+    <p id="register">Don’t have an account? <span id="register-link" (click)="register()">Sign up</span></p>
+  </div>
+</div>

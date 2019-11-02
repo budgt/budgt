@@ -1,16 +1,18 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CategoryListComponent } from '../../../app/category-list/category-list.component';
 import { CategoryService } from '../../../app/category-list/category.service';
 import { Category } from '../../../app/models/category';
 
 describe('Component Tests', () => {
-  describe('Category Management Component', () => {
+  describe('Category List Component', () => {
     let comp: CategoryListComponent;
     let fixture: ComponentFixture<CategoryListComponent>;
     let service: CategoryService;
+    let injector: TestBed;
 
     let category1 = new Category(123);
     let category2 = new Category(456);
@@ -19,28 +21,32 @@ describe('Component Tests', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, RouterTestingModule],
         declarations: [CategoryListComponent],
         providers: [CategoryService]
       })
         .overrideTemplate(CategoryListComponent, '')
+        .overrideComponent(CategoryListComponent, {
+          set: {
+            styleUrls: []
+          }
+        })
         .compileComponents();
-    }));
-
-    beforeEach(() => {
+      injector = getTestBed();
+      service = injector.get(CategoryService);
       fixture = TestBed.createComponent(CategoryListComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(CategoryService);
-    });
+    }));
 
     describe('OnInit', () => {
       it('should call #getCategories', () => {
-        spyOn(service, 'getCategories').and.returnValue(of([category1]));
+        jest.spyOn(CategoryService.prototype, 'getCategories').mockReturnValue(of([category1]));
 
         comp.ngOnInit();
 
         expect(service.getCategories).toHaveBeenCalled();
-        expect(comp.categories[0]).toEqual(jasmine.objectContaining(category1));
+        expect(service.categories[0]).toEqual(category1);
       });
     });
 
@@ -54,7 +60,7 @@ describe('Component Tests', () => {
 
     describe('deleteCategory', () => {
       beforeEach(() => {
-        spyOn(service, 'getCategories').and.returnValue(of([category1, category2]));
+        jest.spyOn(CategoryService.prototype, 'getCategories').mockReturnValue(of([category1, category2]));
 
         comp.ngOnInit();
       });
@@ -62,11 +68,11 @@ describe('Component Tests', () => {
       it('should remove the category from the list', () => {
         comp.deleteCategory(category1);
 
-        expect(comp.categories[0]).toEqual(jasmine.objectContaining(category2));
+        expect(service.categories[0]).toEqual(category2);
       });
 
       it('should call #deleteCatgory', () => {
-        spyOn(service, 'deleteCatgory');
+        jest.spyOn(CategoryService.prototype, 'deleteCatgory').mockReturnValue(of(category2));
 
         comp.deleteCategory(category2);
 
@@ -77,7 +83,7 @@ describe('Component Tests', () => {
     describe('delteSubcategory', () => {
       beforeEach(() => {
         category1.subcategories = [subCategory1, subCategory2];
-        spyOn(service, 'getCategories').and.returnValue(of([category1]));
+        jest.spyOn(CategoryService.prototype, 'getCategories').mockReturnValue(of([category1]));
 
         comp.ngOnInit();
         comp.selectCategory(category1);
@@ -86,11 +92,11 @@ describe('Component Tests', () => {
       it('should delte the subcategory', () => {
         comp.deleteSubcategory(subCategory1);
 
-        expect(service.selectedCategory.subcategories[0]).toEqual(jasmine.objectContaining(subCategory2));
+        expect(service.selectedCategory.subcategories[0]).toEqual(subCategory2);
       });
 
       it('should call #updateCategory', () => {
-        spyOn(service, 'updateCategory');
+        jest.spyOn(CategoryService.prototype, 'updateCategory').mockReturnValue(of(subCategory2));
 
         comp.deleteSubcategory(subCategory2);
 

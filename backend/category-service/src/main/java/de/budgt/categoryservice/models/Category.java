@@ -1,5 +1,10 @@
 package de.budgt.categoryservice.models;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 
 /**
@@ -12,7 +17,8 @@ public class Category {
   private String name;
   private CategoryType type;
   private double amount;
-  private Subcategory[] subcategories;
+  private List<Subcategory> subcategories;
+  private String userId;
 
   public Category() {
   }
@@ -21,6 +27,7 @@ public class Category {
     this.id = id;
     this.setName(name);
     this.type = type;
+    this.subcategories = new ArrayList<>();
   }
 
   /**
@@ -79,15 +86,29 @@ public class Category {
   /**
    * @return the subcategories
    */
-  public Subcategory[] getSubcategories() {
+  public List<Subcategory> getSubcategories() {
     return subcategories;
   }
 
   /**
    * @param subcategories the subcategories to set
    */
-  public void setSubcategories(Subcategory[] subcategories) {
+  public void setSubcategories(List<Subcategory> subcategories) {
     this.subcategories = subcategories;
+  }
+
+  /**
+   * @return the userId
+   */
+  public String getUserId() {
+    return userId;
+  }
+
+  /**
+   * @param userId the userId to set
+   */
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   @Override
@@ -96,6 +117,7 @@ public class Category {
 
     sbld.append("Categodry:\n");
     sbld.append("  ID: " + this.id + "\n");
+    sbld.append("  UserId: " + this.userId + "\n");
     sbld.append("  Name: " + this.name + "\n");
     sbld.append("  Type: " + this.type + "\n");
     sbld.append("  Amount: " + this.amount + "\n");
@@ -109,7 +131,16 @@ public class Category {
     return sbld.toString();
   }
 
+  public boolean checkForSubcategoryDuplicate() {
+    ArrayList<String> subcategoryNames = new ArrayList<>();
+    subcategories.forEach(subcategory -> subcategoryNames.add(subcategory.getName()));
+    Set<String> set = new HashSet<>(subcategoryNames);
+
+    return set.size() < subcategoryNames.size();
+  }
+
   public enum CategoryType {
     INCOME, EXPENSE
   }
+
 }

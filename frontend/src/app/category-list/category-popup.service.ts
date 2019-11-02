@@ -1,7 +1,7 @@
 import { Category } from './../models/category';
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class CategoryPopupService {
