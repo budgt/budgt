@@ -114,22 +114,20 @@ services:
       - budgt-config-server
 
   budgt-auth-service:
-    image: budgt-auth-service:edge
+    image: budgt/budgt-auth-service:edge
     restart: always
     container_name: budgt-auth-service
     networks:
       budgt-network:
         aliases:
           - budgt-auth-service
-    ports:
-      - 1331:1331
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     depends_on:
       - budgt-config-server
 
   budgt-account-service:
-    image: budgt-account-service:edge
+    image: budgt/budgt-account-service:edge
     restart: always
     container_name: budgt-account-service
     networks:
