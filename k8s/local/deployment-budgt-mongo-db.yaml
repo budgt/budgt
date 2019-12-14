@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-mongodb
+  namespace: budgt-local
+  labels:
+    app: budgt-mongodb
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-mongodb
+  template:
+    metadata:
+      labels:
+        app: budgt-mongodb
+    spec:
+      containers:
+        - name: budgt-mongodb
+          image: "mongo:xenial"
+          command: ["mongod"]
+          args: ["auth"]
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: budgt-mongodb
+          imagePullPolicy: Always
+      volumes:
+        - name: budgt-mongodb
+          persistentVolumeClaim:
+            claimName: do-bs-pvc

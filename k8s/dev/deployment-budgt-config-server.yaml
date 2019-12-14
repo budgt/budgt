@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-config-server
+  namespace: budgt-dev
+  labels:
+    app: budgt-config-server
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-config-server
+  template:
+    metadata:
+      labels:
+        app: budgt-config-server
+    spec:
+      containers:
+        - name: budgt-config-server
+          image: "budgt/budgt-config-server:edge"
+          ports:
+            - containerPort: 1339
+              protocol: TCP
+          imagePullPolicy: Always
+      initContainers:
+        - name: git-sync
+          image: k8s.gcr.io/git-sync-amd64:v2.0.6
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: service
+              mountPath: /opt
+            - name: git-secret
+              mountPath: /etc/git-secret
+          env:
+            - name: GIT_SYNC_REPO
+              value: https://github.com/pahofmann/budgt-configuration
+            - name: GIT_SYNC_BRANCH
+              value: master
+            - name: GIT_SYNC_ROOT
+              value: /opt
+            - name: GIT_SYNC_DEST
+              value: /opt
+            - name: GIT_SYNC_PERMISSIONS
+              value: "0777"
+            - name: GIT_SYNC_ONE_TIME
+              value: "true"
+            - name: GIT_SYNC_SSH
+              value: "true"
+          securityContext:
+            runAsUser: 0
+      volumes:
+        - name: service
+          emptyDir: {}
+        - name: git-secret
+          secret:
+            defaultMode: 256
+            secretName: git-creds # your-ssh-key
+

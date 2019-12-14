@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-auth-service
+  namespace: budgt-local
+  labels:
+    app: budgt-auth-service
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-auth-service
+  template:
+    metadata:
+      labels:
+        app: budgt-auth-service
+    spec:
+      containers:
+        - name: budgt-auth-service
+          image: "budgt/budgt-auth-service:edge"
+          ports:
+            - containerPort: 1331
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "local"
+      initContainers:
+        - name: init-config-server
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until curl http://budgt-config-server:1339/auth-service/dev; do echo waiting for config-server; sleep 2; done;",
+            ]

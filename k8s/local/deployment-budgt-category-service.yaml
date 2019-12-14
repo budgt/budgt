@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-category-service
+  namespace: budgt-local
+  labels:
+    app: budgt-category-service
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-category-service
+  template:
+    metadata:
+      labels:
+        app: budgt-category-service
+    spec:
+      containers:
+        - name: budgt-category-service
+          image: "budgt/budgt-category-service:edge"
+          ports:
+            - containerPort: 1338
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "local"
+      initContainers:
+        - name: init-db
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until nc -z budgt-mongodb:27017; do echo waiting for db; sleep 2; done;",
+            ]
+        - name: init-config-server
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until curl http://budgt-config-server:1339/category-service/dev; do echo waiting for config-server; sleep 2; done;",
+            ]

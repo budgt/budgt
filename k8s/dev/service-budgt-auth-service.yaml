@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: budgt-auth-service
+  namespace: budgt-dev
+spec:
+  selector:
+    app: budgt-auth-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 1331

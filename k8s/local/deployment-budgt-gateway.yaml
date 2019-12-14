@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-gateway
+  namespace: budgt-local
+  labels:
+    app: budgt-gateway
+    tier: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-gateway
+  template:
+    metadata:
+      labels:
+        app: budgt-gateway
+    spec:
+      containers:
+        - name: budgt-gateway
+          image: "budgt/budgt-gateway:edge"
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "local"
+      initContainers:
+        - name: init-db
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until nc -z budgt-mongodb:27017; do echo waiting for db; sleep 2; done;",
+            ]
+        - name: init-config-server
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "until curl http://budgt-config-server:1339/gateway/dev; do echo waiting for config-server; sleep 2; done;",
+            ]

@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: budgt-ingress
+  namespace: budgt-dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-dev
+spec:
+  tls:
+    - hosts:
+        - dev.budgt.de
+      secretName: letsencrypt-dev
+  rules:
+    - host: dev.budgt.de
+      http:
+        paths:
+          - gateway:
+              serviceName: budgt-gateway
+              servicePort: 80

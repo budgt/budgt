@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgt-frontend
+  namespace: budgt-dev
+  labels:
+    app: budgt-frontend
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgt-frontend
+  template:
+    metadata:
+      labels:
+        app: budgt-frontend
+    spec:
+      containers:
+        - name: budgt-frontend
+          image: "budgt/budgt-frontend:edge"
+          ports:
+            - containerPort: 1380
+              protocol: TCP
+          imagePullPolicy: Always

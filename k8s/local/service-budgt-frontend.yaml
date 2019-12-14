@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: budgt-frontend
+  namespace: budgt-local
+spec:
+  selector:
+    app: budgt-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 1380
