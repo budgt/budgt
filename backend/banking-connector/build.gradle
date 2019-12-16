@@ -1,0 +1,87 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+
+group = 'de.budgt'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+ext {
+	set('springCloudVersion', 'Greenwich.SR2')
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.cloud:spring-cloud-starter-config')
+	implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	implementation('org.springframework.cloud:spring-cloud-starter-oauth2')
+	implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
+  compile("org.javassist:javassist:3.18.2-GA")
+  compile("com.github.mongobee:mongobee:0.13")
+  compile(group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.3')
+	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+  testCompile(group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.3')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+
+task dockerbuild {
+	description 'Build docker image.'
+    doLast {
+        exec {
+            workingDir '../../'
+            commandLine 'sh', '-c', 'docker build -f backend/banking-connector/src/main/deploy/docker/Dockerfile -t banking-connector .'
+
+        }
+    }
+}
+
+task cleanBuildDocker {
+    dependsOn 'clean'
+    dependsOn 'build'
+    dependsOn 'dockerbuild'
+    tasks.findByName('build').mustRunAfter 'clean'
+    tasks.findByName('dockerbuild').mustRunAfter 'build'
+}
+
+test {
+  systemProperties System.properties
+  systemProperties.put("spring.profiles.active","unittest")
+  systemProperties['user.dir'] = workingDir
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
+}

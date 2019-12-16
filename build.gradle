@@ -4,27 +4,37 @@ allprojects {
 subprojects {
 }
 
+project('backend:account-service') {
+}
+
+project('backend:auth-service') {
+}
+
+project('backend:banking-connector') {
+}
+
 project('backend:category-service') {
 }
 
 project('backend:config-server') {
 }
 
-project('backend:registry-service') {
+project('backend:gateway') {
 }
 
-project('backend:auth-service') {
+project('backend:registry-service') {
 }
 
 project(':frontend') {
 }
 
 task cleanBuildDockerLocal {
-    dependsOn 'frontend:cleanBuildDockerLocal'
-    dependsOn 'backend:category-service:cleanBuildDocker'
-    dependsOn 'backend:gateway:cleanBuildDocker'
-    dependsOn 'backend:config-server:cleanBuildDocker'
-    dependsOn 'backend:registry-service:cleanBuildDocker'
-    dependsOn 'backend:auth-service:cleanBuildDocker'
     dependsOn 'backend:account-service:cleanBuildDocker'
+    dependsOn 'backend:auth-service:cleanBuildDocker'
+    dependsOn 'backend:banking-connector:cleanBuildDocker'
+    dependsOn 'backend:category-service:cleanBuildDocker'
+    dependsOn 'backend:config-server:cleanBuildDocker'
+    dependsOn 'backend:gateway:cleanBuildDocker'
+    dependsOn 'backend:registry-service:cleanBuildDocker'
+    dependsOn 'frontend:cleanBuildDockerLocal'
 }
