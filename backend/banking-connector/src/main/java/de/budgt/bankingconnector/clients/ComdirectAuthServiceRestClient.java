@@ -1,4 +1,4 @@
-package de.budgt.bankingconnector.client;
+package de.budgt.bankingconnector.clients;
 
 import java.util.UUID;
 
@@ -19,9 +19,9 @@ import de.budgt.bankingconnector.models.TokenType;
  *
  * @author Patrick Hofmann
  */
-public class AuthServiceRestClient {
+public class ComdirectAuthServiceRestClient {
 
-  Logger log = LoggerFactory.getLogger(AuthServiceRestClient.class);
+  Logger log = LoggerFactory.getLogger(ComdirectAuthServiceRestClient.class);
 
   private static String URL = "https://api.comdirect.de";
   private static String AuthAPIPath = "/oauth/token";
