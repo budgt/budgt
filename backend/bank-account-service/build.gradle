@@ -60,7 +60,7 @@ task dockerbuild {
     doLast {
         exec {
             workingDir '../../'
-            commandLine 'sh', '-c', 'docker build -f backend/bank-account-service/src/main/deploy/docker/Dockerfile -t bank-account-service .'
+            commandLine 'sh', '-c', 'docker build -f backend/bank-account-service/src/main/deploy/docker/Dockerfile -t budgt-bank-account-service .'
 
         }
     }
