@@ -25,6 +25,9 @@ project('backend:gateway') {
 project('backend:registry-service') {
 }
 
+project('backend:bank-account-service') {
+}
+
 project(':frontend') {
 }
 
@@ -36,5 +39,6 @@ task cleanBuildDockerLocal {
     dependsOn 'backend:config-server:cleanBuildDocker'
     dependsOn 'backend:gateway:cleanBuildDocker'
     dependsOn 'backend:registry-service:cleanBuildDocker'
+    dependsOn 'backend:bank-account-service:cleanBuildDocker'
     dependsOn 'frontend:cleanBuildDockerLocal'
 }

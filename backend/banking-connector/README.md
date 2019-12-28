@@ -5,7 +5,7 @@
 ## Build Status
 
 Master:  
-![Build Status Master](https://jenkins.hfmnn.com/buildStatus/icon?job=budgt/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=alert_status 'quality gate') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=coverage 'coverage') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=code_smells 'code smells') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-category-service&metric=security_rating 'security')  
+![Build Status Master](https://jenkins.hfmnn.com/buildStatus/icon?job=budgt/master) ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-banking-connector&metric=alert_status 'quality gate') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-banking-connector&metric=coverage 'coverage') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-banking-connector&metric=code_smells 'code smells') ![alt text](https://sonarcloud.io/api/project_badges/measure?project=budgt-banking-connector&metric=security_rating 'security')  
 Development:  
 ![Build Status Development](https://jenkins.hfmnn.com/buildStatus/icon?job=budgt/development)
 
