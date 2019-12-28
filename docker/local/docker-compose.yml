@@ -43,6 +43,38 @@ services:
     environment:
       - "SPRING_PROFILES_ACTIVE=local"
 
+  budgt-bank-account-service:
+    image: budgt/budgt-bank-account-service:latest
+    restart: always
+    container_name: budgt-bank-account-service
+    depends_on:
+      - budgt-config-server
+      - budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-bank-account-service-service
+    ports:
+      - 1350:1350
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+
+  budgt-banking-connector:
+    image: budgt/budgt-banking-connector:latest
+    restart: always
+    container_name: budgt-banking-connector
+    depends_on:
+      - budgt-config-server
+      - budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-banking-connector-service
+    ports:
+      - 1351:1351
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+
   budgt-config-server:
     image: budgt-config-server:latest
     restart: always

@@ -1,0 +1,11 @@
+server:
+  port: 1350
+
+logging:
+  level:
+    root: Info
+  file: /var/log/budgt/bank-account-serivce.log
+
+spring:
+  main:
+    allow-bean-definition-overriding: true

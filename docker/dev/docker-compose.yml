@@ -55,8 +55,6 @@ services:
       budgt-network:
         aliases:
           - budgt-category-service
-    ports:
-      - 1338:1338
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     healthcheck:
@@ -66,6 +64,34 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  budgt-bank-account-service:
+    image: budgt/budgt-bank-account-service:edge
+    restart: always
+    container_name: budgt-bank-account-service
+    depends_on:
+      - budgt-config-server
+      - budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-bank-account-service-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+
+  budgt-banking-connector:
+    image: budgt/budgt-banking-connector:edge
+    restart: always
+    container_name: budgt-banking-connector
+    depends_on:
+      - budgt-config-server
+      - budgt-mongodb
+    networks:
+      budgt-network:
+        aliases:
+          - budgt-banking-connector-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
 
   budgt-config-server:
     image: budgt/budgt-config-server:edge
