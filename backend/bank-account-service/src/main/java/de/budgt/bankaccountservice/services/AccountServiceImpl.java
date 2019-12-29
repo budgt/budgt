@@ -2,9 +2,11 @@ package de.budgt.bankaccountservice.services;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import de.budgt.bankaccountservice.exceptions.AccountNotFoundException;
 import de.budgt.bankaccountservice.exceptions.NoAccessToAccountException;
@@ -14,6 +16,8 @@ import de.budgt.bankaccountservice.repositories.AccountRepository;
 /**
  * AccountServiceImpl
  */
+@Service
+@Primary
 public class AccountServiceImpl implements AccountService {
 
   private final AccountRepository accountRepository;

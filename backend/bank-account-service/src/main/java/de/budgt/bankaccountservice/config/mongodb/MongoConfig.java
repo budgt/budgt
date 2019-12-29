@@ -1,4 +1,4 @@
-package de.budgt.bankaccountservice.mongodb;
+package de.budgt.bankaccountservice.config.mongodb;
 
 import java.util.Base64;
 
@@ -9,10 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "de.budgt.categoryservice.repositories")
+@EnableMongoRepositories(basePackages = "de.budgt.bankaccountservice.repositories")
 public class MongoConfig {
-
-  private static final byte[] secretKey = Base64.getDecoder().decode("cmk0M29xa21mYWZkQVNEM3IwNDNpZmFhZDMyYQ==");
+  private static final byte[] secretKey = Base64.getDecoder().decode("MUw4M25xZnlvODJwZjlBQVNEb3F3bmQxMlNBSURPYWY=");
 
   @Bean
   public CryptVault cryptVault() {

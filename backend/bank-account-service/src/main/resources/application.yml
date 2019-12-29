@@ -4,7 +4,7 @@ server:
 logging:
   level:
     root: Info
-  file: /var/log/budgt/banking-connector.log
+  file: /var/log/budgt/bank-account-connector.log
 
 spring:
   main:
