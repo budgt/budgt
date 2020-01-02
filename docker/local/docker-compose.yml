@@ -55,9 +55,9 @@ services:
         aliases:
           - budgt-bank-account-service-service
     ports:
-      - 1350:1350
+      - 1351:1351
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=local"
 
   budgt-banking-connector:
     image: budgt-banking-connector:latest
@@ -71,9 +71,9 @@ services:
         aliases:
           - budgt-banking-connector-service
     ports:
-      - 1351:1351
+      - 1350:1350
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=local"
 
   budgt-config-server:
     image: budgt-config-server:latest
