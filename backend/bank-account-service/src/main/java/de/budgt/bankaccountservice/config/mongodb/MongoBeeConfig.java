@@ -28,6 +28,7 @@ public class MongoBeeConfig {
     runner.setMongoTemplate(mongoTemplate);
     runner.setDbName(mongoProperties.getDatabase());
     runner.setChangeLogsScanPackage(MONGODB_CHANGELOGS_PACKAGE);
+    runner.setLockCollectionName("mongobeelock-bank-account-account");
     return runner;
   }
 
