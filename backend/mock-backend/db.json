@@ -50,6 +50,8 @@
       "_id": { "$oid": "5e0d477ab3cb1f00017b5443" },
       "name": "Comdirect1",
       "type": "COMDIRECT",
+      "clientId": "24390jfoisafd",
+      "clientSecret": "q89234jg4i5go",
       "userId": "randomuser",
       "_class": "de.budgt.bankaccountservice.models.Account"
     },
@@ -57,6 +59,8 @@
       "_id": { "$oid": "5e0d477ab3cb1f00017b5445" },
       "name": "Comdirect2",
       "type": "COMDIRECT",
+      "clientId": "f23j40fqi4ff",
+      "clientSecret": "f31094poffd",
       "userId": "randomuser",
       "_class": "de.budgt.bankaccountservice.models.Account"
     }

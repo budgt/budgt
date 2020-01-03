@@ -1,11 +1,11 @@
-#category-list-container {
+#account-list-container {
   width: 100%;
   height: 100%;
   display: grid;
   justify-items: center;
 }
 
-#category-list-accordion {
+#account-list-accordion {
   max-width: 440px;
   margin-top: 20px;
 }
@@ -14,16 +14,18 @@
   margin-left: 8px;
 }
 
-#subcategory-buttons {
-  margin-left: auto;
-}
-
 .button {
   cursor: pointer;
 }
 
-#add-category-button {
+#add-account-button {
   margin: auto;
+}
+
+#account-form {
+  display: grid;
+  grid-column: 40vw 40vw;
+  grid-gap: 20px;
 }
 
 .loadingIndicatorContainer {

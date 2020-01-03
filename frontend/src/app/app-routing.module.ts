@@ -7,6 +7,7 @@ import { SubcategoryPopupComponent } from './category-list/subcategory-dialog/su
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AccountListComponent } from './account-list/account-list.component';
 
 const appRoutes: Routes = [
   {
@@ -23,6 +24,11 @@ const appRoutes: Routes = [
     path: 'category-list',
     canActivate: [AuthGuard],
     component: CategoryListComponent
+  },
+  {
+    path: 'account-list',
+    canActivate: [AuthGuard],
+    component: AccountListComponent
   },
   {
     path: 'category-dialog/edit/:id',

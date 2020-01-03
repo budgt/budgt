@@ -1,0 +1,60 @@
+<div id="account-list-container">
+  <mat-accordion id="account-list-accordion">
+    <div class="loadingIndicatorContainer" *ngIf="loaderService.isLoading()">
+      <mat-progress-spinner id="progress-spinner" mode="indeterminate"> </mat-progress-spinner>
+    </div>
+    <mat-expansion-panel id="account-list" *ngFor="let account of accountService.accounts">
+      <mat-expansion-panel-header> {{ account.name }} </mat-expansion-panel-header>
+      <div mat-dialog-content>
+        <form id="account-form" name="editForm" role="form" novalidate #editForm="ngForm">
+          <mat-form-field>
+            <input matInput [(ngModel)]="account.name" placeholder="Account name" name="name" id="accountName" cdkFocusInitial required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Account Type</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let type of types">{{ account.type }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [(ngModel)]="account.clientId" placeholder="client ID" name="clientId" id="clientId" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [(ngModel)]="account.clientSecret" placeholder="client secret" name="clientSecret" id="clientSecret" />
+          </mat-form-field>
+
+          <button mat-button (click)="clear()">Cancel</button>
+          <button mat-button (click)="save()" [mat-dialog-close]="subcategory">Save</button>
+
+          <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.controls.bame?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </form>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel disabled>
+      <mat-expansion-panel-header>
+        <button
+          mat-flat-button
+          id="add-account-button"
+          type="submit"
+          [routerLink]="['/', { outlets: { popup: ['account-dialog', 'create'] } }]"
+          replaceUrl="true"
+          queryParamsHandling="merge"
+          color="accent"
+        >
+          Add account
+        </button>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

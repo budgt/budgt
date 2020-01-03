@@ -21,9 +21,12 @@ import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AccountListComponent } from './account-list/account-list.component';
+import { AccountService } from './account-list/account.service';
 
 @NgModule({
   declarations: [
+    AccountListComponent,
     AppComponent,
     NavigationBarComponent,
     CategoryListComponent,
@@ -45,7 +48,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     MaterialModule
   ],
   providers: [
-    CategoryService, //
+    AccountService, //
+    CategoryService,
     CategoryPopupService,
     SubcategoryService,
     SubcategoryPopupService,

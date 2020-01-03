@@ -10,6 +10,7 @@ frontend/out-tsc
 
 # dependencies
 frontend/node_modules
+backend/mock-backend/node_modules
 
 # reports
 frontend/build/reports

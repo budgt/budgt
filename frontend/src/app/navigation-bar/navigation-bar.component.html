@@ -1,7 +1,10 @@
 <mat-toolbar color="primary">
   <img id="logo" alt="budgt logo" src="assets/budgt-logo-white-transparent.png" />
 
-  <div class="navigation-list"><button routerLink="category-list" mat-button color="accent">Categories</button></div>
+  <div class="navigation-list">
+    <button routerLink="category-list" mat-button color="accent">Categories</button>
+    <button routerLink="account-list" mat-button color="accent">Accounts</button>
+  </div>
   <span class="fill-remaining-space"></span>
 
   <button *ngIf="!authService.isLoggedIn()" routerLink="/login" mat-flat-button color="accent">
