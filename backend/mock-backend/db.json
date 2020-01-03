@@ -1,0 +1,64 @@
+{
+  "token": [
+    {
+      "id": "1",
+      "access_token": "6c788b63-f5c6-43d5-beb7-4e85d6692cf8",
+      "token_type": "bearer",
+      "refresh_token": "63c35a9b-cf85-4907-be94-2a053dc4c4ce",
+      "expires_in": 40484,
+      "scope": "ui"
+    }
+  ],
+  "categories": [
+    {
+      "_id": { "$oid": "5d99db33b9d8210001f59264" },
+      "name": "Arbeit",
+      "type": "INCOME",
+      "amount": 0,
+      "subcategories": [{ "name": "Gehalt", "amount": 0 }],
+      "userId": "randomuser",
+      "_class": "de.budgt.categoryservice.models.Category"
+    },
+    {
+      "_id": { "$oid": "5d99db33b9d8210001f59266" },
+      "name": "Hobbys",
+      "type": "EXPENSE",
+      "amount": 0,
+      "subcategories": [
+        { "name": "Pizza", "amount": 0 },
+        { "name": "Starcraft", "amount": 0 }
+      ],
+      "userId": "randomuser",
+      "_class": "de.budgt.categoryservice.models.Category"
+    },
+    {
+      "_id": { "$oid": "5d99db33b9d8210001f59268" },
+      "name": "Lebenshaltungskosten",
+      "type": "EXPENSE",
+      "amount": 0,
+      "subcategories": [
+        { "name": "Miete", "amount": 0 },
+        { "name": "Strom", "amount": 0 },
+        { "name": "Internet", "amount": 0 }
+      ],
+      "userId": "randomuser",
+      "_class": "de.budgt.categoryservice.models.Category"
+    }
+  ],
+  "accounts": [
+    {
+      "_id": { "$oid": "5e0d477ab3cb1f00017b5443" },
+      "name": "Comdirect1",
+      "type": "COMDIRECT",
+      "userId": "randomuser",
+      "_class": "de.budgt.bankaccountservice.models.Account"
+    },
+    {
+      "_id": { "$oid": "5e0d477ab3cb1f00017b5445" },
+      "name": "Comdirect2",
+      "type": "COMDIRECT",
+      "userId": "randomuser",
+      "_class": "de.budgt.bankaccountservice.models.Account"
+    }
+  ]
+}

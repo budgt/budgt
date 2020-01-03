@@ -1,0 +1,5 @@
+{
+  "/api/uaa/oauth/token": "/token",
+  "/api/category-service/categories": "/categories",
+  "/api/bank-account-service/accounts": "/accounts"
+}

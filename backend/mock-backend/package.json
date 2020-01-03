@@ -1,0 +1,11 @@
+{
+  "name": "mock-backend",
+  "version": "0.0.1",
+  "description": "mock backend for easy development on the budgt frontend with local angular server.",
+  "main": "index.js",
+  "author": "Patrick Hofmann",
+  "license": "MIT",
+  "dependencies": {
+    "json-server": "^0.15.1"
+  }
+}
